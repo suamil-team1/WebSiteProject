@@ -24,7 +24,7 @@
 
 	
 				
-			<%@include file="../boardmodel1/listform.jsp" %>
+			<%@include file="../model1/listform.jsp" %>
 			
 				</div>
 			</div>
