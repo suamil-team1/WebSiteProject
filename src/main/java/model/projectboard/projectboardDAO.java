@@ -6,7 +6,9 @@ import java.util.Vector;
 
 import javax.servlet.ServletContext;
 
-import common.JDBConnect;
+import connect.JDBConnect;
+
+
 
 public class projectboardDAO extends JDBConnect{
 	
@@ -15,20 +17,20 @@ public class projectboardDAO extends JDBConnect{
         super(application);
     }
 	
-	public List<projectboardDTO2> selectList(Map<String, Object> map) { 
+	public List<ProjectBoardDTO> selectList(Map<String, Object> map) { 
 	    	
 	    	/*
 	    	board테이블에서 select한 결과데이터를 저장하기 위한 리스트 컬렉션.
 	    	여러가지의 List컬렉션 중 동기화가 보장되는 Vector를 사용한다. 
 	    	 */
-	        List<projectboardDTO2> bbs = new Vector<projectboardDTO2>();  
+	        List<ProjectBoardDTO> bbs = new Vector<ProjectBoardDTO>();  
 	
 	        /*
 	        목록에 출력할 게시물을 추출하기 위한 쿼리문으로 항상 일련번호의 
 	        역순(내림차순)으로 정렬해야 한다. 게시판의 목록은 최근 게시물이
 	        제일 앞에 노출되기 때문이다. 
 	         */
-	        String query = "SELECT * FROM Projectboard "; 
+	        String query = "SELECT * FROM mdl1brd "; 
 	        //검색어가 있는경우 where절을 추가한다. 
 	        if (map.get("searchWord") != null) {
 	            query += " WHERE " + map.get("searchField") + " "
@@ -43,7 +45,7 @@ public class projectboardDAO extends JDBConnect{
 	            //추출된 결과에 따라 반복한다. 
 	            while (rs.next()) { 
 	            	//하나의 레코드를 읽어서 DTO객체에 저장한다. 
-	            	projectboardDTO2 dto = new projectboardDTO2(); 
+	            	ProjectBoardDTO dto = new ProjectBoardDTO(); 
 	
 	                dto.setIdx(rs.getString("idx"));          
 	                dto.setId(rs.getString("id"));          
@@ -70,13 +72,13 @@ public class projectboardDAO extends JDBConnect{
 	
 	
 	//사용자가 입력한 내용을 board테이블에 insert 처리하는 메서드
-    public int insertWrite(projectboardDTO2 dto) {
+    public int insertWrite(ProjectBoardDTO dto) {
         //입력결과 확인용 변수
     	int result = 0;
         
         try {
         	//인파라미터가 있는 쿼리문 작성(동적쿼리문)
-            String query = "INSERT INTO Projectboard ( "
+            String query = "INSERT INTO mdl1brd ( "
                          + " idx, name, email, pass, title, content, visitcount) "
                          + " VALUES ( "
                          + " seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0)";  

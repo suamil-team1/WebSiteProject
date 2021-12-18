@@ -1,8 +1,10 @@
-<%@page import="model.projectboard.projectboardDTO2"%>
+
+<%@page import="model.projectboard.ProjectBoardDTO"%>
+<%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-<%@page import="model.projectboard.projectboardDAO"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
@@ -25,7 +27,7 @@ if(searchWord !=null){
 //board테이블에 저장된 게시물의 갯수 카운트
 //int totalCount = dao.selectCount(param);
 //출력할 레코드 추출
-List<projectboardDTO2> boardLists = dao.selectList(param);
+List<ProjectBoardDTO> boardLists = dao.selectList(param);
 //DB작업 끝났으므로 자원 해제
 dao.close();
 
@@ -106,7 +108,7 @@ else{
 	//게시물이 있을때
 	//int virtualNum=0;//게시물의 출력번호(가상번호)
 	//확장 for문을 통해 List컬렉션에 저장된 레코드의 갯수만큼 반복한다.
-	for(projectboardDTO2 dto:boardLists)
+	for(ProjectBoardDTO dto:boardLists)
 	{
 		//전체 레코드 수를 1씩 차감하면서 번호를 출력
 		//virtualNum = totalCount--;

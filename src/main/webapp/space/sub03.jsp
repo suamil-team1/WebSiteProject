@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
-
  <body>
 	<center>
 	<div id="wrap">
@@ -21,7 +19,7 @@
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;자유게시판<p>
 				</div>
 				<div>
-				<%@include file="../boardmodel1/listform.jsp" %>
+				<%@include file="../model1/listform.jsp" %>
 				<button type="button" class="btn btn-default" 
 		onclick="location.href='sub03_write.jsp';">글쓰기</button>
 				</div>
