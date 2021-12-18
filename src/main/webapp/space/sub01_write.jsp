@@ -2,7 +2,30 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
-
+<script>
+function validateForm(form) {
+	if(form.title.value==""){
+		alert("제목을 입력하세요.");
+		form.title.focus();
+		return false;
+	}
+	if(form.content.value==""){
+		alert("내용을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+	if(form.content.value==""){
+		alert("내용을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+	if(form.content.value==""){
+		alert("내용을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+}
+</script>
  <body>
 	<center>
 	<div id="wrap">
@@ -56,14 +79,14 @@
 		<th class="text-center" 
 			style="vertical-align:middle;">제목</th>
 		<td>
-			<input type="text" class="form-control" />
+			<input type="text" name="title" class="form-control" />
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">내용</th>
 		<td>
-			<textarea rows="10" class="form-control"></textarea>
+			<textarea rows="10" name="content" class="form-control"></textarea>
 		</td>
 	</tr>
 	<tr>
