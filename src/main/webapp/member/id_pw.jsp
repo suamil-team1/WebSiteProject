@@ -22,11 +22,11 @@
 				<div class="idpw_box">
 					<div class="id_box">
 						<ul>
-							<li><input type="text" name="" value="" class="login_input01" /></li>
-							<li><input type="text" name="" value="" class="login_input01" /></li>
+							<li><input type="text" name="id" value="" class="login_input01" /></li>
+							<li><input type="text" name="pw" value="" class="login_input01" /></li>
 						</ul>
 						<a href=""><img src="../images/member/id_btn01.gif" class="id_btn" /></a>
-						<a href=""><img src="../images/login_btn03.gif" class="id_btn02" /></a>
+						<a href="join02.jsp"><img src="../images/login_btn03.gif" class="id_btn02" /></a>
 					</div>
 					<div class="pw_box">
 						<ul>

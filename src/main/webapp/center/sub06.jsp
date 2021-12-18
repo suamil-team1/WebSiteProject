@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2aa948b64a88c50b066555806f58f46c"></script>
 
  <body>
 	<center>
@@ -22,8 +23,41 @@
 				</div>
 				<div class="con_box">
 					<p class="con_tit"><img src="../images/center/sub07_tit01.gif" alt="오시는길" /></p>
-					<img src="../images/center/sub07_img01.gif" class="con_img"/>
-					<p class="con_tit"><img src="../images/center/sub07_tit02.gif" alt="자가용 오시는길" /></p>
+					
+					<div id="map" style="width:700px;height:380px;" ></div>   
+   					<script>
+				      var container = document.getElementById('map');
+				      var options = {
+				         center: new kakao.maps.LatLng(33.450701, 126.570667),
+				         level: 3
+				      };
+				
+				      var map = new kakao.maps.Map(container, options);
+				      
+				      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				          mapOption = { 
+				              center: new kakao.maps.LatLng(37.478820248714875, 126.87876539517411), // 지도의 중심좌표
+				              level: 3 // 지도의 확대 레벨
+				          };
+				   
+				      var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+				   
+				      // 마커가 표시될 위치입니다 
+				      var markerPosition  = new kakao.maps.LatLng(37.478820248714875, 126.87876539517411); 
+				   
+				      // 마커를 생성합니다
+				      var marker = new kakao.maps.Marker({
+				          position: markerPosition
+				      });
+				   
+				      // 마커가 지도 위에 표시되도록 설정합니다
+				      marker.setMap(map);
+				   
+				      // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+				      // marker.setMap(null);
+				   </script>
+
+					<p class="con_tit"><img src="../images/center/sub07_tit02.gif" alt="자가용 오시는길" / style="padding-top: 30px;"></p>
 					<div class="in_box">
 						<p class="dot_tit">강북 방향</p>
 						<p style="margin-bottom:15px;">강변북로 진입 후 월드컵 경기장 방면으로 우측방향 → 난지도길 가양대교 방향으로 좌회전 → 상암동길 상암초교 방면으로 우회전 </p>
