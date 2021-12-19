@@ -23,7 +23,7 @@ int affected = dao.updateEdit(dto);
 dao.close();
 
 if(affected==1){
-	//수정 성공하면 수정된 내용을 확인하기 위해 상세보기 페이지로 이동함
+	//수정 성공하면 수정된  내용을 확인하기 위해 상세보기 페이지로 이동함
 	response.sendRedirect("sub03_view.jsp?idx="+dto.getIdx());
 }
 else{
