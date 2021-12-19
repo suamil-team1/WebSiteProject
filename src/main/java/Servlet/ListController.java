@@ -27,7 +27,7 @@ public class ListController extends HttpServlet {
 		ProjectBoardDAO2 dao = new ProjectBoardDAO2();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		 
 		//검색어 파라미터 받기
 		String searchField = req.getParameter("searchField");
 		String searchWord = req.getParameter("searchWord");
