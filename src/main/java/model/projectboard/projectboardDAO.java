@@ -8,96 +8,191 @@ import javax.servlet.ServletContext;
 
 import connect.JDBConnect;
 
-
-
 public class projectboardDAO extends JDBConnect{
 	
+	
+	public projectboardDAO() {} //기본생성자
 	public projectboardDAO(ServletContext application) {
-    	//내장객체를 통해 web.xml에 작성된 컨텍스트 초기화 파라미터를 얻어온다.
         super(application);
     }
 	
 	public List<ProjectBoardDTO> selectList(Map<String, Object> map) { 
-	    	
-	    	/*
-	    	board테이블에서 select한 결과데이터를 저장하기 위한 리스트 컬렉션.
-	    	여러가지의 List컬렉션 중 동기화가 보장되는 Vector를 사용한다. 
-	    	 */
-	        List<ProjectBoardDTO> bbs = new Vector<ProjectBoardDTO>();  
-	
-	        /*
-	        목록에 출력할 게시물을 추출하기 위한 쿼리문으로 항상 일련번호의 
-	        역순(내림차순)으로 정렬해야 한다. 게시판의 목록은 최근 게시물이
-	        제일 앞에 노출되기 때문이다. 
-	         */
-	        String query = "SELECT * FROM mdl1brd "; 
-	        //검색어가 있는경우 where절을 추가한다. 
-	        if (map.get("searchWord") != null) {
-	            query += " WHERE " + map.get("searchField") + " "
-	                   + " LIKE '%" + map.get("searchWord") + "%' ";
-	        }
-	        query += " ORDER BY idx DESC "; 
-	
-	        try {
-	            stmt = con.createStatement();    
-	            rs = stmt.executeQuery(query);  
-	
-	            //추출된 결과에 따라 반복한다. 
-	            while (rs.next()) { 
-	            	//하나의 레코드를 읽어서 DTO객체에 저장한다. 
-	            	ProjectBoardDTO dto = new ProjectBoardDTO(); 
-	
-	                dto.setIdx(rs.getString("idx"));          
-	                dto.setId(rs.getString("id"));          
-	                dto.setName(rs.getString("name"));          
-	                dto.setEmail(rs.getString("email"));          
-	                dto.setTitle(rs.getString("title"));      
-	                dto.setContent(rs.getString("content"));   
-	                dto.setPostdate(rs.getDate("postdate"));  
-	                dto.setOfile(rs.getString("ofile"));           
-	                dto.setSfile(rs.getString("sfile")); 
-	                dto.setPass(rs.getString("pass"));  
-	                dto.setVisitcount(rs.getInt("visitcount"));  
-	                
-	                //리스트 컬렉션에 DTO객체를 추가한다. 
-	                bbs.add(dto);  
-	            }
-	        } 
-	        catch (Exception e) {
-	            System.out.println("게시물 조회 중 예외 발생");
-	            e.printStackTrace();
-	        }
-	        return bbs;
-	    }
-	
-	
-	//사용자가 입력한 내용을 board테이블에 insert 처리하는 메서드
-    public int insertWrite(ProjectBoardDTO dto) {
-        //입력결과 확인용 변수
-    	int result = 0;
+	    
+		//List컬렉션 생성 
+        List<ProjectBoardDTO> bbs = new Vector<ProjectBoardDTO>();  
+
+        //Idx의 내림차순으로 게시물 정렬 및 출력
+        String query = "SELECT * FROM Model2Board "; 
         
+        //검색어
+        if (map.get("searchWord") != null) {
+            query += " WHERE " + map.get("searchField") + " "
+                   + " LIKE '%" + map.get("searchWord") + "%' ";
+        }
+        query += " ORDER BY idx DESC "; //내림차순 정렬
+
         try {
-        	//인파라미터가 있는 쿼리문 작성(동적쿼리문)
-            String query = "INSERT INTO mdl1brd ( "
-                         + " idx, name, email, pass, title, content, visitcount) "
-                         + " VALUES ( "
-                         + " seq_board_num.NEXTVAL, ?, ?, ?, ?, ?, 0)";  
-            //동적쿼리문 실행을 위한 prepared객체 생성
-            psmt = con.prepareStatement(query);   
-            //순서대로 인파라미터 설정
-            psmt.setString(1, dto.getName());  
-            psmt.setString(2, dto.getEmail());
-            psmt.setString(3, dto.getPass());  
-            psmt.setString(4, dto.getTitle());  
-            psmt.setString(5, dto.getContent());  
-            //쿼리문 실행 : 입력에 성공한다면 1이 반환된다. 실패시 0반환.
-            result = psmt.executeUpdate(); 
+            stmt = con.createStatement();    
+            rs = stmt.executeQuery(query);  
+
+            //결과 반복
+            while (rs.next()) { 
+            	
+            	//레코드 읽기 dto객체 생성
+            	ProjectBoardDTO dto = new ProjectBoardDTO(); 
+
+                dto.setIdx(rs.getString("idx"));
+                dto.setId(rs.getString("id"));
+                dto.setTitle(rs.getString("title"));      
+                dto.setContent(rs.getString("content"));   
+                dto.setPostdate(rs.getDate("postdate"));  
+                dto.setOfile(rs.getString("ofile"));           
+                dto.setSfile(rs.getString("sfile")); 
+                dto.setVisitcount(rs.getInt("visitcount"));  
+                //dto.setEmail(rs.getString("email"));
+                //dto.setName(rs.getString("name"));
+                
+                bbs.add(dto); //dto에 추가  
+            }
+        } 
+        catch (Exception e) {
+            System.out.println("게시물 조회 중 예외 발생");
+            e.printStackTrace();
+        }
+        return bbs;
+    }
+	public int insertWrite(ProjectBoardDTO dto) {
+
+        int result = 0; //확인을 위한 변수
+
+        try {
+            //동적 쿼리
+            String query = "insert into Model2Board"
+                    + "(idx, id, title, content, boardName)"
+                    + "values(seq_prtBoard_idx.NEXTVAL, ? , ? , ?,'F')";
+
+            //동적쿼리문
+            psmt = con.prepareStatement(query);
+            //인파라미터 설정 
+            psmt.setString(1, dto.getId());
+            psmt.setString(2, dto.getTitle());
+            psmt.setString(3, dto.getContent());
+
+            result = psmt.executeUpdate();//성공 시 1반환
         }
         catch (Exception e) {
             System.out.println("게시물 입력 중 예외 발생");
             e.printStackTrace();
         }
-        
+
         return result;
     }
+	//상세보기를 위해 특정 일련번호에 해당하는 게시물을 인출한다. 
+    public ProjectBoardDTO selectView(String idx) { 
+        
+    	ProjectBoardDTO dto = new ProjectBoardDTO(); 
+        
+        String query = "select"
+        		+ " idx, B.id, title, content, postdate, ofile, sfile, visitcount, boardName "
+        		+ " from Model2Board B inner join Projectmember M "
+        		+ " on B.id=M.id "
+                + " WHERE idx=?";
+
+        try {
+            psmt = con.prepareStatement(query);
+            psmt.setString(1, idx);   
+            rs = psmt.executeQuery();  
+            //일련번호는 중복되지 않으므로 if문에서 처리하면 된다. 
+            if (rs.next()) {//ResultSet에서 커서를 이동시켜 레코드를 읽은 후
+            	// DTO객체에 레코드의 내용을 추가한다. 
+            	dto.setIdx(rs.getString("idx"));
+                dto.setId(rs.getString("id"));
+                dto.setTitle(rs.getString("title"));  
+                dto.setContent(rs.getString("content"));   
+                dto.setPostdate(rs.getDate("postdate"));  
+                dto.setOfile(rs.getString("ofile"));           
+                dto.setSfile(rs.getString("sfile")); 
+                dto.setVisitcount(rs.getInt("visitcount")); 
+                //dto.setEmail(rs.getString("email"));
+                //dto.setName(rs.getString("name"));
+            }
+        } 
+        catch (Exception e) {
+            System.out.println("게시물 상세보기 중 예외 발생");
+            e.printStackTrace();
+        }
+        
+        return dto; 
+    }
+    //조회수 증가
+    public void updateVisitCnt(String idx) {
+    	
+    	String query = "UPDATE Model2Board SET "
+    			+ " visitcount = visitcount+1 "
+    			+ " WHERE idx=?";
+    	
+    	try {
+    		psmt = con.prepareStatement(query);
+    		psmt.setString(1, idx);
+    		rs = psmt.executeQuery();
+    	}
+    	catch (Exception e) {
+    		System.out.println("게시물 조회수 증가 중 예외 발생");
+			e.printStackTrace();
+		}
+    }
+    
+    //게시물 수정
+  	public int updateEdit(ProjectBoardDTO dto) {
+  		
+  		int result=0; //확인용 변수
+  		
+  		try { //쿼리문
+  			String query = "UPDATE Model2Board SET " 
+  				  	 + " title= ?, content= ? "
+  				  	 + " WHERE idx=?";
+  			
+  			psmt = con.prepareStatement(query);
+  			psmt.setString(1, dto.getTitle());
+  			psmt.setString(2, dto.getContent());
+  			psmt.setString(3, dto.getIdx());
+  			//쿼리 실행
+  			result = psmt.executeUpdate();
+  		}
+  		catch (Exception e) {
+  			System.out.println("게시물 수정 중 예외 발생");
+  			e.printStackTrace();
+  		}
+  		
+  		return result;
+  	}
+  	
+  /*sub05*/
+  //파일 및 게시물 입력
+  	public int insertFile(ProjectBoardDTO dto) {
+  		int applyResult=0;
+  		try {
+  			//1.쿼리문 작성
+  			String query= "INSERT INTO Model2Board( "
+  					+ " idx, id, title, content, ofile, sfile, boardName) "
+  					+ " VALUES( "
+  					+ " seq_prtBoard_idx.NEXTVAL, ?, ?, ?, ?, ?, 'R')";
+  			
+  			//2.prepared객체 생성 및 인파라미터 설정
+  			psmt = con.prepareStatement(query);
+  			psmt.setString(1, dto.getId());
+  			psmt.setString(2, dto.getTitle());
+  			psmt.setString(3, dto.getContent());
+  			psmt.setString(4, dto.getOfile());
+  			psmt.setString(5, dto.getSfile());
+  			
+  			//3.쿼리 실행
+  			applyResult=psmt.executeUpdate();
+  		}
+  		catch (Exception e) {
+  			System.out.println("INSERT중 예외 발생");
+  			e.printStackTrace();
+  		}
+  		return applyResult;
+  	}
 }

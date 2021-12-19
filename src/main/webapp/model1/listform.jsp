@@ -48,11 +48,11 @@
 	<tbody>
 	<!-- 리스트반복 -->
 	<tr>
-		<td class="text-center">번호</td>
-		<td class="text-left"><a href="sub01_view.jsp">제목</a></td>
-		<td class="text-center">작성자</td>
-		<td class="text-center">작성일</td>
-		<td class="text-center">조회수</td>
+		<td class="text-center"><%= dto.getIdx() %></td>
+		<td class="text-left"><a href="sub01_view.jsp"><%= dto.getTitle() %></a></td>
+		<td class="text-center"><%=dto.getId()%></td>
+		<td class="text-center"><%=dto.getPostdate()%></td>
+		<td class="text-center"><%=dto.getVisitcount()%></td>
 		<td class="text-center">첨부</td>
 	</tr>
 	</tbody>
@@ -83,5 +83,4 @@
 		<li><span class="glyphicon glyphicon-fast-forward"></span></li>
 	</ul>	
 </div>
-
-				</div>
+</div>

@@ -9,10 +9,8 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
-
 //DAO 객체 생성 및 DB연결
 projectboardDAO dao = new projectboardDAO(application);
-
 //검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
 Map<String,Object> param =new HashMap<String,Object>();
 //검색 파라미터를 request 내장객체를 통해 얻어온다.
@@ -32,7 +30,9 @@ List<ProjectBoardDTO> boardLists = dao.selectList(param);
 dao.close();
 
 %>
+<script>
 
+</script>
  <body>
 	<center>
 	<div id="wrap">
@@ -54,7 +54,7 @@ dao.close();
 <div class="row text-right" style="margin-bottom:20px;
 		padding-right:50px;">
 <!-- 검색부분 -->
-<form class="form-inline">	
+<form class="form-inline" id="notice">
 	<div class="form-group">
 		<select name="keyField" class="form-control">
 			<option value="">제목</option>
@@ -107,8 +107,7 @@ if(boardLists.isEmpty()){
 else{
 	//게시물이 있을때
 	//int virtualNum=0;//게시물의 출력번호(가상번호)
-	//확장 for문을 통해 List컬렉션에 저장된 레코드의 갯수만큼 반복한다.
-	for(ProjectBoardDTO dto:boardLists)
+	for(ProjectBoardDTO dto:boardLists) //반복
 	{
 		//전체 레코드 수를 1씩 차감하면서 번호를 출력
 		//virtualNum = totalCount--;
@@ -135,8 +134,8 @@ else{
 	<!-- 각종 버튼 부분 -->
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
-	<button type="button" class="btn btn-default" 
-		onclick="location.href='sub01_write.jsp';">글쓰기</button>
+	<!-- <button type="button" class="btn btn-default" 
+		onclick="location.href='sub01_write.jsp';">글쓰기</button> -->
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>
