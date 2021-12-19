@@ -51,7 +51,6 @@ public class BoardPage {
 						+ totalPages + "'>[마지막페이지]</a>";
 		}
 		return pagingStr;
-	}
-	
+	}	
 }
  

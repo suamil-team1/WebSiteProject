@@ -10,7 +10,7 @@ import connect.DBConnPool;
 
 public class ProjectBoardDAO2 extends DBConnPool{
 	
-	//게시물의 총 개수 계산
+	//게시물의 총 개수 계산(Paging)
 	public int selectCount(Map<String, Object> map) {
 		int totalCount = 0;
 		String query = "SELECT COUNT(*) FROM Model2Board";
@@ -32,7 +32,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 		return totalCount;
 	}
 	
-	//필요한 조건의 게시물을 꺼냄(paging처리 O)
+	//필요한 조건의 게시물을 꺼냄(paging처리 O)(List)
 	public List<ProjectBoardDTO> selectList(Map<String, Object> map) {
 		
 		List<ProjectBoardDTO> pBoard = new Vector<ProjectBoardDTO>();
@@ -62,7 +62,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 				
 				dto.setIdx(rs.getString("idx"));
 				dto.setTitle(rs.getString("title"));
-				dto.setName(rs.getString("id"));
+				dto.setId(rs.getString("id"));
 				dto.setPostdate(rs.getDate("postdate"));
 				dto.setVisitcount(rs.getInt("visitcount"));
 				dto.setOfile(rs.getString("ofile"));
@@ -77,5 +77,48 @@ public class ProjectBoardDAO2 extends DBConnPool{
 			e.printStackTrace();
 		}	
 		return pBoard;
+	}
+	
+	//게시물 클릭수 증가(List, View)
+	public void updateVisitCount(String idx) {
+		String query = "UPDATE Model2Board SET "
+				+ " visitcount=visitcount+1 "
+				+ " WHERE idx=?"; 
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			psmt.executeQuery();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 조회수 증가 중 예외발생");
+			e.printStackTrace();
+		}
+	}
+	
+	//게시물 찾아서 반환(View).
+	public ProjectBoardDTO selectView(String idx) {
+		ProjectBoardDTO dto = new ProjectBoardDTO();
+		String query = "SELECT * FROM Model2Board WHERE idx=?";
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				dto.setId(rs.getString("id"));
+				dto.setPostdate(rs.getDate("postdate"));
+				/*** 이메일 추가 ***/
+				dto.setVisitcount(rs.getInt("visitcount"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setOfile(rs.getString("ofile"));
+				dto.setSfile(rs.getString("sfile"));
+			}
+		}
+		catch(Exception e) {
+			System.out.println("게시물 상세보기 중 예외발생");
+			e.printStackTrace();
+		}
+		return dto;
 	}
 }

@@ -20,8 +20,8 @@
 			<col width="10%" style="text-align:center;">
 			<col width="*" >
 			<col width="15%" style="text-align:center;">
-			<col width="10%" style="text-align:center;">
 			<col width="15%" style="text-align:center;">
+			<col width="10%" style="text-align:center;">
 			<col width="10%" style="text-align:center;">
 		</colgroup>
 		
@@ -50,11 +50,11 @@
 		        <tr align="center">
 		            <td>${row.idx}</td> 
 		            <td align="left">	<!-- 제목 -->
-		                <a href="../mvcboard/view.do?idx=${row.idx}">${row.title}</a>
+		                <a href="../community/view.do?idx=${row.idx}">${row.title}</a>
 		            </td>
 		            <td align="center">${row.id}</td>    <!-- 작성자 -->    
-		            <td align="center">${row.visitcount}</td> <!-- 조회수 -->
 		            <td align="center">${row.postdate}</td> <!-- 작성일 -->
+		            <td align="center">${row.visitcount}</td> <!-- 조회수 -->
 		            <td>	<!-- 첨부파일 -->
 		            <c:if test="${not empty row.ofile}">
 		            	<a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}
@@ -73,12 +73,6 @@
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
 	<button type="button" onclick="location.href='sub01_write.jsp';">글쓰기</button>
-				
-	<!-- <button type="button" class="btn btn-primary">수정하기</button>
-	<button type="button" class="btn btn-success">삭제하기</button>
-	<button type="button" class="btn btn-info">답글쓰기</button>
-	<button type="button" class="btn btn-warning">리스트보기</button>
-	<button type="submit" class="btn btn-danger">전송하기</button> -->
 </div>
 <div>
 	${map.pagingImg}
