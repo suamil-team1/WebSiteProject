@@ -57,8 +57,6 @@ create sequence seq_prtBoard_idx
     nomaxvalue
     nocycle
     nocache;
-    
-
 
 commit;
 
