@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 보호자 게시판 -->  
+<!-- 보호자 게시판; "모든" 회원 접근 & 수정 가능 -->  
 <%@ include file="../include/global_head.jsp" %>
  <body>
 	<center>
@@ -21,7 +21,7 @@
 				</div>
 				<div>
 					<!-- 게시물 테이블 인클루드 -->
-					<%@ include file="../include/list.jsp" %>
+					<%@ include file="../include/list_model2.jsp" %>
 				</div>
 			</div>
 		</div>

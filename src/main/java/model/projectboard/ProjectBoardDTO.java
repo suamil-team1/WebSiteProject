@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class ProjectBoardDTO {
 	
-    private String idx;
+	private String idx;
     private String id;
     private String name;
     private String email;
@@ -15,6 +15,7 @@ public class ProjectBoardDTO {
     private String sfile;
     private String pass;
     private int visitcount;
+    private String boardName;
     
 	public String getIdx() {
 		return idx;
@@ -81,6 +82,12 @@ public class ProjectBoardDTO {
 	}
 	public void setVisitcount(int visitcount) {
 		this.visitcount = visitcount;
+	}
+	public String getBoardName() {
+		return boardName;
+	}
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
 	}
     
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 직원 자료실 -->
+<!-- 직원 자료실; "직원"권한을 가진 회원만 접근 & 수정 가능 -->
 <%@ include file="../include/global_head.jsp" %>
  <body>
 	<center>
@@ -19,8 +19,8 @@
 					<img src="../images/community/sub01_title.gif" alt="직원자료실" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;커뮤니티&nbsp;>&nbsp;직원자료실<p>
 				</div>
-					<!-- 게시물 테이블 인클루드 -->
-					<%@ include file="../include/list.jsp" %>
+					<!-- 컨텐츠 인클루드 -->
+					<%@ include file="../include/list_model2.jsp" %>
 			</div>
 		</div>
 		<%@ include file="../include/quick.jsp" %>

@@ -1,0 +1,102 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 검색부분 -->
+<div style="margin-bottom:20px;padding-right:50px; text-align: right;">
+<form name="searchForm">
+		<select name="keyField">
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+			<option value="name">작성자</option>
+		</select>
+		<input type="text" name="keyString">
+		<input type="submit" value="search">
+</form>	
+</div>
+<div>
+	<!-- 게시판리스트부분 -->
+	<table border="1" width="90%">
+		<colgroup>
+			<col width="10%" style="text-align:center;">
+			<col width="*" >
+			<col width="15%" style="text-align:center;">
+			<col width="10%" style="text-align:center;">
+			<col width="15%" style="text-align:center;">
+			<col width="10%" style="text-align:center;">
+		</colgroup>
+		
+		<thead>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>조회수</th>
+			<th>첨부</th>
+		</tr>
+		</thead>
+		
+		<tbody>
+		<c:choose>
+			<c:when test="${empty boardLists}"> <!-- 게시물이 없을때 -->
+				<tr>
+					<td colspan="6" align="center">
+						등록된 게시물이 없습니다.
+					</td>
+				</tr>
+			</c:when>
+			<c:otherwise> <!-- 출력할 게시물이 있을때 -->
+				<c:forEach items="${boardLists}" var="row" varStatus="loop">
+		        <tr align="center">
+		            <td>${row.idx}</td> 
+		            <td align="left">	<!-- 제목 -->
+		                <a href="../mvcboard/view.do?idx=${row.idx}">${row.title}</a>
+		            </td>
+		            <td align="center">${row.id}</td>    <!-- 작성자 -->    
+		            <td align="center">${row.visitcount}</td> <!-- 조회수 -->
+		            <td align="center">${row.postdate}</td> <!-- 작성일 -->
+		            <td>	<!-- 첨부파일 -->
+		            <c:if test="${not empty row.ofile}">
+		            	<a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}
+		            		&idx=${row.idx}">[Down]</a>
+		            </c:if>
+		            </td>
+		        </tr>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+		</tbody>	
+	</table>
+</div>
+<div style="text-align:right;">
+	<!-- 각종 버튼 부분 -->
+	<!-- <button type="reset" class="btn">Reset</button> -->
+		
+	<button type="button" onclick="location.href='sub01_write.jsp';">글쓰기</button>
+				
+	<!-- <button type="button" class="btn btn-primary">수정하기</button>
+	<button type="button" class="btn btn-success">삭제하기</button>
+	<button type="button" class="btn btn-info">답글쓰기</button>
+	<button type="button" class="btn btn-warning">리스트보기</button>
+	<button type="submit" class="btn btn-danger">전송하기</button> -->
+</div>
+<div>
+	${map.pagingImg}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
