@@ -20,14 +20,17 @@ try{
 	MultipartRequest mr = new MultipartRequest
 			(request, saveDirectory, maxPostsize, encoding);
 	
+	String idx = mr.getParameter("idx");
+	String title = mr.getParameter("title");
+	String content = mr.getParameter("content");
+	String fileName = mr.getFilesystemName("attachedFile");
+	
 	//DTO객체 생성 //폼값 입력
 	ProjectBoardDTO dto = new ProjectBoardDTO();
-	
-	dto.setName(mr.getParameter("name"));
-	dto.setTitle(mr.getParameter("Title"));
-	dto.setContent(mr.getParameter("content"));
+	dto.setIdx(idx);
+	dto.setTitle(title);
+	dto.setContent(content);
 
-	String fileName = mr.getFilesystemName("ofile");
 	if(fileName !=null){
 		String now=new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
 		String ext = fileName.substring(fileName.lastIndexOf("."));
@@ -43,10 +46,12 @@ try{
 		
 	//DAO객체 생성
 	projectboardDAO dao = new projectboardDAO();
-	dao.updateEdit(dto);  //insert처리
+	int affected = dao.updateEdit(dto);  //insert처리
 	dao.close();
 	
-	response.sendRedirect("sub05_view.jsp");
+	if(affected==1){//성공
+		response.sendRedirect("sub05_view.jsp?idx="+ dto.getIdx());	
+	}
 }
 catch(Exception e){
 	e.printStackTrace();

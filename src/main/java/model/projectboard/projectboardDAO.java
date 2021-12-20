@@ -91,6 +91,8 @@ public class projectboardDAO extends JDBConnect{
         }
         return bbs;
     }
+	
+	//자유게시판 입력
 	public int insertWrite(ProjectBoardDTO dto) {
 
         int result = 0; //확인을 위한 변수
@@ -116,7 +118,8 @@ public class projectboardDAO extends JDBConnect{
         }
         return result;
     }
-	//파일 및 게시물 입력
+	
+	//첨부게시판 입력
   	public int insertFile(ProjectBoardDTO dto) {
   		int applyResult=0;
   		try {

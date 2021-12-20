@@ -29,7 +29,7 @@ int yo = dSet.get(Calendar.DAY_OF_WEEK);
 //현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
 int last_day = dSet.getActualMaximum(Calendar.DATE);
 %>
-<table cellpadding="0" cellspacing="0" border="1" class="calendar">
+<table cellpadding="0" cellspacing="0" border="1" class="calendar table">
     <colgroup>
    	 <col width="14%" />
    	 <col width="14%" />
@@ -39,7 +39,8 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
    	 <col width="14%" />
    	 <col width="*" />
     </colgroup>
-    <tr>
+    
+    <tr class="table-secondary">
     <%
     String[] a = { "sun", "mon", "tue", "wed", "thu", "fri", "sat" };
     for (int i = 0; i < 7; i++) {
@@ -99,5 +100,5 @@ out.println("일="+ nowDay.get(Calendar.DATE) +"<br/>"); */
 //오늘이 이번주의 몇번째 날인지 반환
 //일요일1, 월요일2.....
 //out.println(nowDay.get(Calendar.DAY_OF_WEEK)+"<br/>");
-%>
 
+%>
