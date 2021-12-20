@@ -16,7 +16,7 @@
 		JDBConnect jdbc = new JDBConnect();
 		
 		//정적 쿼리 실행을 위한 statement객체 생성 및 쿼리 준비
-		String sql = "SELECT id, pass, name, regidate FROM Projectmember";
+		String sql = "SELECT id, pass, name, email, regidate FROM Projectmember";
 		Statement stmt = jdbc.con.createStatement();
 		
 		//행에 영향이 없는 쿼리를 실행할 경우 executeQuery()를 사용한다.
@@ -30,9 +30,11 @@
 			String id = rs.getString(1); //인덱스는 1부터 시작한다.
 			String pw = rs.getString(2);
 			String name = rs.getString("name"); //컬럼명을 직접 사용
+			String email = rs.getString("email"); 
 			java.sql.Date regidate = rs.getDate("regidate");
 			
-			out.println(String.format("%s %s %s %s", id, pw, name, regidate) +"<br/>");
+			out.println("id pw name email regidate" +"<br/>");
+			out.println(String.format("%s %s %s %s %s", id, pw, name, email, regidate) +"<br/>");
 		}
 		
 		//자원해제

@@ -57,4 +57,49 @@ public class ProjectMemberDAO extends JDBConnect {
 		
 		return dto;
 	}
+	
+
+	public ProjectMemberDTO getProMemberInfo(String uid, String uname, String uemail) {
+		
+        
+    	ProjectMemberDTO dto = new ProjectMemberDTO();  
+        
+    	String query = "";
+    	if(uid.equals("")) //아이디 찾기
+    		query = "SELECT id FROM ProjectMember WHERE name=? AND email=?";
+    	else //비번찾기
+    		query = "SELECT * FROM ProjectMember WHERE id=? AND name=? AND email=?";
+
+        try {
+            psmt = con.prepareStatement(query);
+            if(uid.equals("")) {
+                psmt.setString(1, uname);
+                psmt.setString(2, uemail);
+            }
+        	else {
+        		psmt.setString(1, uid);     
+        		psmt.setString(2, uname);
+        		psmt.setString(3, uemail);
+        	}
+              
+            rs = psmt.executeQuery();  
+            if (rs.next()) {
+                dto.setId(rs.getString("id"));
+				dto.setPass(rs.getString("pass"));
+				dto.setName(rs.getString(3));
+				dto.setEmail(rs.getString(4));
+				dto.setRegidate(rs.getString(5));
+				dto.setTellNum(rs.getString(6));
+				dto.setMobile(rs.getString(7));
+				dto.setAddress(rs.getString(8));
+				dto.setType(rs.getString(9));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return dto; 
+    }
+	
 }
