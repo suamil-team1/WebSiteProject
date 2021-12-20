@@ -29,7 +29,7 @@
 						<c:when test="${bCRUD eq 'view'}">
 							<%@ include file="../model2/view_model2.jsp" %>
 						</c:when>
-						<c:when test="${bCRUD eq 'view'}">
+						<c:when test="${bCRUD eq 'write'}">
 							<%@ include file="../model2/write_model2.jsp" %>
 						</c:when>
 					</c:choose>
