@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.projectboard.ProjectBoardDAO2;
 import model.projectboard.ProjectBoardDTO;
-import utils.BoardPage;
+import utilss.BoardPage;
 
 @WebServlet("/Model2Board/List.do")
 public class ListController extends HttpServlet {
