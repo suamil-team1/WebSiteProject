@@ -31,8 +31,8 @@ try{
 	dto.setTitle(title);
 	dto.setContent(content);
 
-	if(fileName !=null){
-		String now=new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
+	if(fileName != null){
+		String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
 		String ext = fileName.substring(fileName.lastIndexOf("."));
 		String newFileName = now+ext; //최종파일명
 	
@@ -46,7 +46,8 @@ try{
 		
 	//DAO객체 생성
 	projectboardDAO dao = new projectboardDAO();
-	int affected = dao.updateEdit(dto);  //insert처리
+	
+	int affected = dao.updateEdit(dto);  //update처리
 	dao.close();
 	
 	if(affected==1){//성공

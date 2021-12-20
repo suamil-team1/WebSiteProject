@@ -6,9 +6,9 @@
 <%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%@ include file="../model1/loggingnow.jsp" %>
 <%
-String num = request.getParameter("idx");	//게시물의 일련 번호
+String idx = request.getParameter("idx");	//게시물의 일련 번호
 projectboardDAO dao = new projectboardDAO(application);	//DB연결
-ProjectBoardDTO dto = dao.selectView(num);			//게시물 조회
+ProjectBoardDTO dto = dao.selectView(idx);			//게시물 조회
 
 //세션 영역에 저장된 회원 아이디를 얻어와서 문자열의 형태로 변환.
 String sessionId = session.getAttribute("UserId").toString();
@@ -54,7 +54,7 @@ function validateForm(form) {
 				<div>
 <form enctype="multipart/form-data" action="editProcessR.jsp" 
 	name="fileForm" method="post" onsubmit="return validateForm(this);">
-<input type="hidden" name="idx" value="<%=dto.getIdx() %>" />
+<input type="hidden" name="idx" value="<%= idx %>" />
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
@@ -104,8 +104,7 @@ function validateForm(form) {
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td>
-			<input type="file" class="form-control" name="attachedFile"/
-			value="<%= dto.getOfile() %>">
+			<input type="file" class="form-control" name="attachedFile"/>
 		</td>
 	</tr>
 </tbody>
