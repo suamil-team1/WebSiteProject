@@ -21,7 +21,8 @@
 				</div>
 				<div>
 					<!-- 컨텐츠 인클루드 -->
-					<c:if test='${not empty param.bCRUD or param.bCRUD eq null}'>
+					<%-- <% out.print(request.getAttribute("bCRUD")); %> --%>
+					<c:if test='${not empty bCRUD or bCRUD eq null}'>
 					<c:choose>
 						<c:when test="${bCRUD eq 'list'}">
 							<%@ include file="../model2/list_model2.jsp" %>

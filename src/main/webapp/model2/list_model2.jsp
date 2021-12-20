@@ -70,7 +70,7 @@
 </div>
 <div style="text-align:right;">
 	<!-- 각종 버튼 부분 -->		
-	<button type="button" onclick="location.href='sub01_write.jsp';">글쓰기</button>
+	<button type="button" onclick="location.href='../community/Write.do';">글쓰기</button>
 </div>
 <div>
 	${map.pagingImg}

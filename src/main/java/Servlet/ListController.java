@@ -66,6 +66,7 @@ public class ListController extends HttpServlet {
 		List<ProjectBoardDTO> boardLists = dao.selectList(map);
 		dao.close();
 		
+		
 		//페이지 번호 생성
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, 
 				"../community/List.do");

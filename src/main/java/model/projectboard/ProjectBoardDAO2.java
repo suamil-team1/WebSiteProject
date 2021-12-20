@@ -55,10 +55,12 @@ public class ProjectBoardDAO2 extends DBConnPool{
 			psmt = con.prepareStatement(query);
 			psmt.setString(1, map.get("start").toString());
 			psmt.setString(2, map.get("end").toString());
-			rs = psmt.executeQuery();
 
+			rs = psmt.executeQuery();
+			
 			while(rs.next()) {
 				ProjectBoardDTO dto = new ProjectBoardDTO();
+				
 				
 				dto.setIdx(rs.getString("idx"));
 				dto.setTitle(rs.getString("title"));
@@ -68,8 +70,10 @@ public class ProjectBoardDAO2 extends DBConnPool{
 				dto.setOfile(rs.getString("ofile"));
 				dto.setSfile(rs.getString("sfile"));
 				dto.setBoardName(rs.getString("boardName"));
-
+				
 				pBoard.add(dto);
+				
+				System.out.println(rs.getString("idx"));
 			}
 		}
 		catch(Exception e) {
@@ -97,6 +101,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 	
 	//게시물 찾아서 반환(View).
 	public ProjectBoardDTO selectView(String idx) {
+		
 		ProjectBoardDTO dto = new ProjectBoardDTO();
 		String query = "SELECT * FROM Model2Board WHERE idx=?";
 		try {
@@ -120,5 +125,31 @@ public class ProjectBoardDAO2 extends DBConnPool{
 			e.printStackTrace();
 		}
 		return dto;
+	}
+	
+	//새로운 게시물 입력
+	public int insertWrite(ProjectBoardDTO dto) {
+		int result = 0;
+		
+		try {
+			String query = "INSERT INTO Model2Board ( "
+						+ " title, content, ofile, sfile) "
+						+ " VALUES (seq_empBoard_idx.NEXTVAL,?,?,?,?)";
+			
+			psmt = con.prepareStatement(query);
+			
+			psmt.setString(1, dto.getTitle());
+			psmt.setString(2, dto.getContent());
+			psmt.setString(3, dto.getOfile());
+			psmt.setString(4, dto.getSfile());			
+			
+			//쿼리문 실행 : 입력에 성공하면 1, 실패하면 0.
+			result = psmt.executeUpdate();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 입력 중 예외 발생");
+			e.printStackTrace();
+		}		
+		return result;
 	}
 }

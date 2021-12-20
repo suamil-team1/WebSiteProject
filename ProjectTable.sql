@@ -3,7 +3,7 @@ create table Model2Board(
     idx number primary key,--일련번호
     id varchar2(30) not null,
     name varchar2(50) not null,--작성자명
-    email varchar2(50) not null,
+    email varchar2(50),
     title varchar2(300) not null,
     content varchar2(2000) not null,
     postdate date default sysdate not null,
@@ -13,10 +13,13 @@ create table Model2Board(
     visitcount number default 0 not null, --게시물 조회수
     boardName varchar2(30) -- 직원 emp, 보호자 prt
     );
+    
+-- 테스트용 더미데이터
 insert into Model2Board(idx,id,name,email,title,content,pass)
     values(seq_board_num.nextval,'kim','김유신','babo@naver.com','자료실 제목1입니다.','내용','1234');
 insert into Model2Board(idx,id,name,email,title,content,pass)
     values(seq_board_num.nextval,'kim2','김춘추','bapo@naver.com','자료실 제목2입니다.','내용','1234');
+commit;
 
 -- 회원 테이블
 create table Projectmember

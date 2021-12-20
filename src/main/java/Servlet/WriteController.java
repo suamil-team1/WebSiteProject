@@ -1,6 +1,9 @@
 package Servlet;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
 
+import model.projectboard.ProjectBoardDAO2;
 import model.projectboard.ProjectBoardDTO;
 import util.FileUtil;
 import util.JSFunction;
@@ -25,8 +29,8 @@ public class WriteController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		//글쓰기 페이지로 이동
-		req.getRequestDispatcher("/community/sub01.jsp").forward(req, resp);
 		req.setAttribute("bCRUD", "write");
+		req.getRequestDispatcher("/community/sub01.jsp").forward(req, resp);
 	}
 	
 	//글쓰기 제어
@@ -49,11 +53,45 @@ public class WriteController extends HttpServlet {
 			return;
 		}
 		
+		//DTO에 저장
 		ProjectBoardDTO dto = new ProjectBoardDTO();
 		dto.setTitle(mr.getParameter("title"));
 		dto.setContent(mr.getParameter("content"));
 		/* dto.setContent(mr.getParameter("email")); */
-		dto.setPass(mr.getParameter("ofile"));
+		
+		//파일명 가져오기
+		String fileName = mr.getFilesystemName("ofile");
+		
+		//서버에 저장한 파일이 있는 경우 파일명을 임시로 교체.
+		if(fileName != null) {
+			//임시 파일명 생성
+			String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());		
+			String ext = fileName.substring(fileName.lastIndexOf("."));
+			String newFileName = now + ext;
+		
+		
+			File oldFile = new File(saveDirectory + File.separator + fileName);
+			File newFile = new File(saveDirectory + File.separator + newFileName);
+			
+			//파일명 변경
+			oldFile.renameTo(newFile);
+			
+			//파일명 저장
+			dto.setOfile(fileName);
+			dto.setSfile(newFileName);
+		}
+		
+		//새로운 게시물을 테이블에 저장
+		ProjectBoardDAO2 dao = new ProjectBoardDAO2();
+		int result = dao.insertWrite(dto);
+		dao.close();
+		
+		if(result == 1) {
+			resp.sendRedirect("../community/List.do");
+		}
+		else {
+			resp.sendRedirect("../community/Write.do");
+		}
 	}
 }
 
