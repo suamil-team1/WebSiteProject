@@ -33,6 +33,9 @@
 						<c:when test="${bCRUD eq 'write'}">
 							<%@ include file="../model2/write_model2.jsp" %>
 						</c:when>
+						<c:when test="${bCRUD eq 'edit'}">
+							<%@ include file="../model2/edit_model2.jsp" %>
+						</c:when>
 					</c:choose>
 					</c:if>
 				</div>

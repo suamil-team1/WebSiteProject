@@ -1,5 +1,7 @@
 package util;
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.oreilly.servlet.MultipartRequest;
@@ -27,4 +29,16 @@ public class FileUtil {
 	
 	//파일 검색 & 다운로드
 	
+	
+	//파일 삭제
+	public static void deleteFile(HttpServletRequest req, 
+			String directory, String filename) {
+		//물리적 경로 획득
+		String sDirectory = req.getServletContext().getRealPath(directory);
+		
+		File file = new File(sDirectory + File.separator + filename);
+		if(file.exists()) {
+		file.delete();	//존재한다면 삭제
+		}
+	}
 }

@@ -72,8 +72,6 @@ public class ProjectBoardDAO2 extends DBConnPool{
 				dto.setBoardName(rs.getString("boardName"));
 				
 				pBoard.add(dto);
-				
-				System.out.println(rs.getString("idx"));
 			}
 		}
 		catch(Exception e) {
@@ -150,6 +148,22 @@ public class ProjectBoardDAO2 extends DBConnPool{
 			System.out.println("게시물 입력 중 예외 발생");
 			e.printStackTrace();
 		}		
+		return result;
+	}
+	
+	//idx에 해당하는게시물 삭제
+	public int deletePost(String idx) {
+		int result = 0;
+		try {
+			String query = "DELETE FROM Model2Board WHERE idx=?";
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, idx);
+			result = psmt.executeUpdate();
+		}
+		catch(Exception e) {
+			System.out.println("게시물 삭제 중 예외 발생");
+			e.printStackTrace();
+		}
 		return result;
 	}
 }
