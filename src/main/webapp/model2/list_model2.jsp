@@ -50,7 +50,7 @@
 		        <tr align="center">
 		            <td>${row.idx}</td> 
 		            <td align="left">	<!-- 제목 -->
-		                <a href="../community/view.do?idx=${row.idx}">${row.title}</a>
+		                <a href="../community/View.do?idx=${row.idx}">${row.title}</a>
 		            </td>
 		            <td align="center">${row.id}</td>    <!-- 작성자 -->    
 		            <td align="center">${row.postdate}</td> <!-- 작성일 -->

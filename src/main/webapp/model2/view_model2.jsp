@@ -13,7 +13,7 @@
 		<tbody>
 			<tr>
 				<th style="vertical-align:middle;">작성자</th>
-				<td>${dto.name}</td>
+				<td>${dto.id}</td>
 				<th style="vertical-align:middle;">작성일</th>
 				<td>${dto.postdate}</td>
 			</tr>

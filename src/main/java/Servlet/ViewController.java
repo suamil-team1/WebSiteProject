@@ -34,7 +34,8 @@ public class ViewController extends HttpServlet {
 			
 			//request영역에 DTO객체 저장
 			req.setAttribute("dto", dto);
+			req.setAttribute("bCRUD", "view");
 			//View로 포워드
-			req.getRequestDispatcher("/model2/sub01.jsp").forward(req, resp);
+			req.getRequestDispatcher("/community/sub01.jsp").forward(req, resp);
 		}
 }

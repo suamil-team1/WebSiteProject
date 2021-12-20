@@ -11,8 +11,7 @@
 		<img src="../images/community/sub_image.jpg" id="main_visual" />
 
 		<div class="contents_box">
-			<div class="left_contents">
-				
+			<div class="left_contents">				
 				<%@ include file = "../include/community_leftmenu.jsp" %>
 			</div>
 			<div class="right_contents">
@@ -22,8 +21,19 @@
 				</div>
 				<div>
 					<!-- 컨텐츠 인클루드 -->
-					<%@ include file="../model2/list_model2.jsp" %>
-					<%@ include file="../model2/view_model2.jsp" %>
+					<c:if test='${not empty param.bCRUD or param.bCRUD eq null}'>
+					<c:choose>
+						<c:when test="${bCRUD eq 'list'}">
+							<%@ include file="../model2/list_model2.jsp" %>
+						</c:when>
+						<c:when test="${bCRUD eq 'view'}">
+							<%@ include file="../model2/view_model2.jsp" %>
+						</c:when>
+						<c:when test="${bCRUD eq 'view'}">
+							<%@ include file="../model2/write_model2.jsp" %>
+						</c:when>
+					</c:choose>
+					</c:if>
 				</div>
 			</div>
 		</div>

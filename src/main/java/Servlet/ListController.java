@@ -78,6 +78,7 @@ public class ListController extends HttpServlet {
 		//request 영역에 저장
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
+		req.setAttribute("bCRUD", "list");
 		
 		//List의 View페이지로 포워드
 		//if(boardLists.get(0).getBoardName().equals("emp"))
