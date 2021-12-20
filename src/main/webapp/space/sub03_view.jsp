@@ -24,7 +24,7 @@ function deletePost() {
 	if(confirmed){
 		var form=document.writeFrm;
 		form.method="post";//전송방식을 post로 설정
-		form.action="deleteProcess.jsp";//전송할 URL
+		form.action="DeleteProcess.jsp";//전송할 URL
 		form.submit();//폼값 전송
 	}
 }
@@ -49,6 +49,7 @@ function deletePost() {
 				<div>
 <form name="writeFrm">
 <table class="table table-bordered">
+<input type="hidden" name="idx" value="<%= idx %>" />
 <colgroup>
 	<col width="20%"/>
 	<col width="30%"/>

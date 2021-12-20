@@ -1,10 +1,8 @@
-<%@page import="model.projectboard.ProjectBoardDTO"%>
-<%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-<!-- 글쓰기 전 로그인 확인 -->
+<!-- 글쓰기 처리 전 로그인 확인 -->
 <%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%@ include file="../model1/loggingnow.jsp" %>
 <%
@@ -50,13 +48,12 @@ function validateForm(form) {
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub03_title.gif" alt="자유게시판" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;자유게시판<p>
+					<img src="../images/space/sub05_title.gif" alt="정보자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;정보자료실<p>
 				</div>
 				<div>
-<form name="writeFrm" method="post" action="editProcess.jsp"
-	onsubmit="return validateForm(this);">
-<!-- 게시물의 index값 전송 -->
+<form enctype="multipart/form-data" action="editProcessR.jsp" 
+	name="fileForm" method="post" onsubmit="return validateForm(this);">
 <input type="hidden" name="idx" value="<%=dto.getIdx() %>" />
 <table class="table table-bordered">
 <colgroup>
@@ -67,7 +64,6 @@ function validateForm(form) {
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
-		
 		<td>
 			<input type="text" class="form-control" 
 				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
@@ -94,35 +90,43 @@ function validateForm(form) {
 			style="vertical-align:middle;">제목</th>
 		<td>
 			<input type="text" name="title" class="form-control"
-				value="<%= dto.getTitle() %>"/>
+				value="<%= dto.getTitle() %>" />
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">내용</th>
 		<td>
-			<textarea rows="10" name="content" 
-			class="form-control"><%= dto.getContent().replace("\r\n", "<br/>") %></textarea>
+			<textarea rows="10" name="content" class="form-control"><%= dto.getContent().replace("\r\n", "<br/>") %></textarea>
 		</td>
 	</tr>
-	<!-- <tr>
+	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td>
-			<input type="file" class="form-control" />
+			<input type="file" class="form-control" name="attachedFile"/
+			value="<%= dto.getOfile() %>">
 		</td>
-	</tr> -->
+	</tr>
 </tbody>
 </table>
+
+<div class="row text-center" style="">
+	<!-- 각종 버튼 부분 -->
 	<button type="submit" class="btn btn-danger">수정하기</button>
 	<button type="reset" class="btn">Reset</button>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='sub03.jsp';">리스트보기</button>
-</form>
+		onclick="location.href='sub05.jsp';">리스트보기</button>
+</div>
+</form> 
+
 				</div>
 			</div>
 		</div>
-	
+		<%@ include file="../include/quick.jsp" %>
+	</div>
+
+
 	<%@ include file="../include/footer.jsp" %>
 	</center>
  </body>

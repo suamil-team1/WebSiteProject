@@ -13,18 +13,19 @@ create table Model2Board(
     visitcount number default 0 not null, --게시물 조회수
     boardName varchar2(30)
     );
+    
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'kim','자료실 제목1입니다.','내용', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목1입니다.','내용', 'F');
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'kim2','자료실 제목2입니다.','내용', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목2입니다.','내용', 'F');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test1','자료실 제목3입니다.','내용3', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목3입니다.','내용3', 'F');
 insert into Model2Board(idx, id, title, content, boardName)
     values(seq_prtBoard_idx.nextval,'test2','자료실 제목4입니다.','내용4', 'F');
 insert into Model2Board(idx, id, title, content, boardName )
-    values(seq_prtBoard_idx.nextval,'kim','자료실 제목1입니다.','내용', 'N');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목1입니다.','내용', 'N');
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'kim2','자료실 제목2입니다.','내용', 'N');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목2입니다.','내용', 'N');
 insert into Model2Board(idx, id, title, content, boardName)
     values(seq_prtBoard_idx.nextval,'test1','자료실 제목3입니다.','내용3', 'N');
 insert into Model2Board(idx, id, title, content, boardName)
@@ -50,7 +51,8 @@ create table Projectmember
     primary key (id)
 );
 
-insert into Projectmember(id,pass, name,mobile,address) values ('test', '1234', '테스트','01000000000','서울시 서울구 서울로20길 서울아파트');
+insert into Projectmember(id, pass, name ,mobile, address) values ('test', '1234', '테스트','01000000000','서울시 서울구 서울로20길 서울아파트');
+insert into Projectmember(id, pass, name ,mobile, address) values ('test2', '1234', '테스트','01000000000','서울시 서울구 서울로20길 서울아파트');
 
 ALTER TABLE Model2Board
 	ADD CONSTRAINT pBoard_mem_fk

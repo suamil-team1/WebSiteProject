@@ -21,7 +21,7 @@ if(searchWord !=null){
 	param.put("searchWord", searchWord);//검색어
 }
 //board테이블에 저장된 게시물의 갯수 카운트
-//int totalCount = dao.selectCount(param);
+int totalCount = dao.selectCount(param);
 //출력할 레코드 추출
 List<ProjectBoardDTO> boardLists = dao.selectList(param);
 //DB작업 끝났으므로 자원 해제
@@ -101,18 +101,18 @@ if(boardLists.isEmpty()){
 }
 else{
 	//게시물이 있을때
-	//int virtualNum=0;//게시물의 출력번호(가상번호)
+	int virtualNum=0;//게시물의 출력번호(가상번호)
 	for(ProjectBoardDTO dto:boardLists) //반복
 	{
 		//전체 레코드 수를 1씩 차감하면서 번호를 출력
-		//virtualNum = totalCount--;
+		virtualNum = totalCount--;
 
 %>	
 	<tbody>
 	<!-- 리스트반복 -->
 	<tr>
-		<td class="text-center"><%= dto.getIdx() %></td>
-		<td class="text-left"><a href="sub05_view.jsp"><%= dto.getTitle() %></a></td>
+		<td class="text-center"><%= virtualNum %></td>
+		<td class="text-left"><a href="sub05_view.jsp?idx=<%= dto.getIdx()%>"><%= dto.getTitle() %></a></td>
 		<td class="text-center"><%=dto.getId()%></td>
 		<td class="text-center"><%=dto.getPostdate()%></td>
 		<td class="text-center"><%=dto.getVisitcount()%></td>

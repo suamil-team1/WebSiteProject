@@ -16,6 +16,36 @@ public class projectboardDAO extends JDBConnect{
         super(application);
     }
 	
+	//게시물의 갯수 카운트하기
+	public int selectCount(Map<String, Object> map){
+		int totalCount=0;//카운트 변수
+		
+		//쿼리문 작성
+		String query = " SELECT COUNT(*) FROM Model2Board";
+		//검색어가 있는 경우
+		if(map.get("searchWord") != null) {
+			query += " WHERE " + map.get("searchField") +" "
+					+" LIKE '%" + map.get("searchWord") + "%' ";
+		}
+		
+		try {
+			//정적쿼리문 실행 객체 생성
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(query);
+			rs.next();
+			
+			//결과값을 변수에 저장
+			totalCount = rs.getInt(1);
+		}
+		catch (Exception e) {
+			System.out.println("게시물 수를 구하는 중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return totalCount;
+	}
+	
+	//게시물 출력 관련 메서드
 	public List<ProjectBoardDTO> selectList(Map<String, Object> map) { 
 	    
 		//List컬렉션 생성 
@@ -84,9 +114,36 @@ public class projectboardDAO extends JDBConnect{
             System.out.println("게시물 입력 중 예외 발생");
             e.printStackTrace();
         }
-
         return result;
     }
+	//파일 및 게시물 입력
+  	public int insertFile(ProjectBoardDTO dto) {
+  		int applyResult=0;
+  		try {
+  			//1.쿼리문 작성
+  			String query= "INSERT INTO Model2Board( "
+  					+ " idx, id, title, content, ofile, sfile, boardName) "
+  					+ " VALUES( "
+  					+ " seq_prtBoard_idx.NEXTVAL, ?, ?, ?, ?, ?, 'R')";
+  			
+  			//2.prepared객체 생성 및 인파라미터 설정
+  			psmt = con.prepareStatement(query);
+  			psmt.setString(1, dto.getId());
+  			psmt.setString(2, dto.getTitle());
+  			psmt.setString(3, dto.getContent());
+  			psmt.setString(4, dto.getOfile());
+  			psmt.setString(5, dto.getSfile());
+  			
+  			//3.쿼리 실행
+  			applyResult=psmt.executeUpdate();
+  		}
+  		catch (Exception e) {
+  			System.out.println("INSERT중 예외 발생");
+  			e.printStackTrace();
+  		}
+  		return applyResult;
+  	}
+	
 	//상세보기를 위해 특정 일련번호에 해당하는 게시물을 인출한다. 
     public ProjectBoardDTO selectView(String idx) { 
         
@@ -149,13 +206,15 @@ public class projectboardDAO extends JDBConnect{
   		
   		try { //쿼리문
   			String query = "UPDATE Model2Board SET " 
-  				  	 + " title= ?, content= ? "
+  				  	 + " title= ?, content= ?, ofile= ?, sfile= ? "
   				  	 + " WHERE idx=?";
   			
   			psmt = con.prepareStatement(query);
   			psmt.setString(1, dto.getTitle());
   			psmt.setString(2, dto.getContent());
-  			psmt.setString(3, dto.getIdx());
+  			psmt.setString(3, dto.getOfile());
+  			psmt.setString(4, dto.getSfile());
+  			psmt.setString(5, dto.getIdx());
   			//쿼리 실행
   			result = psmt.executeUpdate();
   		}
@@ -166,33 +225,56 @@ public class projectboardDAO extends JDBConnect{
   		
   		return result;
   	}
-  	
-  /*sub05*/
-  //파일 및 게시물 입력
-  	public int insertFile(ProjectBoardDTO dto) {
-  		int applyResult=0;
-  		try {
-  			//1.쿼리문 작성
-  			String query= "INSERT INTO Model2Board( "
-  					+ " idx, id, title, content, ofile, sfile, boardName) "
-  					+ " VALUES( "
-  					+ " seq_prtBoard_idx.NEXTVAL, ?, ?, ?, ?, ?, 'R')";
+  	/*sub05 수정하기 
+  	public int updateEditR(ProjectBoardDTO dto) {
+  		
+  		int result=0; //확인용 변수
+  		
+  		try { //쿼리문
+  			String query = "UPDATE Model2Board SET " 
+  				  	 + " title= ?, content= ?, ofile= ?, sfile= ? "
+  				  	 + " WHERE idx=?";
   			
-  			//2.prepared객체 생성 및 인파라미터 설정
   			psmt = con.prepareStatement(query);
-  			psmt.setString(1, dto.getId());
-  			psmt.setString(2, dto.getTitle());
-  			psmt.setString(3, dto.getContent());
-  			psmt.setString(4, dto.getOfile());
-  			psmt.setString(5, dto.getSfile());
-  			
-  			//3.쿼리 실행
-  			applyResult=psmt.executeUpdate();
+  			psmt.setString(1, dto.getTitle());
+  			psmt.setString(2, dto.getContent());
+  			psmt.setString(3, dto.getOfile());
+  			psmt.setString(4, dto.getSfile());
+  			psmt.setString(5, dto.getIdx());
+  			//쿼리 실행
+  			result = psmt.executeUpdate();
   		}
   		catch (Exception e) {
-  			System.out.println("INSERT중 예외 발생");
+  			System.out.println("게시물 수정 중 예외 발생");
   			e.printStackTrace();
   		}
-  		return applyResult;
-  	}
+  		
+  		return result;
+  	}*/
+  	
+  	// 지정한 게시물을 삭제합니다.
+    public int deletePost(ProjectBoardDTO dto) { 
+        int result = 0;
+
+        try {
+            // 쿼리문 템플릿
+            String query = "DELETE FROM Model2Board WHERE idx=?"; 
+
+            // 쿼리문 완성
+            psmt = con.prepareStatement(query); 
+            psmt.setString(1, dto.getIdx()); 
+
+            // 쿼리문 실행
+            result = psmt.executeUpdate(); 
+        } 
+        catch (Exception e) {
+            System.out.println("게시물 삭제 중 예외 발생");
+            e.printStackTrace();
+        }
+        
+        return result; // 결과 반환
+    }
+  	
+  /*sub05*/
+  
 }

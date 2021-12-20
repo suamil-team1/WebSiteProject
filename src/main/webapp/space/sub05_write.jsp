@@ -84,7 +84,7 @@
 	<button type="submit" class="btn btn-danger">전송하기</button>
 	<button type="reset" class="btn">Reset</button>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='ListSkin.jsp';">리스트보기</button>
+		onclick="location.href='sub05.jsp';">리스트보기</button>
 </div>
 </form> 
 
