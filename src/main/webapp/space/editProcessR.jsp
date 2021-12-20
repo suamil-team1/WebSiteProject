@@ -1,3 +1,4 @@
+<%@page import="fileupload.FileUtil"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.io.File"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -30,7 +31,7 @@ try{
 	dto.setIdx(idx);
 	dto.setTitle(title);
 	dto.setContent(content);
-
+	
 	if(fileName != null){
 		String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
 		String ext = fileName.substring(fileName.lastIndexOf("."));
