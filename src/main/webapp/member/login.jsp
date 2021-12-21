@@ -1,39 +1,28 @@
+<%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
-<body>
-	<!-- 
-		request영역에 해당 속성이 있는지 확인하여 속성이 있다면
-		에러메세지를 출력한다.
-		해당 속성은 로그인 실패처리 시 request영역에 저장하게 된다
-	 -->
-	<span style="color: red; font-size: 1.2em;">
-		<%=  request.getAttribute("LoginErrMsg") == null ?
-				"" : request.getAttribute("LoginErrMsg") %>
-	</span>
-	<%
-		//로그인 확인
-		if (session.getAttribute("UserId") == null) {
-			//만약 session영역에 저장된 속성이 없다면 로그인 이전의 상태이므로
-			//로그인 폼을 화면에 출력한다.
-	%>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 	function validateForm(form) {
-		if (!form.user_id.value) {
-			alert("아이디를 입력하세요.");
-			form.user_id.focus();
-			return false;
-		}
-		if (!form.user_pw.value) {
-			alert("패스워드를 입력하세요.");
-			form.user_pw.focus();
-			return false;	
-		}
+	if(!form.id.value){ 
+		alert("아이디를 입력하세요.");
+		form.id.focus();
+		return false;
 	}
+	if(form.pass.value ==""){
+		alert("패스워드를 입력하세요.");
+		form.pass.focus();
+		return false;
+	}
+}
 </script>
-	<!-- <center> -->
-	<div id="wrap">
+
+ <body>
+
+	<center>
+	<div id="container-fluid">
 		<%@ include file="../include/top.jsp" %>
 
 		<img src="../images/member/sub_image.jpg" id="main_visual" />
@@ -47,41 +36,43 @@
 					<img src="../images/login_title.gif" alt="인사말" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;멤버쉽&nbsp;>&nbsp;로그인<p>
 				</div>
+				<form action="../member/login.do" method="post" name="loginFrm" onsubmit="return validateForm(this);">
+				<%
+				if(request.getAttribute("LoginErrMsg")!=null){
+					JSFunction.alertBack("아이디 혹은 비밀번호가 일치하지 않습니다.", out);
+				} 
+				if (session.getAttribute("UserId") == null){
+				%>
 				<div class="login_box01">
-					<form action="LoginProcess.jsp" method="post" name="LoginFrm"
-						onsubmit="return validateForm(this);">
 					<img src="../images/login_tit.gif" style="margin-bottom:30px;" />
 					<ul>
-						<li><img src="../images/login_tit001.gif" alt="아이디" style="margin-right:15px;" /><input type="text" name="user_id" value="" class="login_input01" /></li>
-						<li><img src="../images/login_tit002.gif" alt="비밀번호" style="margin-right:15px;" /><input type="password" name="user_pw" value="" class="login_input01" /></li>
+						<li><img src="../images/login_tit001.gif" alt="아이디" style="margin-right:15px;" /><input type="text" name="id" value="" class="login_input01" tabindex='1'/></li>
+						<li><img src="../images/login_tit002.gif" alt="비밀번호" style="margin-right:15px;" /><input type="password" name="pass" value="" class="login_input01" tabindex='2'/></li>
 					</ul>
-					<a href=""><input type="image" src="../images/login_btn.gif" class="login_btn01" /></a>
-					</form>
-					
-					<%
-						} else {
-					%>
-						
-						
-						
-						<%= session.getAttribute("UserName") %> 회원님, 로그인하셨습니다. <br />
-						<a href="Logout.jsp">[로그아웃]</a>
-						
-						
-						
-						
-					<%
-						}
-					%>
-
+					<a href=""><input type="image" src="../images/login_btn.gif" class="login_btn01" tabindex='3'/></a>
 				</div>
-				<p style="text-align:center; margin-bottom:50px;"><a href=""><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>&nbsp;<a href=""><img src="../images/login_btn03.gif" alt="회원가입" /></a></p>
+				<p style="text-align:center; margin-bottom:50px;"><a href="id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>&nbsp;<a href="join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a></p>
+				<%
+				} else {
+				%>
+				<div class="login_box01">
+					
+					<span style="font-size: 18px; font-weight: bold;"><%= session.getAttribute("UserName") %></span> 님, 반갑습니다.<br>
+					<br><br>
+					<button type="button" class="btn btn-warning" onclick="location.href='modify.jsp';">회원정보수정</button>
+					<button type="button" class="btn btn-danger" onclick="location.href='logout.jsp';">로그아웃</button>
+				</div>
+				<%
+				}
+				%>
+				</form>
 			</div>
 		</div>
 		<%@ include file="../include/quick.jsp" %>
 	</div>
 	
+
 	<%@ include file="../include/footer.jsp" %>
-	<!-- </center> -->
+	</center>
  </body>
 </html>

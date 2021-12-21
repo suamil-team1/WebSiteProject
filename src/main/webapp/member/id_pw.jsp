@@ -4,63 +4,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script>
 	
-	 /* function formValidate(frm){
-		var btn = document.getElementClassName("id_btn")
-		function find_btn(str) {
-			if (str == i)
-		}
-		 if(frm.user_name1.value==""){
-    		alert("이름을 입력해주세요");
-    		frm.user_name1.focus();
-    		return false;
-    	}
-		if(frm.user_email1.value==""){
-    		alert("이메일을 입력해주세요");
-    		frm.user_email1.focus();
-    		return false;
-    	} 
-
-    	
-	}  */
-	 
-	 /* $(function() {
-		 
-		 if ($('#find').val()=='id_btn') {
-			 alert("이름을 입력해주세요");	 
-			 frm.user_name1.focus();
-		 }
-		 else if ($('#find').val()=='pw_btn') {
-			 alert("이름을 입력해주세요");	 
-			 frm.user_name2.focus();
-		 }
-	}); */
-	 
-	 
-	
-	/* $('.id_btn').click(function(){
-		alert("이름을 입력해주세요");
-		frm.user_name1.focus();
-	} */
-	
-	  
-	
-	
-	
-	
-	
-	/* function formvalidate(frm) {
-		if(frm.user_name1.value==""){
-    		alert("이름을 입력해주세요");
-    		frm.user_name1.focus();
-    		return false;
-    	}
-		if(frm.user_email1.value==""){
-    		alert("이메일을 입력해주세요");
-    		frm.user_email1.focus();
-    		return false;
-    	} 
-	}  */
-	
 	function findId(){
 	   	var frm = document.idFrm;
 	   	if(frm.user_name.value==""){
@@ -133,7 +76,7 @@
 					</form>
 					</div>
 					<div class="pw_box">
-					<form name="pwFrm">
+					<form name="pwFrm" method="post" action="SendProcess.jsp" >
 						<ul>
 							<li><input type="text" name="user_id" value="" class="login_input01" /></li>
 							<li><input type="text" name="user_name" value="" class="login_input01" /></li>

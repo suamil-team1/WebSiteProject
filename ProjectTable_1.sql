@@ -46,6 +46,9 @@ create table Projectmember
 );
 
 insert into Projectmember(id, pass, name, email, mobile,address) values ('test', '1234', '테스트', 'apple@naver.com', '01000000000','서울시 서울구 서울로20길 서울아파트');
+insert into Projectmember(id, pass, name, email, mobile,address) values ('test2', '1234', '보내줘', 'tjcos3@hanmail.net', '01012345678','서울시 서울구 서울로20길 서울아파트');
+
+
 
 ALTER TABLE Model2Board
 	ADD CONSTRAINT pBoard_mem_fk
@@ -109,4 +112,4 @@ commit;
 
 SELECT id FROM ProjectMember WHERE name='테스트' AND email='apple@naver.com';
 
-
+select id from Projectmember where id='chae';

@@ -20,6 +20,7 @@ public class ProjectMemberDAO extends JDBConnect {
 		super(application);
 	}
 	
+	public ProjectMemberDAO(){}
 	
 	/*
 	 사용자가 입력한 아이디, 패스워드를 통해 회원테이블을 확인한 후
@@ -67,6 +68,9 @@ public class ProjectMemberDAO extends JDBConnect {
     	String query = "";
     	if(uid.equals("")) //아이디 찾기
     		query = "SELECT id FROM ProjectMember WHERE name=? AND email=?";
+    	else if (uname.equals("") && uemail.equals("")) {
+    		query = "SELECT id FROM ProjectMember WHERE id=?";
+    	}
     	else //비번찾기
     		query = "SELECT * FROM ProjectMember WHERE id=? AND name=? AND email=?";
 
@@ -75,6 +79,9 @@ public class ProjectMemberDAO extends JDBConnect {
             if(uid.equals("")) {
                 psmt.setString(1, uname);
                 psmt.setString(2, uemail);
+            }
+            else if (uname.equals("") && uemail.equals("")) {
+            	psmt.setString(1, uid);
             }
         	else {
         		psmt.setString(1, uid);     
@@ -101,5 +108,35 @@ public class ProjectMemberDAO extends JDBConnect {
 
         return dto; 
     }
+	
+	
+	public int insertMember(ProjectMemberDTO dto) {
+		int result = 0;
+		
+		try {
+			//인파라미터(?물음표)가 있는 쿼리문 작성 => 동적쿼리문
+			String query = " INSERT INTO Projectmember (id, pass, name, email, mobile, address) "
+						+ " VALUES ( ?, ?, ?, ?, ?, ?) ";
+			//동적쿼리문 실행을 위한 prepared 객체 생성
+			psmt = con.prepareStatement(query);
+			//순서대로 인파라미터 설정
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getPass());
+			psmt.setString(3, dto.getName());
+			psmt.setString(4, dto.getEmail());
+			psmt.setString(5, dto.getMobile());
+			psmt.setString(6, dto.getAddress());
+			
+			//쿼리문 실행 : 입력에 성공한다면 1이 반환된다. 실패시 0 반환. 한줄씩 밖에 안들어가니까
+			result = psmt.executeUpdate(); //값을 삽입하는 것이므로 executeUpdate사용
+		}
+		catch (Exception e) {
+			System.out.println("회원가입 중 예외발생");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	
 	
 }
