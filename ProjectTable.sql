@@ -81,6 +81,21 @@ create sequence seq_prtBoard_idx
     nocycle
     nocache;
     
+create table Model2BoardCal(
+    idx number primary key,--일련번호
+    id varchar2(30) not null,
+    title varchar2(300) not null,
+    content varchar2(2000) not null,
+    pdate date not null,
+    boardName varchar2(30)
+    );
+    
+ALTER TABLE Model2BoardCal
+	ADD CONSTRAINT pCal_mem_fk
+	FOREIGN KEY (id)
+	REFERENCES Projectmember (id)
+;
+
 
 
 commit;
