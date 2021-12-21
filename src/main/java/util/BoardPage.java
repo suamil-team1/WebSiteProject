@@ -22,9 +22,9 @@ public class BoardPage {
 		
 		//이전블럭으로 바로가기 링크. (첫번째 블록일때는 나올수 없게 설정)
 		if(pageTemp !=1) {
-			pagingStr += "<a href='" + reqUrl + "?pageNum=1'>[첫페이지]</a>";
+			pagingStr += "<a href='" + reqUrl + "&pageNum=1'>[첫페이지]</a>";
 			pagingStr += "&nbsp;";
-			pagingStr += "<a href='" + reqUrl + "?pageNum=" + (pageTemp - 1)
+			pagingStr += "<a href='" + reqUrl + "&pageNum=" + (pageTemp - 1)
 						+ "'>[이전블록]</a>";
 		}
 		
@@ -36,7 +36,7 @@ public class BoardPage {
 				pagingStr += "&nbsp;" + pageTemp + "&nbsp;";
 			}
 			else {
-				pagingStr += "&nbsp;<a href='" + reqUrl + "?pageNum=" + pageTemp
+				pagingStr += "&nbsp;<a href='" + reqUrl + "&pageNum=" + pageTemp
 							+ "'>" + pageTemp + "</a>&nbsp;";
 			}
 			pageTemp++;
@@ -45,9 +45,9 @@ public class BoardPage {
 		
 		//다음 블럭으로 바로가기 링크(마지막 블록일때는 나오지 않게 설정)
 		if(pageTemp <= totalPages) {
-			pagingStr += "<a href='" + reqUrl + "?pageNum=" + pageTemp + "'>[다음블록]</a>";
+			pagingStr += "<a href='" + reqUrl + "&pageNum=" + pageTemp + "'>[다음블록]</a>";
 			pagingStr += "&nbsp;";
-			pagingStr += "<a href='" + reqUrl + "?pageNum=" 
+			pagingStr += "<a href='" + reqUrl + "&pageNum=" 
 						+ totalPages + "'>[마지막페이지]</a>";
 		}
 		return pagingStr;

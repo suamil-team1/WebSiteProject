@@ -24,13 +24,18 @@ import util.JSFunction;
 @WebServlet("/community/Write.do")
 public class WriteController extends HttpServlet {
 	
+	//글쓰기 페이지로 이동
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
-		//글쓰기 페이지로 이동
+		String boardName = req.getParameter("boardName");
 		req.setAttribute("bCRUD", "write");
-		req.getRequestDispatcher("/community/sub01.jsp").forward(req, resp);
+		
+		if(boardName.equals("emp"))
+			req.getRequestDispatcher("/community/sub01.jsp?boardName=emp").forward(req, resp);
+		else if(boardName.equals("prt"))
+			req.getRequestDispatcher("/community/sub02.jsp?boardName=prt").forward(req, resp);	
 	}
 	
 	//글쓰기 제어
@@ -57,7 +62,10 @@ public class WriteController extends HttpServlet {
 		ProjectBoardDTO dto = new ProjectBoardDTO();
 		dto.setTitle(mr.getParameter("title"));
 		dto.setContent(mr.getParameter("content"));
-		/* dto.setContent(mr.getParameter("email")); */
+		dto.setBoardName(mr.getParameter("boardName"));
+		/* 테스트용 더미데이터 입력 */
+		dto.setId("tester");
+		dto.setEmail("test@java.com");
 		
 		//파일명 가져오기
 		String fileName = mr.getFilesystemName("ofile");
@@ -86,11 +94,12 @@ public class WriteController extends HttpServlet {
 		int result = dao.insertWrite(dto);
 		dao.close();
 		
+		String boardName = mr.getParameter("boardName");
 		if(result == 1) {
-			resp.sendRedirect("../community/List.do");
+			resp.sendRedirect("../community/List.do?boardName="+boardName);
 		}
 		else {
-			resp.sendRedirect("../community/Write.do");
+			resp.sendRedirect("../community/Write.do?boardName="+boardName);
 		}
 	}
 }

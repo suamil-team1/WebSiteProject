@@ -4,6 +4,7 @@
 
 
  <body>
+ <div class="container-fluid">
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
@@ -36,5 +37,6 @@
 
 	<%@ include file="../include/footer.jsp" %>
 	</center>
- </body>
+</div>
+</body>
 </html>

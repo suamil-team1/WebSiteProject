@@ -6,14 +6,12 @@ public class ProjectBoardDTO {
 	
 	private String idx;
     private String id;
-    private String name;
     private String email;
     private String title;
     private String content;
     private Date postdate;
     private String ofile;
     private String sfile;
-    private String pass;
     private int visitcount;
     private String boardName;
     
@@ -28,12 +26,6 @@ public class ProjectBoardDTO {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
 	}
 	public String getEmail() {
 		return email;
@@ -70,12 +62,6 @@ public class ProjectBoardDTO {
 	}
 	public void setSfile(String sfile) {
 		this.sfile = sfile;
-	}
-	public String getPass() {
-		return pass;
-	}
-	public void setPass(String pass) {
-		this.pass = pass;
 	}
 	public int getVisitcount() {
 		return visitcount;

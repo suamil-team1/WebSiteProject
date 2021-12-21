@@ -18,9 +18,11 @@ public class ViewController extends HttpServlet {
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 				throws ServletException, IOException {
 			
+			
 			//DB 연결
 			ProjectBoardDAO2 dao = new ProjectBoardDAO2();			
 			
+			String boardName = req.getParameter("boardName");
 			String idx = req.getParameter("idx");
 			
 			//조회수 증가
@@ -35,7 +37,11 @@ public class ViewController extends HttpServlet {
 			//request영역에 DTO객체 저장
 			req.setAttribute("dto", dto);
 			req.setAttribute("bCRUD", "view");
-			//View로 포워드
-			req.getRequestDispatcher("/community/sub01.jsp").forward(req, resp);
+			
+			//View 페이지로 포워드
+			if(boardName.equals("emp"))
+				req.getRequestDispatcher("sub01.jsp?boardName="+boardName).forward(req, resp);
+			else if(boardName.equals("prt"))
+				req.getRequestDispatcher("sub02.jsp?boardName=prt").forward(req, resp);	
 		}
 }

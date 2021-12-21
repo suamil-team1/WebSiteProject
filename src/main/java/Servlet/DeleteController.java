@@ -21,6 +21,7 @@ public class DeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
+		String boardName = req.getParameter("boardName");
 		String idx = req.getParameter("idx");
 		
 		/* 아이디 검증 */
@@ -36,7 +37,7 @@ public class DeleteController extends HttpServlet {
 			String saveFileName = dto.getSfile();
 			FileUtil.deleteFile(req, "/Uploads", saveFileName);	
 			
-			JSFunction.alertLocation(resp, "해당 게시물이 삭제되었습니다.", "../community/List.do");
+			JSFunction.alertLocation(resp, "해당 게시물이 삭제되었습니다.", "../community/List.do?boardName="+boardName);
 			
 			return;
 		}

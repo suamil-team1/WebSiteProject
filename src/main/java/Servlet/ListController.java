@@ -23,11 +23,15 @@ public class ListController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
 		
+		String boardName = req.getParameter("boardName");
+		System.out.println(boardName);
 		//DB 연결
 		ProjectBoardDAO2 dao = new ProjectBoardDAO2();
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		 
+		map.put("boardName", boardName);	
+		
 		//검색구역 & 검색어 파라미터 받기
 		String searchField = req.getParameter("keyField");
 		String searchWord = req.getParameter("keyString");
@@ -69,7 +73,7 @@ public class ListController extends HttpServlet {
 		
 		//페이지 번호 생성
 		String pagingImg = BoardPage.pagingStr(totalCount, pageSize, blockPage, pageNum, 
-				"../community/List.do");
+				"../community/List.do?boardName="+boardName);
 		
 		map.put("pagingImg", pagingImg); //페이지 번호
 		map.put("totalCount", totalCount); //전체 게시물의 개수
@@ -80,12 +84,13 @@ public class ListController extends HttpServlet {
 		req.setAttribute("boardLists", boardLists);
 		req.setAttribute("map", map);
 		req.setAttribute("bCRUD", "list");
+		req.setAttribute("boardName", boardName);
 		
-		//List의 View페이지로 포워드
-		//if(boardLists.get(0).getBoardName().equals("emp"))
+		//List 페이지로 포워드
+		if(boardName.equals("emp"))
 			req.getRequestDispatcher("sub01.jsp").forward(req, resp);
-		//else if(boardLists.get(0).getBoardName().equals("prt"))
-			//req.getRequestDispatcher("community/sub02.jsp").forward(req, resp);	
+		else if(boardName.equals("prt"))
+			req.getRequestDispatcher("sub02.jsp").forward(req, resp);	
 	}
 }
 

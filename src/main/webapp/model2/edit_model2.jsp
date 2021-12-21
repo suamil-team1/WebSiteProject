@@ -18,11 +18,11 @@ function validateForm(form) {
 
 <form name="writeFrm" method="post" enctype="multipart/form-data"
 	action="../community/Edit.do" onsubmit="return validateForm(this);">
-	<input type="hid-den" name="idx" value="${dto.idx}">
-	<input type="hid-den" name="prevOfile" value="${dto.ofile}">
-	<input type="hid-den" name="prevSfile" value="${dto.sfile}">
+	<input type="hidden" name="idx" value="${dto.idx}">
+	<input type="hidden" name="prevOfile" value="${dto.ofile}">
+	<input type="hidden" name="prevSfile" value="${dto.sfile}">
 	
-	<table>
+	<table class="table" >
 	<colgroup>
 		<col width="20%"/>
 		<col width="*"/>
@@ -30,12 +30,12 @@ function validateForm(form) {
 	<tbody>
 		<tr>
 			<th style="vertical-align:middle;">제목</th>
-			<td><input type="text" name="title">${dto.title}</td>
+			<td><input type="text" name="title" width="80%" height="400px">${dto.title}</td>
 		</tr>
 		<tr>
 			<th style="vertical-align:middle;">내용</th>
 			<td>
-				<textarea rows="10" name="content">${dto.content}</textarea>
+				<textarea rows="10" name="content" style="width:90%;height: 150px">${dto.content}</textarea>
 			</td>
 		</tr>
 		<tr>

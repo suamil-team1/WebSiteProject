@@ -15,7 +15,7 @@
 </div>
 <div>
 	<!-- 게시판리스트부분 -->
-	<table border="1" width="90%">
+	<table class="table" border="1" width="90%">
 		<colgroup>
 			<col width="10%" style="text-align:center;">
 			<col width="*" >
@@ -50,15 +50,14 @@
 		        <tr align="center">
 		            <td>${row.idx}</td> 
 		            <td align="left">	<!-- 제목 -->
-		                <a href="../community/View.do?idx=${row.idx}">${row.title}</a>
+		                <a href="../community/View.do?boardName=${row.boardName}&idx=${row.idx}">${row.title}</a>
 		            </td>
 		            <td align="center">${row.id}</td>    <!-- 작성자 -->    
 		            <td align="center">${row.postdate}</td> <!-- 작성일 -->
 		            <td align="center">${row.visitcount}</td> <!-- 조회수 -->
 		            <td>	<!-- 첨부파일 -->
 		            <c:if test="${not empty row.ofile}">
-		            	<a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}
-		            		&idx=${row.idx}">[Down]</a>
+		            	첨부
 		            </c:if>
 		            </td>
 		        </tr>
@@ -70,7 +69,7 @@
 </div>
 <div style="text-align:right;">
 	<!-- 각종 버튼 부분 -->		
-	<button type="button" onclick="location.href='../community/Write.do';">글쓰기</button>
+	<button type="button" onclick="location.href='../community/Write.do?boardName=${param.boardName}';">글쓰기</button>
 </div>
 <div>
 	${map.pagingImg}

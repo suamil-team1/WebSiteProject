@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <form enctype="multipart/form-data">
-	<table>
+	<table class="table" >
 		<colgroup>
 			<col width="20%">
 			<col width="30%">
@@ -35,9 +35,8 @@
 				<th style="vertical-align:middle;">첨부파일</th>
 				<td colspan="3">
 					<c:if test="${not empty dto.ofile}">
-						${dto.ofile}
-						<!-- idx가 있는 이유는 다운로드 카운트를 증가시켜야 하기 때문. -->
-						<%-- <a href="../mvcboard/download.do?ofile=${dto.ofile}&sfile=${dto.sfile}&idx=${dto.idx}"> --%>
+						${dto.ofile}						
+						<a href="../community/download.do?ofile=${dto.ofile}&sfile=${dto.sfile}&idx=${dto.idx}">
 							[다운로드]
 						</a>
 					</c:if>
@@ -49,7 +48,7 @@
 	<div>
 		<!-- 각종 버튼 부분 -->
 		<button type="button" onclick="location.href='../community/Edit.do?idx=${param.idx}';">수정하기</button>
-		<button type="button" onclick="location.href='../community/Delete.do?idx=${param.idx}';">삭제하기</button>	
-		<button type="button" onclick="location.href='../community/List.do';">목록보기</button>
+		<button type="button" onclick="location.href='../community/Delete.do?boardName=${param.boardName}&idx=${param.idx}';">삭제하기</button>	
+		<button type="button" onclick="location.href='../community/List.do?boardName=${param.boardName}';">목록보기</button>
 	</div>
 </form> 

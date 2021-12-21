@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 직원 자료실; "직원"권한을 가진 회원만 접근 & 수정 가능; 파일 첨부형 -->
 <%@ include file="../include/global_head.jsp" %>
- <body>
+<body>
+<div class="container-fluid">
 	<center>
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
@@ -47,5 +48,6 @@
 
 	<%@ include file="../include/footer.jsp" %>
 	</center>
- </body>
+</div>
+</body>
 </html>
