@@ -21,7 +21,7 @@
 
  <body>
 
-	<center>
+	<!-- <center> -->
 	<div id="container-fluid">
 		<%@ include file="../include/top.jsp" %>
 
@@ -51,7 +51,7 @@
 					</ul>
 					<a href=""><input type="image" src="../images/login_btn.gif" class="login_btn01" tabindex='3'/></a>
 				</div>
-				<p style="text-align:center; margin-bottom:50px;"><a href="id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>&nbsp;<a href="join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a></p>
+				<p style="text-align:center; margin-bottom:50px;"><a href="modify.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>&nbsp;<a href="join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a></p>
 				<%
 				} else {
 				%>
@@ -73,6 +73,6 @@
 	
 
 	<%@ include file="../include/footer.jsp" %>
-	</center>
+	<!-- </center> -->
  </body>
 </html>

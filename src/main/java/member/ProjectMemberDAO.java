@@ -1,5 +1,7 @@
 package member;
 
+import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 
 import connect.JDBConnect;
@@ -69,7 +71,7 @@ public class ProjectMemberDAO extends JDBConnect {
     	if(uid.equals("")) //아이디 찾기
     		query = "SELECT id FROM ProjectMember WHERE name=? AND email=?";
     	else if (uname.equals("") && uemail.equals("")) {
-    		query = "SELECT id FROM ProjectMember WHERE id=?";
+    		query = "SELECT * FROM ProjectMember WHERE id=?";
     	}
     	else //비번찾기
     		query = "SELECT * FROM ProjectMember WHERE id=? AND name=? AND email=?";
@@ -92,7 +94,7 @@ public class ProjectMemberDAO extends JDBConnect {
             rs = psmt.executeQuery();  
             if (rs.next()) {
                 dto.setId(rs.getString("id"));
-				dto.setPass(rs.getString("pass"));
+				dto.setPass(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
 				dto.setRegidate(rs.getString(5));
@@ -100,6 +102,8 @@ public class ProjectMemberDAO extends JDBConnect {
 				dto.setMobile(rs.getString(7));
 				dto.setAddress(rs.getString(8));
 				dto.setType(rs.getString(9));
+				
+				
             }
         }
         catch (Exception e) {
@@ -136,6 +140,41 @@ public class ProjectMemberDAO extends JDBConnect {
 		}
 		return result;
 	}
+	
+	public void updateMemberInfo(ProjectMemberDTO dto) throws SQLException {
+		int result = 0;
+		
+		String query = "UPDATE Projectmember "
+				+ " SET pass=?, name=?, email=?, "
+				+ " tellnum=?, mobile=?, address=? "
+				+ " WHERE id=? ";
+		try {
+			psmt = con.prepareStatement(query);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				
+				dto.setId(rs.getString("id"));
+				
+				dto.setPass(rs.getString("pass"));
+				dto.setName(rs.getString("name")); 
+				dto.setEmail(rs.getString("email"));
+				dto.setTellNum(rs.getString("tellnum"));
+				dto.setMobile(rs.getString("mobile")); 
+				dto.setAddress(rs.getString("address"));
+				
+				
+				psmt.executeUpdate(); 
+				con.commit();
+			}
+		}
+		catch (Exception e) {
+			System.out.println("회원정보 수정 중 예외발생");
+			e.printStackTrace();
+		}
+		//return result;
+	}
+	
 	
 	
 	

@@ -1,7 +1,20 @@
+<%@page import="member.ProjectMemberDTO"%>
+<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
+<%
+	String userId = session.getAttribute("UserId").toString();
+	
+	String oracleDriver = application.getInitParameter("OracleDriver");
+	String oracleURL = application.getInitParameter("OracleURL");
+	String oracleId = application.getInitParameter("OracleId");
+	String oraclePwd = application.getInitParameter("OraclePwd");
+	
+	ProjectMemberDAO dao = new ProjectMemberDAO(oracleDriver, oracleURL, oracleId, oraclePwd);
+	ProjectMemberDTO dto = dao.getProMemberInfo(userId, "", "");
+	
+%>
 <script>
 function validateForm(form){
 	
@@ -144,7 +157,6 @@ function zipFind(){
 	
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
-		<%@ include file="../member/ModifyProcess.jsp" %>
 
 		<img src="../images/member/sub_image.jpg" id="main_visual" />
 
@@ -168,23 +180,23 @@ function zipFind(){
 					</colgroup>
 					<tr>
 						<th><img src="../images/join_tit001.gif" /></th>
-						<td><input type="text" name="name" value="" class="join_input" /></td>
+						<td><input type="text" name="name" value="<%= dto.getName() %>" class="join_input" /></td>
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit002.gif" /></th>
 						<td>
-							<input type="text" name="id"  value="" class="join_input" onkeydown="inputIdChk()" readOnly />&nbsp;
+							<input type="text" name="id"  value="<%= dto.getId() %>" class="join_input" onkeydown="inputIdChk()" readOnly />&nbsp;
 							<!-- <a style="cursor:hand;"><img src="../images/btn_idcheck.gif" alt="중복확인" /></a>&nbsp;&nbsp; -->
 							<!-- <input type="hidden" name="idDuplication" value="idUncheck" > -->
 							<span>* 아이디는 수정할 수 없습니다.</span></td>
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit003.gif" /></th>
-						<td><input type="password" name="pass" value="" class="join_input" />&nbsp;&nbsp;<span>* 4자 이상 12자 이내의 영문/숫자 조합</span></td>
+						<td><input type="password" name="pass" value="<%= dto.getPass() %>" class="join_input" />&nbsp;&nbsp;<span>* 4자 이상 12자 이내의 영문/숫자 조합</span></td>
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit04.gif" /></th>
-						<td><input type="password" name="pass2" value="" class="join_input" /></td>
+						<td><input type="password" name="pass2" value="<%= dto.getPass() %>" class="join_input" /></td>
 					</tr>
 					
 					<tr>
