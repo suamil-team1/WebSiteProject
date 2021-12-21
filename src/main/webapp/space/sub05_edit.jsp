@@ -55,6 +55,8 @@ function validateForm(form) {
 <form enctype="multipart/form-data" action="editProcessR.jsp" 
 	name="fileForm" method="post" onsubmit="return validateForm(this);">
 <input type="hidden" name="idx" value="<%= idx %>" />
+<input type="hidden" name="prevOfile" value="<%= dto.getOfile() %>"/>
+<input type="hidden" name="prevSfile" value="<%= dto.getSfile() %>" />
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>

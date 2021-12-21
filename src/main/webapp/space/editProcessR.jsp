@@ -10,7 +10,7 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="./IsLoggedIn.jsp" %>--%>
 <%
-//파일 저장소
+//파일 저장소 위치
 String saveDirectory = application.getRealPath("/Uploads");
 //업로드 용량
 int maxPostsize = 1024*3000;
@@ -21,10 +21,19 @@ try{
 	MultipartRequest mr = new MultipartRequest
 			(request, saveDirectory, maxPostsize, encoding);
 	
+	if(mr==null){ //파일 업로드에 실패하는 경우
+		JSFunction.alertBack(response, "첨부파일이 제한 용량을 초과합니다.");
+	}
+	
+	//hidden 속성의 값 가져오기
 	String idx = mr.getParameter("idx");
+	String prevOfile = mr.getParameter("prevOfile"); //DB에 등록된 원본명의 파일
+	String prevSfile = mr.getParameter("prevSfile"); //DB에 등록된 서버명의 파일
+	//수정페이지에서 새로 입력한 폼값
 	String title = mr.getParameter("title");
 	String content = mr.getParameter("content");
-	String fileName = mr.getFilesystemName("attachedFile");
+	//파일을 새롭게 등록한다면 이 변수를 쓰겠음..
+	String fileName=mr.getFilesystemName("attachedFile"); 
 	
 	//DTO객체 생성 //폼값 입력
 	ProjectBoardDTO dto = new ProjectBoardDTO();
@@ -32,7 +41,7 @@ try{
 	dto.setTitle(title);
 	dto.setContent(content);
 	
-	if(fileName != null){
+	if(fileName != null){//새롭게 파일을 등록한다면..
 		String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
 		String ext = fileName.substring(fileName.lastIndexOf("."));
 		String newFileName = now+ext; //최종파일명
@@ -41,8 +50,13 @@ try{
 		File newFile = new File(saveDirectory+File.separator+newFileName);
 		oldFile.renameTo(newFile);
 	
+		//새로운 파일을 dto에 저장
 		dto.setOfile(fileName);
 		dto.setSfile(newFileName);
+	}
+	else{//기존의 파일을 그대로 저장
+		dto.setOfile(prevOfile);
+		dto.setSfile(prevSfile);
 	}
 		
 	//DAO객체 생성
