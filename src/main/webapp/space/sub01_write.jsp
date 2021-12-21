@@ -14,16 +14,6 @@ function validateForm(form) {
 		form.content.focus();
 		return false;
 	}
-	if(form.content.value==""){
-		alert("내용을 입력하세요.");
-		form.content.focus();
-		return false;
-	}
-	if(form.content.value==""){
-		alert("내용을 입력하세요.");
-		form.content.focus();
-		return false;
-	}
 }
 </script>
  <body>
@@ -56,7 +46,7 @@ function validateForm(form) {
 			style="vertical-align:middle;">작성자</th>
 		<td>
 			<input type="text" class="form-control" 
-				style="width:100px;" />
+				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
 		</td>
 	</tr>
 	<tr>

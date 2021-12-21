@@ -5,6 +5,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+
 //게시물의 일련번호를 파라미터를 통해 받는다. 
 String idx = request.getParameter("idx");   
 //DB연결
@@ -21,7 +24,7 @@ dao.close();
 function deletePost() {
 	var confirmed = confirm("정말로 삭제하겠습니까?");
 	if(confirmed){
-		var form=document.writeFrm;
+		var form=document.fileForm;
 		form.method="post";//전송방식을 post로 설정
 		form.action="DeleteProcess.jsp";//전송할 URL
 		form.submit();//폼값 전송
@@ -115,7 +118,7 @@ if(session.getAttribute("UserId")!=null
 %> 
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"
-		onclick="location.href='sub05_edit.jsp?idx=<%=dto.getIdx()%>';">수정하기</button>
+		onclick="location.href='sub05_edit.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
 		onclick="deletePost();">삭제하기</button>	
 	<button type="button" class="btn btn-warning" 

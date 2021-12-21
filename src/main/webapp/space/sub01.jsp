@@ -1,14 +1,13 @@
-
 <%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
+request.getParameter("boardName");
 //DAO 객체 생성 및 DB연결
 projectboardDAO dao = new projectboardDAO(application);
 //검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성

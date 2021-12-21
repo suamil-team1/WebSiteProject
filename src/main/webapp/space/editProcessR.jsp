@@ -10,6 +10,7 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="./IsLoggedIn.jsp" %>--%>
 <%
+
 //파일 저장소 위치
 String saveDirectory = application.getRealPath("/Uploads");
 //업로드 용량
@@ -27,6 +28,7 @@ try{
 	
 	//hidden 속성의 값 가져오기
 	String idx = mr.getParameter("idx");
+	String boardName = mr.getParameter("boardName");
 	String prevOfile = mr.getParameter("prevOfile"); //DB에 등록된 원본명의 파일
 	String prevSfile = mr.getParameter("prevSfile"); //DB에 등록된 서버명의 파일
 	//수정페이지에서 새로 입력한 폼값
@@ -40,6 +42,7 @@ try{
 	dto.setIdx(idx);
 	dto.setTitle(title);
 	dto.setContent(content);
+	dto.setBoardName(boardName);
 	
 	if(fileName != null){//새롭게 파일을 등록한다면..
 		String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());

@@ -91,8 +91,8 @@ public class projectboardDAO extends JDBConnect{
         }
         return bbs;
     }
-	
-	//자유게시판 입력
+		
+	//자유게시판 입력 //sub03
 	public int insertWrite(ProjectBoardDTO dto) {
 
         int result = 0; //확인을 위한 변수
@@ -101,7 +101,7 @@ public class projectboardDAO extends JDBConnect{
             //동적 쿼리
             String query = "insert into Model2Board"
                     + "(idx, id, title, content, boardName)"
-                    + "values(seq_prtBoard_idx.NEXTVAL, ? , ? , ?,'F')";
+                    + "values(seq_prtBoard_idx.NEXTVAL, ? , ? , ?, ?)";
 
             //동적쿼리문
             psmt = con.prepareStatement(query);
@@ -109,6 +109,7 @@ public class projectboardDAO extends JDBConnect{
             psmt.setString(1, dto.getId());
             psmt.setString(2, dto.getTitle());
             psmt.setString(3, dto.getContent());
+            psmt.setString(4, dto.getBoardName());
 
             result = psmt.executeUpdate();//성공 시 1반환
         }
@@ -119,7 +120,7 @@ public class projectboardDAO extends JDBConnect{
         return result;
     }
 	
-	//첨부게시판 입력
+	//첨부게시판 입력 //sub04, sub05
   	public int insertFile(ProjectBoardDTO dto) {
   		int applyResult=0;
   		try {
@@ -127,7 +128,7 @@ public class projectboardDAO extends JDBConnect{
   			String query= "INSERT INTO Model2Board( "
   					+ " idx, id, title, content, ofile, sfile, boardName) "
   					+ " VALUES( "
-  					+ " seq_prtBoard_idx.NEXTVAL, ?, ?, ?, ?, ?, 'R')";
+  					+ " seq_prtBoard_idx.NEXTVAL, ?, ?, ?, ?, ?, ?)";
   			
   			//2.prepared객체 생성 및 인파라미터 설정
   			psmt = con.prepareStatement(query);
@@ -136,6 +137,7 @@ public class projectboardDAO extends JDBConnect{
   			psmt.setString(3, dto.getContent());
   			psmt.setString(4, dto.getOfile());
   			psmt.setString(5, dto.getSfile());
+  			psmt.setString(6, dto.getBoardName());
   			
   			//3.쿼리 실행
   			applyResult=psmt.executeUpdate();
@@ -202,7 +204,7 @@ public class projectboardDAO extends JDBConnect{
 		}
     }
     
-    //게시물 수정
+    //게시물 수정 //sub03,sub05
   	public int updateEdit(ProjectBoardDTO dto) {
   		
   		int result=0; //확인용 변수

@@ -7,6 +7,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+
 //DAO 객체 생성 및 DB연결
 projectboardDAO dao = new projectboardDAO(application);
 //검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
@@ -112,7 +115,7 @@ else{
 	<!-- 리스트반복 -->
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="sub05_view.jsp?idx=<%= dto.getIdx()%>"><%= dto.getTitle() %></a></td>
+		<td class="text-left"><a href="sub05_view.jsp?idx=<%= dto.getIdx()%>&boardName=<%=boardName%>"><%= dto.getTitle() %></a></td>
 		<td class="text-center"><%=dto.getId()%></td>
 		<td class="text-center"><%=dto.getPostdate()%></td>
 		<td class="text-center"><%=dto.getVisitcount()%></td>
@@ -130,7 +133,7 @@ else{
 	<!-- <button type="reset" class="btn">Reset</button> -->
 		
 	<button type="button" class="btn btn-default" 
-		onclick="location.href='sub05_write.jsp';">글쓰기</button>
+		onclick="location.href='sub05_write.jsp?boardName=<%=boardName%>';">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

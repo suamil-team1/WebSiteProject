@@ -11,6 +11,7 @@
 <%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%@ include file="../model1/loggingnow.jsp" %>
 <%
+
 //파일 저장소
 String saveDirectory = application.getRealPath("/Uploads");
 //업로드 용량
@@ -36,6 +37,7 @@ try{
 	//파일을 제외한 나머지 폼값받아오기
 	String title=mr.getParameter("title");
 	String content=mr.getParameter("content");
+	String boardName=mr.getParameter("boardName"); //보드네임
 	
 	//DTO객체 생성 //폼값 입력
 	ProjectBoardDTO dto = new ProjectBoardDTO();
@@ -44,17 +46,27 @@ try{
 	dto.setContent(content);
 	dto.setOfile(fileName);
 	dto.setSfile(newFileName);
+	dto.setBoardName(boardName);
 	
 	//id저장
 	dto.setId(session.getAttribute("UserId").toString());
 		
 	//DAO객체 생성
 	projectboardDAO dao = new projectboardDAO();
-	dao.insertFile(dto);  //insert처리
+	int iResult = dao.insertFile(dto);  //insert처리
 	dao.close();
 	
 	//문제가 없다면 파일리스트로 이동한다.
-	response.sendRedirect("sub05.jsp");
+	//response.sendRedirect("sub05.jsp");
+	if(iResult == 1){ //글쓰기 성공 > 목록으로 가기
+		
+		switch(boardName){
+		case "gal" : 
+			response.sendRedirect("sub04.jsp?boardName=gal"); return;
+		case "ref" :
+			response.sendRedirect("sub05_view.jsp?boardName=ref"); return;
+		}
+	}
 }
 catch(Exception e){
 	e.printStackTrace();

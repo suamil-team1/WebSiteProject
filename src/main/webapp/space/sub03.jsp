@@ -7,6 +7,9 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+
 //DAO 객체 생성 및 DB연결
 projectboardDAO dao = new projectboardDAO(application);
 //검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
@@ -29,11 +32,6 @@ List<ProjectBoardDTO> boardLists = dao.selectList(param);
 dao.close();
 
 %>
-<script>
-$(function){
-	
-}
-</script>
  <body>
 	<center>
 	<div id="wrap">
@@ -56,7 +54,7 @@ $(function){
 <div class="row text-right" style="margin-bottom:20px;
 		padding-right:50px;">
 <!-- 검색부분 -->
-<form class="form-inline" id="notice">
+<form class="form-inline" id="free">
 	<div class="form-group">
 		<select name="keyField" class="form-control">
 			<option value="">제목</option>
@@ -119,7 +117,7 @@ else{
 	<!-- 리스트반복 -->
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
-		<td class="text-left"><a href="sub03_view.jsp?idx=<%= dto.getIdx()%>"><%= dto.getTitle() %></a></td>
+		<td class="text-left"><a href="sub03_view.jsp?idx=<%= dto.getIdx()%>&boardName=<%=boardName%>"><%= dto.getTitle() %></a></td>
 		<td class="text-center"><%=dto.getId()%></td>
 		<td class="text-center"><%=dto.getPostdate()%></td>
 		<td class="text-center"><%=dto.getVisitcount()%></td>
@@ -135,9 +133,8 @@ else{
 <div class="row text-right" style="padding-right:50px;">
 	<!-- 각종 버튼 부분 -->
 	<!-- <button type="reset" class="btn">Reset</button> -->
-		
 	<button type="button" class="btn btn-default" 
-		onclick="location.href='sub03_write.jsp';">글쓰기</button>
+		onclick="location.href='sub03_write.jsp?boardName=<%=boardName%>';">글쓰기</button>
 				
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

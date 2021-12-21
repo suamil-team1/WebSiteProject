@@ -15,23 +15,23 @@ create table Model2Board(
     );
     
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'test','자료실 제목1입니다.','내용', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목1입니다.','내용', 'not');
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'test','자료실 제목2입니다.','내용', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목2입니다.','내용', 'not');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test','자료실 제목3입니다.','내용3', 'F');
+    values(seq_prtBoard_idx.nextval,'test','자료실 제목3입니다.','내용3', 'not');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test2','자료실 제목4입니다.','내용4', 'F');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목4입니다.','내용4', 'not');
 insert into Model2Board(idx, id, title, content, boardName )
-    values(seq_prtBoard_idx.nextval,'test2','자료실 제목1입니다.','내용', 'N');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목1입니다.','내용', 'fre');
 insert into Model2Board(idx, id, title, content,  boardName)
-    values(seq_prtBoard_idx.nextval,'test2','자료실 제목2입니다.','내용', 'N');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목2입니다.','내용', 'fre');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test1','자료실 제목3입니다.','내용3', 'N');
+    values(seq_prtBoard_idx.nextval,'test1','자료실 제목3입니다.','내용3', 'fre');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test2','자료실 제목4입니다.','내용4', 'N');
+    values(seq_prtBoard_idx.nextval,'test2','자료실 제목4입니다.','내용4', 'fre');
 insert into Model2Board(idx, id, title, content, boardName)
-    values(seq_prtBoard_idx.nextval,'test5','자료실 제목5입니다.','내용5', 'F');
+    values(seq_prtBoard_idx.nextval,'test5','자료실 제목5입니다.','내용5', 'fre');
 
 SELECT B.*, M.name
   			   FROM Model2Board B INNER JOIN Projectmember M 
@@ -50,15 +50,20 @@ create table Projectmember
     address varchar2(200) not null,
     primary key (id)
 );
-
 insert into Projectmember(id, pass, name ,mobile, address) values ('test', '1234', '테스트','01000000000','서울시 서울구 서울로20길 서울아파트');
 insert into Projectmember(id, pass, name ,mobile, address) values ('test2', '1234', '테스트','01000000000','서울시 서울구 서울로20길 서울아파트');
+
+drop table pboard;
 
 ALTER TABLE Model2Board
 	ADD CONSTRAINT pBoard_mem_fk
 	FOREIGN KEY (id)
 	REFERENCES Projectmember (id)
 ;
+
+alter table PROJECTMEMBER DROP CONSTRAINT SYS_C007639;
+
+select * from user_constraints;
 
 create sequence seq_empBoard_idx
     increment by 1

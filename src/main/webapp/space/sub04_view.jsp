@@ -1,10 +1,9 @@
-<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="model.projectboard.ProjectBoardDTO"%>
+<%@page import="model.projectboard.projectboardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-<!-- 글쓰기 전 로그인 확인 -->
-<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName); 
@@ -25,7 +24,7 @@ dao.close();
 function deletePost() {
 	var confirmed = confirm("정말로 삭제하겠습니까?");
 	if(confirmed){
-		var form=document.writeFrm;
+		var form=document.fileForm;
 		form.method="post";//전송방식을 post로 설정
 		form.action="DeleteProcess.jsp";//전송할 URL
 		form.submit();//폼값 전송
@@ -46,14 +45,14 @@ function deletePost() {
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub03_title.gif" alt="자유게시판" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;자유게시판<p>
+					<img src="../images/space/sub05_title.gif" alt="정보자료실" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;정보자료실<p>
 				</div>
 				<div>
-<form name="writeFrm">
-<table class="table table-bordered">
+
+<form enctype="multipart/form-data" name="fileForm" method="post">
 <input type="hidden" name="idx" value="<%= idx %>" />
-<input type="hidden" name="boardName" value="<%= boardName %>" />
+<table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
 	<col width="30%"/>
@@ -99,13 +98,13 @@ function deletePost() {
 			<%= dto.getContent().replace("\r\n", "<br/>") %>
 		</td>
 	</tr>
-	<%-- <tr>
+	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td colspan="3">
-			<%= dto.getOfile() %>
+			<a href="Download.jsp?oName=<%= URLEncoder.encode(dto.getOfile(), "UTF-8") %>&sName=<%= URLEncoder.encode(dto.getSfile(),"UTF-8") %>"><%= dto.getOfile()%></a>
 		</td>
-	</tr> --%>
+	</tr>
 </tbody>
 </table>
 
@@ -116,14 +115,14 @@ if(session.getAttribute("UserId")!=null
 %>
 <%
 }
-%> 	
+%> 
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"
-	onclick="location.href='sub03_edit.jsp?idx=<%=dto.getIdx()%>';">수정하기</button>
+		onclick="location.href='sub04_edit.jsp?idx=<%=dto.getIdx()%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
-		onclick="deletePost();">삭제하기</button>
+		onclick="deletePost();">삭제하기</button>	
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='sub03.jsp?boardName=<%=boardName%>';">리스트보기</button>
+		onclick="location.href='sub04.jsp?boardName=<%=boardName%>';">리스트보기</button>
 </div>
 </form> 
 

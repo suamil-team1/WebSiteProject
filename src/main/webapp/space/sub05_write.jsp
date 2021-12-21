@@ -4,6 +4,10 @@
 <!-- 글쓰기 처리 전 로그인 확인 -->
 <%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%@ include file="../model1/loggingnow.jsp" %>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+%>
  <body>
 	<center>
 	<div id="wrap">
@@ -24,6 +28,7 @@
 				<div>
 <form enctype="multipart/form-data" action="uploadProcess.jsp" 
 	name="fileForm" method="post" onsubmit="return validateForm(this);">
+<input type="hidden" name="boardName" value="<%=boardName%>"/>
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
@@ -84,7 +89,7 @@
 	<button type="submit" class="btn btn-danger">전송하기</button>
 	<button type="reset" class="btn">Reset</button>
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='sub05.jsp';">리스트보기</button>
+		onclick="location.href='sub05.jsp?boardName=<%=boardName%>';">리스트보기</button>
 </div>
 </form> 
 

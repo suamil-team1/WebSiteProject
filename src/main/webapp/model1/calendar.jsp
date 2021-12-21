@@ -29,6 +29,7 @@ int yo = dSet.get(Calendar.DAY_OF_WEEK);
 //현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
 int last_day = dSet.getActualMaximum(Calendar.DATE);
 %>
+<div><%= y%>년 <%=m+1 %>월</div>
 <table cellpadding="0" cellspacing="0" border="1" class="calendar table">
     <colgroup>
    	 <col width="14%" />
@@ -40,7 +41,7 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
    	 <col width="*" />
     </colgroup>
     
-    <tr class="table-secondary">
+    <tr class="table-active">
     <%
     String[] a = { "sun", "mon", "tue", "wed", "thu", "fri", "sat" };
     for (int i = 0; i < 7; i++) {
@@ -60,9 +61,12 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     }
     %>
     <%
+   	int f_date;
     for (int j = 1; j <= last_day; j++) {
+  
     %>
    	 <!-- 날짜가 출력되는 부분 <%=y%>-<%=m+1%>-<%=j%> -->
+   
    	 <td><%=j%></td>
     <%if ((yo+j-1) % 7 == 0) {%>
     </tr>

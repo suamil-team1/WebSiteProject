@@ -7,6 +7,8 @@
 <%
 //폼값 받기
 String idx= request.getParameter("idx");
+String boardName = request.getParameter("boardName");
+System.out.println(boardName); 
 
 //DTO객체와 DB연결 및 기존 게시물 가져오기
 ProjectBoardDTO dto = new ProjectBoardDTO();
@@ -28,8 +30,22 @@ if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
 	dao.close();
 	
 	if(delResult==1){
-		//게시물 삭제에 성공하면 리스트로 이동한다.
-		JSFunction.alertLocation("삭제되었습니다.", "sub03.jsp", out);
+		
+		if(boardName.equals("not")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub01.jsp?boardName=not", out);
+		}
+		/* if(boardName.equals("cal")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub02.jsp?boardName=cal", out);
+		} */
+		if(boardName.equals("fre")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub03.jsp?boardName=fre", out);
+		}
+		/* if(boardName.equals("gal")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub04.jsp?boardName=gal", out);
+		}
+		if(boardName.equals("ref")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub05.jsp?boardName=ref", out);
+		} */
 	}
 	else{
 		JSFunction.alertBack("삭제에 실패하였습니다.", out);
