@@ -47,7 +47,7 @@
 	
 	<div>
 		<!-- 각종 버튼 부분 -->
-		<button type="button" onclick="location.href='../community/Edit.do?idx=${param.idx}';">수정하기</button>
+		<button type="button" onclick="location.href='../community/Edit.do?boardName=${param.boardName}&idx=${param.idx}';">수정하기</button>
 		<button type="button" onclick="location.href='../community/Delete.do?boardName=${param.boardName}&idx=${param.idx}';">삭제하기</button>	
 		<button type="button" onclick="location.href='../community/List.do?boardName=${param.boardName}';">목록보기</button>
 	</div>

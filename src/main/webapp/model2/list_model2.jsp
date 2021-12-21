@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 검색부분 -->
 <div style="margin-bottom:20px;padding-right:50px; text-align: right;">
-<form name="searchForm">
+<form name="searchForm" action="../community/List.do">
+		<input type="text" name="boardName" value="${param.boardName}">
 		<select name="keyField">
 			<option value="title">제목</option>
 			<option value="content">내용</option>

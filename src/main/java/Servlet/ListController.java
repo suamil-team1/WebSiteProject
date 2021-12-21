@@ -24,7 +24,7 @@ public class ListController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String boardName = req.getParameter("boardName");
-		System.out.println(boardName);
+		
 		//DB 연결
 		ProjectBoardDAO2 dao = new ProjectBoardDAO2();
 		

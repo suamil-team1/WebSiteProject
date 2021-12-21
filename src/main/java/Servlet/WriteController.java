@@ -63,7 +63,7 @@ public class WriteController extends HttpServlet {
 		dto.setTitle(mr.getParameter("title"));
 		dto.setContent(mr.getParameter("content"));
 		dto.setBoardName(mr.getParameter("boardName"));
-		/* 테스트용 더미데이터 입력 */
+		/** 테스트용 더미데이터 입력 **/
 		dto.setId("tester");
 		dto.setEmail("test@java.com");
 		
@@ -75,8 +75,7 @@ public class WriteController extends HttpServlet {
 			//임시 파일명 생성
 			String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());		
 			String ext = fileName.substring(fileName.lastIndexOf("."));
-			String newFileName = now + ext;
-		
+			String newFileName = now + ext;		
 		
 			File oldFile = new File(saveDirectory + File.separator + fileName);
 			File newFile = new File(saveDirectory + File.separator + newFileName);

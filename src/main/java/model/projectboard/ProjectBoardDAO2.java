@@ -179,25 +179,29 @@ public class ProjectBoardDAO2 extends DBConnPool{
 		return result;
 	}
 	
+	//게시물 수정
 	public int updatePost(ProjectBoardDTO dto) {
+		System.out.println(dto.getId());
+		
 		int result = 0;
 		
 		try {
 			String query = "UPDATE Model2Board "
-					+ " SET title=?, name=?, content=?, ofile=?, sfile=? "
-					+ " WHERE idx=? and pass=?";
+					+ " SET email=?, title=?, content=?, ofile=?, sfile=? "
+					+ " WHERE idx=?";
 			
 			//prepared 객체 생성
 			psmt = con.prepareStatement(query);
-			//인파라미터 설정
-			psmt.setString(6, dto.getIdx());
-			psmt.setString(1, dto.getTitle());
+			//인파라미터 설정			
+			psmt.setString(1, dto.getEmail());
+			psmt.setString(2, dto.getTitle());
 			psmt.setString(3, dto.getContent());
-			/** 이메일 **/
 			psmt.setString(4, dto.getOfile());
 			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getIdx());
 			//쿼리 실행
 			result = psmt.executeUpdate();
+			System.out.println(result);
 		}
 		catch(Exception e) {
 			System.out.println("게시물 수정 중 예외 발생");

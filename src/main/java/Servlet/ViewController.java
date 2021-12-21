@@ -18,7 +18,6 @@ public class ViewController extends HttpServlet {
 		protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
 				throws ServletException, IOException {
 			
-			
 			//DB 연결
 			ProjectBoardDAO2 dao = new ProjectBoardDAO2();			
 			
@@ -40,8 +39,8 @@ public class ViewController extends HttpServlet {
 			
 			//View 페이지로 포워드
 			if(boardName.equals("emp"))
-				req.getRequestDispatcher("sub01.jsp?boardName="+boardName).forward(req, resp);
+				req.getRequestDispatcher("sub01.jsp?boardName="+boardName+"&idx="+idx).forward(req, resp);
 			else if(boardName.equals("prt"))
-				req.getRequestDispatcher("sub02.jsp?boardName=prt").forward(req, resp);	
+				req.getRequestDispatcher("sub02.jsp?boardName="+boardName+"&idx="+idx).forward(req, resp);	
 		}
 }

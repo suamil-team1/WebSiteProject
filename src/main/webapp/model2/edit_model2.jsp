@@ -18,6 +18,8 @@ function validateForm(form) {
 
 <form name="writeFrm" method="post" enctype="multipart/form-data"
 	action="../community/Edit.do" onsubmit="return validateForm(this);">
+	
+	<input type="hidden" name="boardName" value="${param.boardName}">
 	<input type="hidden" name="idx" value="${dto.idx}">
 	<input type="hidden" name="prevOfile" value="${dto.ofile}">
 	<input type="hidden" name="prevSfile" value="${dto.sfile}">
@@ -30,7 +32,7 @@ function validateForm(form) {
 	<tbody>
 		<tr>
 			<th style="vertical-align:middle;">제목</th>
-			<td><input type="text" name="title" width="80%" height="400px">${dto.title}</td>
+			<td><input type="text" name="title" style="width:50%;" value="${dto.title}"></td>
 		</tr>
 		<tr>
 			<th style="vertical-align:middle;">내용</th>
@@ -56,6 +58,6 @@ function validateForm(form) {
 	<div style="text-align:right;">
 		<!-- 각종 버튼 부분 -->
 		<button type="submit">저장하기</button>
-		<button type="button" onclick="location.href='../community/List.do';">목록보기</button>
+		<button type="button" onclick="location.href='../community/List.do?boardName=${param.boardName}';">목록보기</button>
 	</div>
 </form> 
