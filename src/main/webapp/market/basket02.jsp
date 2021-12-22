@@ -15,7 +15,7 @@ shopboardDTO dto = dao.selectView(idx);
 //자원해제
 dao.close();                               
 %>
-
+dd
 <!-- <script>
 $(document).ready(function() {
 	
@@ -71,6 +71,36 @@ $(document).ready(function() {
 		});
 	});
 });
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
 
 </script> -->
  <body>

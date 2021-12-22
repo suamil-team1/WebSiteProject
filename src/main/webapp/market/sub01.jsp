@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../include/global_head.jsp" %>
-<%
+<% 
 //DAO 객체 생성 및 DB연결
 shopboardDAO dao = new shopboardDAO(application);
 //검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
