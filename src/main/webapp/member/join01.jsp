@@ -7,7 +7,7 @@ function join(){
 	
 	var check  = document.getElementById('agreement1').checked;
 	if(check == false) {
-	alert("개인정보 동의해주세요.");
+	alert("개인정보 동의해주세요."); 
 	return false;
 	}
 }

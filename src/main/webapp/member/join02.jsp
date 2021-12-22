@@ -77,7 +77,7 @@ function validateForm(form){
 	if(form.idDuplication.value != "idCheck"){
 		alert("아이디 중복체크를 해주세요.");
 		return false;
-	}
+	} 
 }
 
 function focusMove(thisObj, naxtName, inputLen){
@@ -105,24 +105,20 @@ function email_input(form){
     }
 }
 
+//중복확인
 function id_check_person(form){
-    if(form.id.value ==""){
-        alert("아이디 입력 후 중복확인을 누르세요");
+	if(form.id.value==""){
+        alert("아이디를 입력후 중복확인을 누르세요");
         form.id.focus();
         return false;
     }
     else{
-        
-        form.id.readOnly = true; 
-       
-        window.open("id_check.jsp?id=" + form.id.value, "idover", "width=500, height=300");
+    	form.id.readOnly = true; //검증이 끝난후 수정을 할 수 없게하고 팝업창에서는 수정할 수 있도록 readOnly사용 
+    	var popupX = (document.body.offsetWidth / 2) - (200 / 2)-300;
+    	var popupY= (document.body.offsetHeight / 2) - (300 / 2);
+        window.open("./IdCheckProcess.jsp?id=" + form.id.value, "idover", 'status=no, height=300, width=500, left='+ popupX + ', top='+ popupY);
     }
 }
-function inputIdChk(){
-	document.userInfo.idDuplication.value ="idUncheck";
-}
-
-
 
 </script>
 
@@ -142,7 +138,7 @@ function zipFind(){
 </script>
 
  <body>
-	<!-- <center> -->
+	<center>
 	
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
@@ -159,7 +155,7 @@ function zipFind(){
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;멤버쉽&nbsp;>&nbsp;회원가입<p>
 				</div>
 				
-				<form name = "join02Frm" action="../member/LoginProcess.jsp" method="post" onsubmit="return validateForm(this)">
+				<form name = "join02Frm" action="JoinProcess.jsp" method="post" onsubmit="return validateForm(this)">
 				
 				<p class="join_title"><img src="../images/join_tit03.gif" alt="회원정보입력" /></p>
 				<table cellpadding="0" cellspacing="0" border="0" class="join_box">
@@ -174,8 +170,8 @@ function zipFind(){
 					<tr>
 						<th><img src="../images/join_tit002.gif" /></th>
 						<td>
-							<input type="text" name="id"  value="" class="join_input" onkeydown="inputIdChk()" />&nbsp;
-							<a style="cursor:hand;"><input type="image" src="../images/btn_idcheck.gif" alt="중복확인" onclick="id_check_person(this.form);"/></a>&nbsp;&nbsp;
+							<input type="text" name="id"  value="" class="join_input" />&nbsp;
+							<a style="cursor:hand;"><button type="button" onclick="id_check_person(this.form);" style="border: 0px; cursor:hand;" ><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/member/btn_check2.gif" alt="중복확인" ></button></a>&nbsp;&nbsp;
 							<input type="hidden" name="idDuplication" value="idUncheck" >
 							<span>* 4자 이상 12자 이내의 영문/숫자 조합하여 공백 없이 기입</span></td>
 					</tr>
@@ -249,10 +245,8 @@ function zipFind(){
 						</td>
 					</tr>
 				</table>
-				<p style="text-align:center; margin-bottom:20px"><a href="join02.jsp"><input type="image" src="../images/btn01.gif" /></a>&nbsp;&nbsp;<a href="../main/main.jsp"><img src="../images/btn02.gif" /></a></p>
-				
+				<p style="text-align:center; margin-bottom:20px"><input type="image" src="../images/btn01.gif" />&nbsp;&nbsp;<a href="../main/main.jsp"><img src="../images/btn02.gif" /></a></p>
 				</form>
-				
 			</div>
 		</div>
 		<%@ include file="../include/quick.jsp" %>

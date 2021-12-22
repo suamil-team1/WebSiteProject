@@ -1,4 +1,5 @@
-<%@page import="utils.JSFunction"%>
+<%@page import="util.CookieManager"%>
+<%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,7 +13,6 @@
 @import url("../css/sub.css");
 </style>
 </head>
-
 <script>
 function validateForm(form) {
 	if(!form.id.value){
@@ -26,6 +26,16 @@ function validateForm(form) {
 		return false;
 	}
 }
+
+<%
+//쿠키값 읽어오기
+String loginId = CookieManager.readCookie(request, "loginId");
+
+String cookieCheck="";
+if(!loginId.equals("")){
+	cookieCheck = "checked";
+}
+%>
 </script>
 <body>
 <center>
@@ -37,17 +47,17 @@ function validateForm(form) {
 		</div>
 		<div class="main_contents">
 		
-			<form name = "mainLoginFrm" action="../member/LoginProcess.jsp" method="post" onsubmit="return validateForm(this)">
+			<form name = "mainLoginFrm" action="../member/login.do" method="post" onsubmit="return validateForm(this)">
 			<div class="main_con_left">
 				<p class="main_title" style="border:0px; margin-bottom:0px;"><a href="../member/LoginProcess.jsp"><img src="../images/main_title01.gif" alt="로그인 LOGIN" /></a></p>
 				<div class="login_box">
-<!-- 로그인 전 -->
-<%
-if(request.getAttribute("LoginErrMsg")!=null){
-	JSFunction.alertLocation("아이디 혹은 비밀번호가 일치하지 않습니다.", "../main/main.jsp", out);
-}   	
-if (session.getAttribute("UserId") == null){
-%>
+					<!-- 로그인 전 -->
+					<%
+					if(request.getAttribute("LoginErrMsg")!=null){
+						JSFunction.alertBack("아이디 혹은 비밀번호가 일치하지 않습니다.", out);
+					}   	
+					if (session.getAttribute("UserId") == null){
+					%>
 					<table cellpadding="0" cellspacing="0" border="0">
 						<colgroup>
 							<col width="45px" />
@@ -56,8 +66,8 @@ if (session.getAttribute("UserId") == null){
 						</colgroup>
 						<tr>
 							<th><img src="../images/login_tit01.gif" alt="아이디" /></th>
-							<td><input type="text" name="id" value="" class="login_input" tabindex="1"/></td>
-							<td rowspan="2"><input type="image" src="../images/login_btn01.gif" alt="로그인" tabindex="3"/></td>
+							<td><input type="text" name="id" value="<%= loginId%>" class="login_input" tabindex="1"/></td>
+							<td rowspan="2"><input type="image" src="../images/login_btn01.gif" alt="로그인" tabindex="4"/></td>
 						</tr>
 						<tr>
 							<th><img src="../images/login_tit02.gif" alt="패스워드" /></th>
@@ -66,23 +76,22 @@ if (session.getAttribute("UserId") == null){
 						
 					</table>
 					<p>
-						<input type="checkbox" name="" value="" /><img src="../images/login_tit03.gif" alt="저장" />
+						<input type="checkbox" name="saveId" value="Y"<%= cookieCheck %> tabindex="3" /><img src="../images/login_tit03.gif" alt="저장" />
 						<a href="../member/id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>
 						<a href="../member/join01.jsp"><img src="../images/login_btn03.gif" alt="회원가입" /></a>
 					</p>
-					 
-<!-- 로그인 후 -->
-<%
-    } else {
-%>
+					<!-- 로그인 후 -->
+					<%
+					    } else {
+					%>
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
 						<a href=""><img src="../images/login_btn04.gif" /></a>
-						<a href="../member/Logout.jsp"><img src="../images/login_btn05.gif" /></a>
+						<a href="../member/logout.jsp"><img src="../images/login_btn05.gif" /></a>
 					</p>
-<%
-}
-%>
+					<%
+					}
+					%>
 				</div>
 			</div>
 		</form>
