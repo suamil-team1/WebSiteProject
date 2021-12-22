@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 되돌리기 테스트 -->
 <!-- 검색부분 -->
 <div style="margin-bottom:20px;padding-right:50px; text-align: right;">
 <form name="searchForm" action="../community/List.do">
