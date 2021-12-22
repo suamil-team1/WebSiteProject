@@ -12,11 +12,4 @@ session.setAttribute("UserId", userId );
 session.setAttribute("UserPwd", userPwd);
 session.setAttribute("UserName", userName);
 session.setAttribute("UserMail", userMail);
-/*
-ProjectBoardDTO dto = new ProjectBoardDTO();
-
-dto.setId(userId);
-dto.setPass(userPwd);
-dto.setName(userName);
-dto.setEmail(userMail);*/
 %>

@@ -3,6 +3,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="model.projectboard.ProjectBoardDTO"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
@@ -30,7 +31,6 @@ int totalCount = dao.selectCount(param);
 List<ProjectBoardDTO> boardLists = dao.selectList(param);
 //DB작업 끝났으므로 자원 해제
 dao.close();
-
 %>
  <body>
 	<center>
@@ -111,7 +111,6 @@ else{
 	{
 		//전체 레코드 수를 1씩 차감하면서 번호를 출력
 		virtualNum = totalCount--;
-
 %>
 	<tbody>
 	<!-- 리스트반복 -->
@@ -160,8 +159,6 @@ else{
 		</div>
 		<%@ include file="../include/quick.jsp" %>
 	</div>
-
-
 	<%@ include file="../include/footer.jsp" %>
 	</center>
  </body>

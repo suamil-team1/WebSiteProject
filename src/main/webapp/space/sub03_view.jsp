@@ -8,7 +8,6 @@
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName); 
-
 //게시물의 일련번호를 파라미터를 통해 받는다. 
 String idx = request.getParameter("idx");   
 //DB연결
@@ -124,6 +123,7 @@ if(session.getAttribute("UserId")!=null
 		onclick="deletePost();">삭제하기</button>
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='sub03.jsp?boardName=<%=boardName%>';">리스트보기</button>
+		
 </div>
 </form> 
 
