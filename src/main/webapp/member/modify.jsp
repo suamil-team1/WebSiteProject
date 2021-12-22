@@ -14,6 +14,13 @@
 	ProjectMemberDAO dao = new ProjectMemberDAO(oracleDriver, oracleURL, oracleId, oraclePwd);
 	ProjectMemberDTO dto = dao.getProMemberInfo(userId, "", "");
 	
+	
+	//String[] tellnum = dto.getTellNum().split("-");
+	String[] mobile = dto.getMobile().split("-");
+	String[] email = dto.getEmail().split("@");
+	String[] address = dto.getAddress().split(",");
+	
+	
 %>
 <script>
 function validateForm(form){
@@ -210,15 +217,15 @@ function zipFind(){
 					<tr>
 						<th><img src="../images/join_tit07.gif" /></th>
 						<td>
-							<input type="text" name="mobile1" value="" maxlength="3" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'mobile2', 3);"/>&nbsp;-&nbsp;
-							<input type="text" name="mobile2" value="" maxlength="4" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'mobile3', 4);"/>&nbsp;-&nbsp;
-							<input type="text" name="mobile3" value="" maxlength="4" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'email_1', 4);"/></td>
+							<input type="text" name="mobile1" value="<%= mobile[0] %>" maxlength="3" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'mobile2', 3);"/>&nbsp;-&nbsp;
+							<input type="text" name="mobile2" value="<%= mobile[1] %>" maxlength="4" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'mobile3', 4);"/>&nbsp;-&nbsp;
+							<input type="text" name="mobile3" value="<%= mobile[2] %>" maxlength="4" class="join_input" style="width:50px;" onkeyup="focusMove(this, 'email_1', 4);"/></td>
 					</tr>
 					<tr>
 						<th><img src="../images/join_tit08.gif" /></th>
 						<td>
-							<input type="text" name="email_1" style="width:100px;height:20px;border:solid 1px #dadada;" value="" /> @ 
-							<input type="text" name="email_2" style="width:150px;height:20px;border:solid 1px #dadada;" value="" readonly />
+							<input type="text" name="email_1" style="width:100px;height:20px;border:solid 1px #dadada;" value="<%= email[0] %>" /> @ 
+							<input type="text" name="email_2" style="width:150px;height:20px;border:solid 1px #dadada;" value="<%= email[1] %>" readonly />
 							<select name="last_email_check2" onchange="email_input(this.form);" class="pass" id="last_email_check2" >
 								<option selected="" value="">선택해주세요</option>
 								<option value="1" >직접입력</option>
@@ -255,8 +262,8 @@ function zipFind(){
 							    
 							<br/>
 							
-							<input type="text" name="addr1" value=""  class="join_input" style="width:550px; margin-top:5px;" /><br>
-							<input type="text" name="addr2" value=""  class="join_input" style="width:550px; margin-top:5px;" />
+							<input type="text" name="addr1" value="<%= address[0] %>"  class="join_input" style="width:550px; margin-top:5px;" /><br>
+							<input type="text" name="addr2" value="<%= address[1] %>"  class="join_input" style="width:550px; margin-top:5px;" />
 						</td>
 					</tr>
 				</table>
