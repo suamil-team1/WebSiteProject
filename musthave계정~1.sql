@@ -9,8 +9,7 @@ create table Model2BoardCal(
     
 
 insert into Model2BoardCal (idx, id, title, content, pdate, boardName)
-values (seq_prtBoard_idx.NEXTVAL, "test" , "¾È³ç" , "¾È³ç³»¿ë", to_date('12/10/2021', 'mm/dd/yyyy'), "cal");
-;
+values (seq_prtBoard_idx.NEXTVAL, 'test' , '¾È³ç' , '¾È³ç³»¿ë', to_date('12/10/2021', 'mm/dd/yyyy'), 'cal');
 
 ALTER TABLE Model2BoardCal
 	ADD CONSTRAINT pCal_mem_fk
@@ -24,4 +23,4 @@ commit;
 select title
 from Model2BoardCal where pdate='2021-12-17';
 
-select count(*) from Model2Board where boardName='gal';
+select bd.*, to_char(pdate, 'yyyy-mm-dd') from Model2BoardCal bd where boardname='cal' and  to_char(pdate, 'yyyy-mm')='2021-12';

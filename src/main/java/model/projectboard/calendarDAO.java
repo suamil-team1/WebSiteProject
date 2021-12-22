@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import javax.servlet.ServletContext;
@@ -46,15 +47,16 @@ public class calendarDAO extends JDBConnect{
     }
 	
 	//해당 날짜 title출력 메서드
-	public Map<String, calendarDTO> selectCal(String param) { 
+	public Map<String, calendarDTO> selectCal(String s) { 
 	    
 		//Map컬렉션 생성 
 		Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();  
 
         //쿼리문
-        String query = "SELECT bd.* , to_char(pdate, 'yyyy-mm-dd') "
+        String query = "SELECT bd.* , to_char(pdate, 'yyyy-mm-dd') pd "
         		+ " FROM Model2BoardCal bd WHERE boardName='cal' "
-        		+ " AND to_char(pdate, 'yyyy-mm')='"+ param +"'"; 
+        		+ " AND to_char(pdate, 'yyyy-mm')='"+ s +"'"; 
+        System.out.println(query);
 
         try {
             stmt = con.createStatement();    
@@ -70,13 +72,17 @@ public class calendarDAO extends JDBConnect{
                 dto.setId(rs.getString("id"));
                 dto.setTitle(rs.getString("title"));      
                 dto.setContent(rs.getString("content"));   
-                dto.setPdate(rs.getString("pdate"));  
+                dto.setPdate(rs.getString("pd"));  
                 dto.setBoardName(rs.getString("boardName"));  
                 //dto.setEmail(rs.getString("email"));
                 //dto.setName(rs.getString("name"));
-                
-                String pdate = dto.getPdate();
-                map.put(pdate, dto); //dto에 추가  
+                            
+                map.put(dto.getPdate(), dto); //value 값 얻기
+				/*
+				 * Set<String> keys = map.keySet(); for(String key : keys) {
+				 * 
+				 * System.out.println(key); }
+				 */
             }
         } 
         catch (Exception e) {

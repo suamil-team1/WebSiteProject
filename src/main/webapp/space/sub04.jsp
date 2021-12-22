@@ -39,17 +39,17 @@ dao.close();
 				</div>
 				<div class="row">
 				<form id="galFrm">
-				<input type="hidden" name="boardName" value="<%=boardName%>"/>
+
 				
 	<%
-	for(ProjectBoardDTO b:boardLists){
+	for(ProjectBoardDTO dto : boardLists){
 	%>
 		<div class="card">
-			<a href="sub04_view.jsp?idx=<%= b.getIdx()%>&boardName=<%=boardName%>">
-	        <img class="card-img-top" src="../Uploads/<%=b.getSfile() %>" style="width: 200px;">
+			<a href="sub04_view.jsp?idx=<%= dto.getIdx()%>&boardName=<%=boardName%>">
+	        <img class="card-img-top" src="../Uploads/<%=dto.getSfile() %>" style="width: 200px;">
 	        </a>
 	        <div class="card-body">
-	        <h4 class="card-title"><%=b.getTitle() %></h4>         
+	        <h4 class="card-title"><%=dto.getTitle() %></h4>         
 	    	</div>
     	</div>
 	<%} %>

@@ -45,8 +45,8 @@ function deletePost() {
 			</div>
 			<div class="right_contents">
 				<div class="top_title">
-					<img src="../images/space/sub05_title.gif" alt="정보자료실" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;정보자료실<p>
+					<img src="../images/space/sub04_title.gif" alt="사진게시판" class="con_title" />
+					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린공간&nbsp;>&nbsp;사진게시판<p>
 				</div>
 				<div>
 
@@ -103,7 +103,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">첨부파일</th>
 		<td colspan="3">
-			<a href="Download.jsp?oName=<%= URLEncoder.encode(dto.getOfile(), "UTF-8") %>&sName=<%= URLEncoder.encode(dto.getSfile(),"UTF-8") %>"><%= dto.getOfile()%></a>
+			<img class="card-img-top" src="../Uploads/<%=dto.getSfile() %>" style="width: 400px;">
 		</td>
 	</tr>
 </tbody>

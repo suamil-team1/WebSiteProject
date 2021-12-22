@@ -1,3 +1,4 @@
+<%@page import="model.projectboard.calendarDAO"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -28,8 +29,29 @@ dSet.set(y, m, 1);//현재 년/월/1 일로 설정함
 int yo = dSet.get(Calendar.DAY_OF_WEEK);
 //현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
 int last_day = dSet.getActualMaximum(Calendar.DATE);
+
 %>
-<div><%= y%>년 <%=m+1 %>월</div>
+<!-- 이전 해 -->
+<a href="./sub02.jsp?year=<%= y-1%>&month=<%=m+1 %>" target="_self">
+	<b>&lt;&lt;</b>
+</a>
+<!-- 이전 달 -->
+<%if(m >0){ %>
+<a href="./sub02.jsp?year=<%= y%>&month=<%=m %>" target="_self">
+	<b>&lt;</b>
+</a>
+<%}else{%><b>&lt;</b><%}%>
+&nbsp;<%= y%>년<%=m+1 %>월&nbsp;
+<!-- 다음 달  -->
+<%if(m<11){%>
+<a href="./sub02.jsp?year=<%= y%>&month=<%=m+1 %>" target="_self">
+	<b>&gt;</b>
+</a>
+<%}else{%><b>&gt;</b><%} %>
+<!-- 다음 해  -->
+<a href="./sub02.jsp?year=?year=<%=y+1%>&month=<%=m+1%>" target="_self">
+<b>&gt;&gt;</b>
+</a>
 <table cellpadding="0" cellspacing="0" border="1" class="calendar table">
     <colgroup>
    	 <col width="14%" />
@@ -63,8 +85,10 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     <%
    	int f_date;
     for (int j = 1; j <= last_day; j++) {
-  
-    String tdate = y + "-" + (m+1) + "-" + j ;
+  	
+    String s_date = y + "-" + (m+1) + "-" + j ;
+    dao.selectCal(s_date);
+    System.out.println(s_date);
     %>
    	 <!-- 날짜가 출력되는 부분 <%=y%>-<%=m+1%>-<%=j%> -->
    
