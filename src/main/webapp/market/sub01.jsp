@@ -32,13 +32,58 @@ dao.close();
 
 %>
 <script>
-function basketIn(idx) {
+/* function basketIn(idx) {
 	var choiceCount = document.getElementById('Quantity_'+idx).value;
 	console.log("상품번호&갯수", idx, choiceCount);
-}
+} */
 input.name onchange 
 
 ajax 해당 수량을 업데이트하는 쿼리문 
+
+$(document).ready(function() {
+	
+	//select를 선택하면 발생되는 change이벤트를 통해 서버로 요청
+	$('#goodsOptionId01').change(function() {
+		$.ajax({
+			url : "../basketprocess.do", //요청 URL
+			type : "get", //전송방식
+			data : { //파라미터 : select에서 선택한 값
+				QuantityValue : $('#Quantity').val()
+			},
+			dataType : "json", //콜백데이터 형식은 JSON
+			contentType : "text/html; charset:UTF-8",
+			
+			success : function(d) {
+				//기본가를 얻어온다.
+				var totalPrice = parseInt(dto.getPrice());
+				//선택한 옵션의 value값을 얻어온다.
+				var QuantityCheck = $('#Quantity').val();
+				//옵션에 따라 옵션가를 합산한다.
+				
+				if(QuantityCheck < 0) {
+					QuantityCheck = 1;
+				}
+				else{
+					
+				}
+				
+				//합산된 금액을 다시 totalprice에 더한다.
+				//계산된 가격을 다시 hidden박스에 적용한다.
+				$('#totalPrice').val(totalPrice);
+				
+				//웹브라우저에 총 금액을 출력한다.
+				totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); //콤마추가하기
+				$('#totalPrice').html(totalPrice);
+				
+				//옵션을 선택한 후 최초 상태로 리셋한다.
+				$('#goodsOptionId01').val('');
+			},
+			error : function(e) {
+				alert("실패" + e.status)
+			}
+		});
+	});
+});
 </script>
  <body>
 	<!-- <center> -->
@@ -95,12 +140,11 @@ else{
 
 %>					
 					<tr>
-						<%-- <td><%=dto.getIdx() %></td> --%> 
-						<td><input type="checkbox" name="" value="" /></td>
+						<td><%= virtualNum %></td>
 						<td><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/img01.jpg" /></a></td>
 						<td class="t_left"><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><%=dto.getPname()%></a></td>
-						<td class="p_style"><%=dto.getPrice()%></td>
-						<td><input type="number" id="" name="Quantity" value="1" class="n_box" onchange="num"/></td>
+						<td class="p_style" id=totalPrice><%=dto.getPrice()%></td>
+						<td><input type="number" id="Quantity" name="Quantity" value="1" class="n_box" onchange=""/></td>
 						<td><a href="basket02.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a><br /><a href="basket.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn02.gif" style="cursor: pointer"/></a></td>
 					</tr>
 					<%-- <c:forEach begin="1" end="3" step="1" var="i">

@@ -11,6 +11,7 @@ import model.projectboard.ProjectBoardDTO;
 
 public class shopboardDAO extends JDBConnect{
 	
+
 	public shopboardDAO() {} //기본생성자
 	public shopboardDAO(ServletContext application) {
         super(application);
@@ -120,39 +121,7 @@ public class shopboardDAO extends JDBConnect{
         
         return dto; 
     }
-    
-    /*
-  //장바구니 관련 메서드
-    public shopboardDTO selectBasketView(String pNum) { 
-        
-    	shopboardDTO dto = new shopboardDTO(); 
-        
-        String query = " select * from product inner join basket using(pNum) where pNum = ? ";
-        
-        try {
-            psmt = con.prepareStatement(query);
-            psmt.setString(1, pNum);   
-            rs = psmt.executeQuery();  
-            //일련번호는 중복되지 않으므로 if문에서 처리하면 된다. 
-            if (rs.next()) {//ResultSet에서 커서를 이동시켜 레코드를 읽은 후
-            	dto.setpNum(rs.getString("pNum"));
-                dto.setIdx(rs.getString("idx"));   
-            	dto.setPname(rs.getString("pname"));
-                dto.setPcontent(rs.getString("pcontent"));
-                dto.setPrice(rs.getString("price"));   
-                dto.setImgfile(rs.getString("imgfile"));
-                dto.setPoint(rs.getString("point"));
-                dto.setid
-            }
-        } 
-        catch (Exception e) {
-            System.out.println("게시물 상세보기 중 예외 발생");
-            e.printStackTrace();
-        }
-        
-        return dto; 
-    }
-    */
+      
     //게시물 출력 관련 메서드
 	public List<shopboardDTO> selectBasket(Map<String, Object> map) { 
 	    
@@ -196,6 +165,5 @@ public class shopboardDAO extends JDBConnect{
         }
         return bbs;
     }
-  		
-		
+  	 
 }

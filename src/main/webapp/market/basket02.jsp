@@ -7,7 +7,6 @@
 <%
 //게시물의 일련번호를 파라미터를 통해 받는다. 
 String idx = request.getParameter("idx");   
-String Quantity = request.getParameter("Quantity");
 //DB연결
 shopboardDAO dao = new shopboardDAO(application);
 
@@ -17,6 +16,13 @@ shopboardDTO dto = dao.selectView(idx);
 dao.close();                               
 %>
 
+<script>
+function QuantityCheck() {
+	var a = document.getElementId("Quantity").value();
+	console.log(a)
+}
+
+</script>
 <!-- <script>
 $(document).ready(function() {
 	
@@ -125,7 +131,7 @@ $(document).ready(function() {
 							<td><%= dto.getPname() %></td>
 							<td><%= dto.getPrice() %></td>
 							<td><img src="../images/market/j_icon.gif" />&nbsp;300원</td>
-							<td><input type="number" name="" value="1" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
+							<td><input type="number" name="" id="Quantity" value="1" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" onclick="QuantityCheck()"/></a></td>
 							<td>무료배송</td>
 							<td>[조건]</td>
 							<td><span>60,000원<span></td>
