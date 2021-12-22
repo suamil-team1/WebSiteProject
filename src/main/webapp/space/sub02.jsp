@@ -8,7 +8,7 @@
 <%@ include file="../include/global_head.jsp" %>
 <%
 String boardName = request.getParameter("boardName");
-System.out.println(boardName);
+System.out.println(boardName);  
 
 //DAO 객체 생성 및 DB연결
 calendarDAO dao = new calendarDAO(application);
