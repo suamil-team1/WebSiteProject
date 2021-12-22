@@ -1,10 +1,23 @@
+<%@page import="model.shopboard.shopboardDTO"%>
+<%@page import="model.shopboard.shopboardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 
+<%
+//게시물의 일련번호를 파라미터를 통해 받는다. 
+String idx = request.getParameter("idx");   
+//DB연결
+shopboardDAO dao = new shopboardDAO(application);
+
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
 
  <body>
-	<center>
+	<!-- <center> -->
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
 
@@ -49,19 +62,8 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /></td>
 							<td><img src="../images/market/cake_img1.jpg" /></td>
-							<td>녹차 쌀 무스케잌</td>
-							<td>30,000원</td>
-							<td><img src="../images/market/j_icon.gif" />&nbsp;300원</td>
-							<td><input type="text" name="" value="2" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
-							<td>무료배송</td>
-							<td>[조건]</td>
-							<td><span>60,000원<span></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="" value="" /></td>
-							<td><img src="../images/market/cake_img1.jpg" /></td>
-							<td>녹차 쌀 무스케잌</td>
-							<td>30,000원</td>
+							<td><%= dto.getPname() %></td>
+							<td><%= dto.getPrice() %></td>
 							<td><img src="../images/market/j_icon.gif" />&nbsp;300원</td>
 							<td><input type="text" name="" value="2" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
 							<td>무료배송</td>

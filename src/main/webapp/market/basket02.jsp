@@ -1,10 +1,80 @@
+<%@page import="model.shopboard.shopboardDTO"%>
+<%@page import="model.shopboard.shopboardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<%
+//게시물의 일련번호를 파라미터를 통해 받는다. 
+String idx = request.getParameter("idx");   
+//DB연결
+shopboardDAO dao = new shopboardDAO(application);
 
+//일련번호에 해당하는 게시물 조회
+shopboardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
 
+<!-- <script>
+$(document).ready(function() {
+	
+	//select를 선택하면 발생되는 change이벤트를 통해 서버로 요청
+	$('#goodsOptionId01').change(function() {
+		$.ajax({
+			url : "../ShoppingOptions.choice", //요청 URL
+			type : "get", //전송방식
+			data : { //파라미터 : select에서 선택한 값
+				goodsOptionName : $('#goodsOptionId01').val()
+			},
+			dataType : "json", //콜백데이터 형식은 JSON
+			contentType : "text/html; charset:UTF-8",
+			
+			success : function(d) {
+				//기본가를 얻어온다.
+				var totalPrice = parseInt($('#totalPrice').val());
+				//선택한 옵션의 value값을 얻어온다.
+				var goodsOption = $('#goodsOptionId01').val();
+				//옵션에 따라 옵션가를 합산한다.
+				if(goodsOption=='op01') totalPrice += 5000;
+				else if (goodsOption=='op02') totalPrice += 7000;
+				else if (goodsOption=='op03') totalPrice += 10000;
+				
+				//합산된 금액을 다시 totalprice에 더한다.
+				//계산된 가격을 다시 hidden박스에 적용한다.
+				$('#totalPrice').val(totalPrice);
+				//웹브라우저에 총 금액을 출력한다.
+				$('#priceDisplay').html("총상품금액: " +totalPrice);
+				
+				//콜백된 데이터를 통해 옵션 테이블을 생성한다.
+				var table = ''
+					+ '<table class="table table-bordered">'
+					+ '<tr>'
+					+ '		<td width="30%">옵션명:</td>'
+					+ '		<td width="70%">'+d.optionName+'</td>'
+					+ '</tr>'
+					+ '<tr>'
+					+ '		<td colspan="2" class="info">추가비용: '+d.optionPrice+'원</td>'
+					+ '</tr>'
+					+ '</table>';
+				console.log(d);
+				
+				//웹브라우저에 추가한다.
+				$('#goodsList').append(table);
+				
+				//옵션을 선택한 후 최초 상태로 리셋한다.
+				$('#goodsOptionId01').val('');
+			},
+			error : function(e) {
+				alert("실패" + e.status)
+			}
+		});
+	});
+});
+
+</script> -->
  <body>
-	<center>
+	<!-- <center> -->
 	<div id="wrap">
 		<%@ include file="../include/top.jsp" %>
 
@@ -16,6 +86,7 @@
 				<%@ include file = "../include/market_leftmenu.jsp" %>
 			</div>
 			<div class="right_contents">
+			<input type="hidden" name="idx" value="<%= dto.getIdx() %>" />
 				<div class="top_title">
 					<img src="../images/market/sub01_title.gif" alt="수아밀 제품 주문" class="con_title" />
 					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린장터&nbsp;>&nbsp;수아밀 제품 주문<p>
@@ -50,21 +121,10 @@
 						<tr>
 							<td><input type="checkbox" name="" value="" /></td>
 							<td><img src="../images/market/cake_img1.jpg" /></td>
-							<td>녹차 쌀 무스케잌</td>
-							<td>30,000원</td>
+							<td><%= dto.getPname() %></td>
+							<td><%= dto.getPrice() %></td>
 							<td><img src="../images/market/j_icon.gif" />&nbsp;300원</td>
-							<td><input type="text" name="" value="2" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
-							<td>무료배송</td>
-							<td>[조건]</td>
-							<td><span>60,000원<span></td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="" value="" /></td>
-							<td><img src="../images/market/cake_img1.jpg" /></td>
-							<td>녹차 쌀 무스케잌</td>
-							<td>30,000원</td>
-							<td><img src="../images/market/j_icon.gif" />&nbsp;300원</td>
-							<td><input type="text" name="" value="2" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
+							<td><input type="number" name="" value="" class="basket_num" />&nbsp;<a href=""><img src="../images/market/m_btn.gif" /></a></td>
 							<td>무료배송</td>
 							<td>[조건]</td>
 							<td><span>60,000원<span></td>

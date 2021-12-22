@@ -1,5 +1,7 @@
 package member;
 
+import java.sql.SQLException;
+
 import javax.servlet.ServletContext;
 
 import connect.JDBConnect;
@@ -55,9 +57,11 @@ public class ProjectMemberDAO extends JDBConnect {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return dto;
 	}
 	
+
 	public ProjectMemberDTO getProMemberInfo(String uid, String uname, String uemail) {
 		
         
@@ -66,14 +70,20 @@ public class ProjectMemberDAO extends JDBConnect {
     	String query = "";
     	if(uid.equals("")) //아이디 찾기
     		query = "SELECT id FROM ProjectMember WHERE name=? AND email=?";
+    	else if (uname.equals("") && uemail.equals("")) {
+    		query = "SELECT * FROM ProjectMember WHERE id=?";
+    	}
     	else //비번찾기
     		query = "SELECT * FROM ProjectMember WHERE id=? AND name=? AND email=?";
-    	
+
         try {
             psmt = con.prepareStatement(query);
             if(uid.equals("")) {
                 psmt.setString(1, uname);
                 psmt.setString(2, uemail);
+            }
+            else if (uname.equals("") && uemail.equals("")) {
+            	psmt.setString(1, uid);
             }
         	else {
         		psmt.setString(1, uid);     
@@ -84,7 +94,7 @@ public class ProjectMemberDAO extends JDBConnect {
             rs = psmt.executeQuery();  
             if (rs.next()) {
                 dto.setId(rs.getString("id"));
-				dto.setPass(rs.getString("pass"));
+				dto.setPass(rs.getString(2));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
 				dto.setRegidate(rs.getString(5));
@@ -97,8 +107,10 @@ public class ProjectMemberDAO extends JDBConnect {
         catch (Exception e) {
             e.printStackTrace();
         }
+
         return dto; 
     }
+	
 	
 	public int insertMember(ProjectMemberDTO dto) {
 		int result = 0;
@@ -128,27 +140,26 @@ public class ProjectMemberDAO extends JDBConnect {
 	}
 	
 	public boolean idCheck(String uid) {
-		boolean isCorr = false;
-		
-		String query = "select id from Projectmember where id = ?";
-		
-		try {
-			psmt = con.prepareStatement(query);
-			psmt.setString(1, uid);
-			rs = psmt.executeQuery();
-			
-			if (rs.next()) {
-				isCorr = true;
-			}
-			
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return isCorr;
-	}
+		  boolean isCorr = false;
+		  
+		  String query = "select id from Projectmember where id = ?";
+		  
+		  try {
+		     psmt = con.prepareStatement(query);
+		     psmt.setString(1, uid);
+		     rs = psmt.executeQuery();
+		     
+		     if (rs.next()) {
+		        isCorr = true;
+		     }
+		     
+		  }catch (Exception e) {
+		     e.printStackTrace();
+		  }
+		  return isCorr;
+	   }
 	
-	/*
-	public int updateMemberInfo(ProjectMemberDTO dto) {
+	public int updateMemberInfo(ProjectMemberDTO dto) throws SQLException {
 		int result = 0;
 		
 		String query = "UPDATE Projectmember "
@@ -157,23 +168,17 @@ public class ProjectMemberDAO extends JDBConnect {
 				+ " WHERE id=? ";
 		try {
 			psmt = con.prepareStatement(query);
-			rs = psmt.executeQuery();
 			
-			if (rs.next()) {
-				
-				dto.setId(rs.getString("id"));
-				
-				dto.setPass(rs.getString("pass"));
-				dto.setName(rs.getString("name")); 
-				dto.setEmail(rs.getString("email"));
-				dto.setTellNum(rs.getString("tellnum"));
-				dto.setMobile(rs.getString("mobile")); 
-				dto.setAddress(rs.getString("address"));
-				
-				
-				psmt.executeUpdate(); 
-				con.commit();
-			}
+			psmt.setString(1, dto.getPass());
+			psmt.setString(2, dto.getName());
+			psmt.setString(3, dto.getEmail());
+			psmt.setString(4, dto.getTellNum());
+			psmt.setString(5, dto.getMobile());
+			psmt.setString(6, dto.getAddress());
+			psmt.setString(7, dto.getId());
+			
+			result = psmt.executeUpdate();
+			con.commit();
 		}
 		catch (Exception e) {
 			System.out.println("회원정보 수정 중 예외발생");
@@ -181,6 +186,8 @@ public class ProjectMemberDAO extends JDBConnect {
 		}
 		return result;
 	}
-	*/
+	
+	
+	
 	
 }
