@@ -1,8 +1,18 @@
+<%@page import="model.shopboard.basketboardDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
-
+<!-- 글쓰기 전 로그인 확인 -->
+<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
+<%@ include file="../model1/loggingnow.jsp" %>
+<% 
+//DAO 객체 생성 및 DB연결
+basketboardDAO dao = new basketboardDAO(application);
+//출력할 레코드 추출
+List<basketboardDTO> boardLists = dao.selectList(param);
+//DB작업 끝났으므로 자원 해제
+dao.close();
+%>
  <body>
 	<center>
 	<div id="wrap">

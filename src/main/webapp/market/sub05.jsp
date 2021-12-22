@@ -44,7 +44,13 @@
 				<div style="text-align:left">
 					<img src="../images/market/sub05_img01.jpg" style="margin-bottom:30px;" />
 				</div>
-				<table cellpadding="0" cellspacing="0" border="0" class="con_table" style="width:100%;">
+				
+				
+				
+				
+				
+				<form method="post" action="SendProcess.jsp">
+				<table cellpadding="0" cellspacing="0" border="0" class="con_table" style="width:100%;" name="content">
 					<colgroup>
 						<col width="25%" />
 						<col width="*" />
@@ -52,14 +58,14 @@
 					<tbody>
 						<tr>
 							<th>고객명/회사명</th>
-							<td style="text-align:left;"><input type="text" name=""  value="" class="join_input" /></td>
+							<td style="text-align:left;"><input type="text" name="content"  value="" class="join_input" /></td>
 						</tr>
 						<tr>
 							<th>장애유무</th>
 							<td style="text-align:left;" style="padding:0px;">
 								<table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
 									<tr>
-										<td style="border-bottom:0px;"><input type="radio" name=""  value="" /> 유&nbsp;&nbsp;&nbsp;<input type="radio" name=""  value="" /> 무</td>
+										<td style="border-bottom:0px;"><input type="radio" name="1"  value="장애있음" /> 유&nbsp;&nbsp;&nbsp;<input type="radio" name=""  value="장애없음" /> 무</td>
 										<th style="border-bottom:0px;" width="100px">주요장애유형</th>
 										<td style="border-right:0px; border-bottom:0px;"><input type="text" name=""  value="" class="join_input" /></td>
 									</tr>
@@ -71,7 +77,7 @@
 							<td style="text-align:left;" style="padding:0px;">
 								<table cellpadding="0" cellspacing="0" border="0" style="width:100%;">
 									<tr>
-										<td style="border-bottom:0px;"><input type="radio" name=""  value="" /> 유&nbsp;&nbsp;&nbsp;<input type="radio" name=""  value="" /> 무</td>
+										<td style="border-bottom:0px;"><input type="radio" name=""  value="보호장비유" /> 유&nbsp;&nbsp;&nbsp;<input type="radio" name=""  value="보호장비무" /> 무</td>
 										<th style="border-bottom:0px;" width="100px">보장구 명</th>
 										<td style="border-right:0px; border-bottom:0px;"><input type="text" name=""  value="" class="join_input" /></td>
 									</tr>
@@ -107,7 +113,7 @@
 						</tr>
 						<tr>
 							<th>체험희망날짜</th>
-							<td style="text-align:left;"><input type="text" name=""  value="" class="join_input" /></td>
+							<td style="text-align:left;"><input type="text" name=""  valuess="join_input" /></td>
 						</tr>
 						<tr>
 							<th>접수종류 구분</th>
@@ -120,7 +126,11 @@
 						</tr>
 					</tbody>
 				</table>
-				<p style="text-align:center; margin-bottom:40px"><a href=""><img src="../images/btn01.gif" /></a>&nbsp;&nbsp;<a href="#"><img src="../images/btn02.gif" /></a></p>
+				<p style="text-align:center; margin-bottom:40px"><button type="submit"><img src="../images/btn01.gif" /></button></a>&nbsp;&nbsp;<a href="#"><img src="../images/btn02.gif" /></a></p>
+				<input style="display:none" type="text" name="from" value="ybj0096@naver.com" /> <!-- 보내는이 -->
+				<input style="display:none" type="text" name="to" value="000ybj0096@gmail.com" /> <!-- 받는이 -->
+				<input style="display:none" type="text" name="subject" size="50" value="메일 발송 테스트 0" /> <!-- 제목 -->
+				</form>
 			</div>
 		</div>
 		<%@ include file="../include/quick.jsp" %>

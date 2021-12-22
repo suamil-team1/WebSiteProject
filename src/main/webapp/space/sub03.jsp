@@ -1,3 +1,4 @@
+<%@page import="util.BoardPage"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
@@ -25,7 +26,27 @@ if(searchWord !=null){
 }
 //board테이블에 저장된 게시물의 갯수 카운트
 int totalCount = dao.selectCount(param);
-
+/***페이지 처리 start***/
+//컨텍스트 초기화 파라미터를 얻어온 후 사칙연산을 위한 정수로 변경한다.
+int pageSize=Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+int blockPage=Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
+//전체 페이지 수를 계산한다. 소수점을 얻기 위해 double로 형변환 후 나눈다.
+int totalPage= (int)Math.ceil((double)totalCount/pageSize);
+/*  
+목록에 첫 진입시에는 페이지 관련 파라미터가 없으므로 무조건 1page로 지정한다.
+만약 pageNum이 있다면 파라미터를 받아와서 정수로 변경한 후 페이지수로 지정한다.
+*/
+int pageNum=1;
+//pageTemp에 잠깐 저장
+String pageTemp = request.getParameter("pageNum");
+if(pageTemp != null&&!pageTemp.equals(""))
+	pageNum=Integer.parseInt(pageTemp);
+//게시물의 구간을 계산한다.
+int start=(pageNum-1)*pageSize+1;//구간의 시작
+int end=pageNum*pageSize;//구간의 끝
+param.put("start",start);//Map컬렉션에 저장 후 DAO로 전달함
+param.put("end", end);
+/***페이지 처리 end***/
 //출력할 레코드 추출
 List<ProjectBoardDTO> boardLists = dao.selectList(param);
 //DB작업 끝났으므로 자원 해제
@@ -54,18 +75,19 @@ dao.close();
 <div class="row text-right" style="margin-bottom:20px;
 		padding-right:50px;">
 <!-- 검색부분 -->
-<form class="form-inline" id="free">
+<form class="form-inline" id="notice" method="get">
 	<div class="form-group">
-		<select name="keyField" class="form-control">
-			<option value="">제목</option>
-			<option value="">작성자</option>
-			<option value="">내용</option>
+		<select name="searchField" class="form-control">
+			<option value="title">제목</option>
+			<!-- <option value="">작성자</option> -->
+			<option value="content">내용</option>
 		</select>
 	</div>
 	<div class="input-group">
-		<input type="text" name="keyString"  class="form-control"/>
+		<input type="text" name="searchWord"  class="form-control"/>
 		<div class="input-group-btn">
-			<button type="submit" class="btn btn-default">
+			<!-- <button type="submit" class="btn btn-default"> -->
+				<input type="submit" value="검색하기" />
 				<i class="glyphicon glyphicon-search"></i>
 			</button>
 		</div>
@@ -107,10 +129,11 @@ if(boardLists.isEmpty()){
 else{
 	//게시물이 있을때
 	int virtualNum=0;//게시물의 출력번호(가상번호)
+	int countNum=0;
 	for(ProjectBoardDTO dto:boardLists) //반복
 	{
 		//전체 레코드 수를 1씩 차감하면서 번호를 출력
-		virtualNum = totalCount--;
+		virtualNum = totalCount-(((pageNum-1)*pageSize)+countNum++);
 
 %>
 	<tbody>
@@ -142,18 +165,16 @@ else{
 	<button type="button" class="btn btn-warning">리스트보기</button>
 	<button type="submit" class="btn btn-danger">전송하기</button> -->
 </div>
-<!-- <div class="row text-center">
-	페이지번호 부분
-	<ul class="pagination">
-		<li><span class="glyphicon glyphicon-fast-backward"></span></li>
-		<li><a href="#">1</a></li>		
-		<li class="active"><a href="#">2</a></li>
-		<li><a href="#">3</a></li>
-		<li><a href="#">4</a></li>		
-		<li><a href="#">5</a></li>
-		<li><span class="glyphicon glyphicon-fast-forward"></span></li>
-	</ul>	
-</div> -->
+<div class="row text-center">
+	<div class="row mt-3">
+                <div class="col">
+                    <ul class="pagination justify-content-center">
+                        <%=BoardPage.pagingStr(totalCount,pageSize,
+        				blockPage, pageNum, request.getRequestURI()) %>
+                    </ul>
+                </div>
+            </div>
+</div>
 
 				</div>
 			</div>
