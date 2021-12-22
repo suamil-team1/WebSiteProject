@@ -8,7 +8,7 @@
 <%@page import="member.ProjectMemberDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
+<% 
 	String find = request.getParameter("find");
  
 	String id = request.getParameter("user_id");
