@@ -11,18 +11,18 @@ DAO(Data Access Object): 실제 데이터베이스에 접근하여
 */
 
 //DB 연결을 위한 클래스를 상속한다.
-public class ProjectMemberDAO extends JDBConnect {
+public class ProjectMemberDAO2 extends JDBConnect {
 	//인자가 4개인 부모의 생성자를 호출하여 연결한다.
-	public ProjectMemberDAO(String drv, String url, String id, String pw) {
+	public ProjectMemberDAO2(String drv, String url, String id, String pw) {
 		super(drv, url, id, pw);
 	}
 
 	//application 내장 객체만 매개변수로 받아 부모로 전달하는 생성자
-	public ProjectMemberDAO(ServletContext application) {
+	public ProjectMemberDAO2(ServletContext application) {
 		super(application);
 	}
 	
-	public ProjectMemberDAO(){}
+	public ProjectMemberDAO2(){}
 	
 	/*
 	 사용자가 입력한 아이디, 패스워드를 통해 회원테이블을 확인한 후
@@ -57,11 +57,9 @@ public class ProjectMemberDAO extends JDBConnect {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return dto;
 	}
 	
-
 	public ProjectMemberDTO getProMemberInfo(String uid, String uname, String uemail) {
 		
         
@@ -70,20 +68,14 @@ public class ProjectMemberDAO extends JDBConnect {
     	String query = "";
     	if(uid.equals("")) //아이디 찾기
     		query = "SELECT id FROM ProjectMember WHERE name=? AND email=?";
-    	else if (uname.equals("") && uemail.equals("")) {
-    		query = "SELECT * FROM ProjectMember WHERE id=?";
-    	}
     	else //비번찾기
     		query = "SELECT * FROM ProjectMember WHERE id=? AND name=? AND email=?";
-
+    	
         try {
             psmt = con.prepareStatement(query);
             if(uid.equals("")) {
                 psmt.setString(1, uname);
                 psmt.setString(2, uemail);
-            }
-            else if (uname.equals("") && uemail.equals("")) {
-            	psmt.setString(1, uid);
             }
         	else {
         		psmt.setString(1, uid);     
@@ -94,7 +86,7 @@ public class ProjectMemberDAO extends JDBConnect {
             rs = psmt.executeQuery();  
             if (rs.next()) {
                 dto.setId(rs.getString("id"));
-				dto.setPass(rs.getString(2));
+				dto.setPass(rs.getString("pass"));
 				dto.setName(rs.getString(3));
 				dto.setEmail(rs.getString(4));
 				dto.setRegidate(rs.getString(5));
@@ -107,10 +99,8 @@ public class ProjectMemberDAO extends JDBConnect {
         catch (Exception e) {
             e.printStackTrace();
         }
-
         return dto; 
     }
-	
 	
 	public int insertMember(ProjectMemberDTO dto) {
 		int result = 0;
@@ -140,24 +130,24 @@ public class ProjectMemberDAO extends JDBConnect {
 	}
 	
 	public boolean idCheck(String uid) {
-		  boolean isCorr = false;
-		  
-		  String query = "select id from Projectmember where id = ?";
-		  
-		  try {
-		     psmt = con.prepareStatement(query);
-		     psmt.setString(1, uid);
-		     rs = psmt.executeQuery();
-		     
-		     if (rs.next()) {
-		        isCorr = true;
-		     }
-		     
-		  }catch (Exception e) {
-		     e.printStackTrace();
-		  }
-		  return isCorr;
-	   }
+		boolean isCorr = false;
+		
+		String query = "select id from Projectmember where id = ?";
+		
+		try {
+			psmt = con.prepareStatement(query);
+			psmt.setString(1, uid);
+			rs = psmt.executeQuery();
+			
+			if (rs.next()) {
+				isCorr = true;
+			}
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isCorr;
+	}
 	
 	public int updateMemberInfo(ProjectMemberDTO dto) throws SQLException {
 		int result = 0;
@@ -186,8 +176,5 @@ public class ProjectMemberDAO extends JDBConnect {
 		}
 		return result;
 	}
-	
-	
-	
 	
 }

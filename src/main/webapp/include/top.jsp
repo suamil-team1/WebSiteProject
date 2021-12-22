@@ -15,7 +15,7 @@
     	} else {
 		%>
 		 <li><a href="../member/logout.jsp"><img src="../images/lnb05.gif" alt="LOG OUT" /></a></li>
-		<li><a href="#"><img src="../images/lnb06.gif" alt="MODIFY" /></a></li>
+		<li><a href="../member/modify.jsp"><img src="../images/lnb06.gif" alt="MODIFY" /></a></li>
 		<%
 		}
 		%>

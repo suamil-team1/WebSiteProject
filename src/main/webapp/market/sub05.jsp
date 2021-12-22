@@ -1,11 +1,16 @@
+<%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-
+<%
+   if (session.getAttribute("UserId") == null) {
+      JSFunction.alertLocation("로그인 후 이용하실 수 있습니다.", "../member/login.jsp", out);
+   }
+%>
 
  <body>
-	<center>
-	<div id="wrap">
+	<!-- <center> -->
+	<div id="wrap">	
 		<%@ include file="../include/top.jsp" %>
 
 		<img src="../images/market/sub_image.jpg" id="main_visual" />
@@ -128,6 +133,6 @@
 	
 
 	<%@ include file="../include/footer.jsp" %>
-	</center>
+	<!-- </center> -->
  </body>
 </html>
