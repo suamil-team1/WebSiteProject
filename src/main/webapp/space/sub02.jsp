@@ -7,27 +7,27 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
-request.getParameter("boardName");
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+
 //DAO 객체 생성 및 DB연결
-projectboardDAO dao = new projectboardDAO(application);
-//검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
-Map<String,Object> param =new HashMap<String,Object>();
-//검색 파라미터를 request 내장객체를 통해 얻어온다.
-String searchField = request.getParameter("searchField");
-String searchWord = request.getParameter("searchWord");
-//검색어가 있는 경우에만
+calendarDAO dao = new calendarDAO(application);
+
+//날짜 파라미터를 저장하기 위한 Map컬렉션 생성
+Map<String, calendarDTO> param = new HashMap<String, calendarDTO>();
+//날짜 값을 파라미터를 request 내장객체를 통해 얻어온다.
+String y = request.getParameter("y");
+String m = request.getParameter(("m");
+/*
 if(searchWord !=null){
 	//Map컬렉션에 파라미터 값을 추가한다.
 	param.put("searchField", searchField);//검색필드명(title,content 등)
 	param.put("searchWord", searchWord);//검색어
-}
-//board테이블에 저장된 게시물의 갯수 카운트
-int totalCount = dao.selectCount(param);
-//출력할 레코드 추출
-List<ProjectBoardDTO> boardLists = dao.selectList(param);
+}*/
+
+Map<String, calendarDTO> Lists = dao.selectCal(param);
 //DB작업 끝났으므로 자원 해제
 dao.close();
-
 %>
 %>
  <body>

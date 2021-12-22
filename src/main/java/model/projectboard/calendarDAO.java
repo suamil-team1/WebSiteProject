@@ -1,5 +1,6 @@
 package model.projectboard;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -43,43 +44,17 @@ public class calendarDAO extends JDBConnect{
         }
         return result;
     }
-//	
-//	//게시물의 갯수 카운트하기
-//		public int selectCount(Map<String, Object> map){
-//			int totalCount=0;//카운트 변수
-//			
-//			//쿼리문 작성
-//			String query = " SELECT COUNT(*) FROM Model2Board";
-//			//검색어가 있는 경우
-//			if(map.get("searchWord") != null) {
-//				query += " WHERE " + map.get("searchField") +" "
-//						+" LIKE '%" + map.get("searchWord") + "%' ";
-//			}
-//			
-//			try {
-//				//정적쿼리문 실행 객체 생성
-//				stmt = con.createStatement();
-//				rs = stmt.executeQuery(query);
-//				rs.next();
-//				
-//				//결과값을 변수에 저장
-//				totalCount = rs.getInt(1);
-//			}
-//			catch (Exception e) {
-//				System.out.println("게시물 수를 구하는 중 예외 발생");
-//				e.printStackTrace();
-//			}
-//			
-//			return totalCount;
-//		}
+	
 	//해당 날짜 title출력 메서드
-	public HashSet<calendarDTO> select(Map<String, Object> map) { 
+	public Map<String, calendarDTO> selectCal(String param) { 
 	    
-		//List컬렉션 생성 
-		HashSet bbs = new HashSet<calendarDTO>();  
+		//Map컬렉션 생성 
+		Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();  
 
         //쿼리문
-        String query = "SELECT title FROM Model2BoardCal "; 
+        String query = "SELECT bd.* , to_char(pdate, 'yyyy-mm-dd') "
+        		+ " FROM Model2BoardCal bd WHERE boardName='cal' "
+        		+ " AND to_char(pdate, 'yyyy-mm')='"+ param +"'"; 
 
         try {
             stmt = con.createStatement();    
@@ -100,14 +75,15 @@ public class calendarDAO extends JDBConnect{
                 //dto.setEmail(rs.getString("email"));
                 //dto.setName(rs.getString("name"));
                 
-                bbs.add(dto); //dto에 추가  
+                String pdate = dto.getPdate();
+                map.put(pdate, dto); //dto에 추가  
             }
         } 
         catch (Exception e) {
             System.out.println("게시물 조회 중 예외 발생");
             e.printStackTrace();
         }
-        return bbs;
+        return map;
     }
 }
 

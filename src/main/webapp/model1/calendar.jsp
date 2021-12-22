@@ -64,6 +64,7 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
    	int f_date;
     for (int j = 1; j <= last_day; j++) {
   
+    String tdate = y + "-" + (m+1) + "-" + j ;
     %>
    	 <!-- 날짜가 출력되는 부분 <%=y%>-<%=m+1%>-<%=j%> -->
    
