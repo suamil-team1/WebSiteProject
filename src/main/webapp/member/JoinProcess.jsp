@@ -17,9 +17,10 @@ String mobile1		= request.getParameter("mobile1");
 String mobile2		= request.getParameter("mobile2");
 String mobile3		= request.getParameter("mobile3");
 String mobile		= (mobile1 +"-" + mobile2 +"-" + mobile3);
+String zipcode		= request.getParameter("zip1");
 String address1		= request.getParameter("addr1");
 String address2		= request.getParameter("addr2");
-String address		= (address1 +","+ address2);
+String address		= (zipcode +"|"+ address1 +"|"+ address2);
  
 ProjectMemberDTO dto = new ProjectMemberDTO();
 dto.setId(id);

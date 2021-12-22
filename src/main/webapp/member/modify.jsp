@@ -14,11 +14,21 @@
 	ProjectMemberDAO dao = new ProjectMemberDAO(oracleDriver, oracleURL, oracleId, oraclePwd);
 	ProjectMemberDTO dto = dao.getProMemberInfo(userId, "", "");
 	
+	String[] tellnum = new String[2];
 	
-	//String[] tellnum = dto.getTellNum().split("-");
+	if (dto.getTellNum() != null) {
+		tellnum = dto.getTellNum().split("-");	
+	}
+	 else {
+		for (int i=0; i<=2; i++) {
+			tellnum[i] = " ";
+			
+		}
+	} 
+	
 	String[] mobile = dto.getMobile().split("-");
 	String[] email = dto.getEmail().split("@");
-	String[] address = dto.getAddress().split(",");
+	String[] address = dto.getAddress().split("|");
 	
 	
 %>
@@ -209,9 +219,9 @@ function zipFind(){
 					<tr>
 						<th><img src="../images/join_tit06.gif" /></th>
 						<td>
-							<input type="text" name="tel1" value="" maxlength="3" class="join_input" style="width:50px;" />&nbsp;-&nbsp;
-							<input type="text" name="tel2" value="" maxlength="4" class="join_input" style="width:50px;" />&nbsp;-&nbsp;
-							<input type="text" name="tel3" value="" maxlength="4" class="join_input" style="width:50px;" />
+							<input type="text" name="tel1" value="<%= tellnum[0] %>" maxlength="3" class="join_input" style="width:50px;" />&nbsp;-&nbsp;
+							<input type="text" name="tel2" value="<%= tellnum[1] %>" maxlength="4" class="join_input" style="width:50px;" />&nbsp;-&nbsp;
+							<input type="text" name="tel3" value="<%= tellnum[2] %>" maxlength="4" class="join_input" style="width:50px;" />
 						</td>
 					</tr>
 					<tr>
@@ -257,13 +267,13 @@ function zipFind(){
 					<tr>
 						<th><img src="../images/join_tit09.gif" /></th>
 						<td>
-							<input type="text" name="zip1" value=""  class="join_input" style="width:50px;" />
+							<input type="text" name="zip1" value="<%= address[0] %>"  class="join_input" style="width:50px;" />
 							<a href="javascript:;" title="새 창으로 열림" onclick="zipFind();" onkeypress="">[우편번호검색]</a> 
 							    
 							<br/>
 							
-							<input type="text" name="addr1" value="<%= address[0] %>"  class="join_input" style="width:550px; margin-top:5px;" /><br>
-							<input type="text" name="addr2" value="<%= address[1] %>"  class="join_input" style="width:550px; margin-top:5px;" />
+							<input type="text" name="addr1" value="<%= address[1] %>"  class="join_input" style="width:550px; margin-top:5px;" /><br>
+							<input type="text" name="addr2" value="<%= address[2] %>"  class="join_input" style="width:550px; margin-top:5px;" />
 						</td>
 					</tr>
 				</table>
