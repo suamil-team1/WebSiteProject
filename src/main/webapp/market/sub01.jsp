@@ -36,10 +36,9 @@ function basketIn(idx) {
 	var choiceCount = document.getElementById('Quantity_'+idx).value;
 	console.log("상품번호&갯수", idx, choiceCount);
 }
-/* function num() {
-	var a = document.getElementById('Quantity').value;
-	
-} */
+input.name onchange 
+
+ajax 해당 수량을 업데이트하는 쿼리문 
 </script>
  <body>
 	<!-- <center> -->
@@ -95,15 +94,16 @@ else{
 		virtualNum = totalCount--;
 
 %>					
-					<%-- <tr>
-						<td><%=dto.getpNum() %></td>
+					<tr>
+						<%-- <td><%=dto.getIdx() %></td> --%> 
+						<td><input type="checkbox" name="" value="" /></td>
 						<td><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/img01.jpg" /></a></td>
 						<td class="t_left"><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><%=dto.getPname()%></a></td>
 						<td class="p_style"><%=dto.getPrice()%></td>
-						<td><input type="number" id="Quantity" name="Quantity" value="1" class="n_box" onchange="num"/></td>
+						<td><input type="number" id="" name="Quantity" value="1" class="n_box" onchange="num"/></td>
 						<td><a href="basket02.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a><br /><a href="basket.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn02.gif" style="cursor: pointer"/></a></td>
-					</tr> --%>
-					<c:forEach begin="1" end="3" step="1" var="i">
+					</tr>
+					<%-- <c:forEach begin="1" end="3" step="1" var="i">
 					<tr>
 						<td>${i }</td>
 						<td><a href="market_view.jsp?idx=${i }"><img src="../images/market/img01.jpg" /></a></td>
@@ -112,7 +112,7 @@ else{
 						<td><input type="number" id="Quantity_${i }" name="Quantity_${i }" value="1" class="n_box" /></td>
 						<td><a href="basket02.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a><br /><a href="basket.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn02.gif" onclick="basketIn(${i })" style="cursor: pointer"/></a></td>
 					</tr>
-					</c:forEach>
+					</c:forEach> --%>
 <%
 	}
 }
