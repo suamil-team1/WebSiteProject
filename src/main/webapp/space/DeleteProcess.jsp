@@ -7,6 +7,7 @@
 <%
 //폼값 받기
 String idx= request.getParameter("idx");
+System.out.println(idx);
 String boardName = request.getParameter("boardName");
 System.out.println(boardName); 
 
@@ -21,7 +22,7 @@ String sessionId=session.getAttribute("UserId").toString();
 int delResult=0;
 
 //현재 삭제하는 사람이 해당 글의 작성자가 맞는지 확인
-if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
+//if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
 	
 	//DTO객체에 일련번호를 저장한 후 DAO로 매개변수 전달
 	dto.setIdx(idx);
@@ -42,18 +43,18 @@ if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
 		}
 		/* if(boardName.equals("gal")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub04.jsp?boardName=gal", out);
-		}
+		}*/
 		if(boardName.equals("ref")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub05.jsp?boardName=ref", out);
-		} */
+		}
 	}
 	else{
 		JSFunction.alertBack("삭제에 실패하였습니다.", out);
 	}
-}
-	else{// 작성자 본인이 아니면 삭제할 수 없음
-		JSFunction.alertBack("본인만 삭제할 수 있습니다.", out);
-		return;
-	}
+//}
+//else{// 작성자 본인이 아니면 삭제할 수 없음
+//	JSFunction.alertBack("본인만 삭제할 수 있습니다.", out);
+//	return;
+//}
 
 %>

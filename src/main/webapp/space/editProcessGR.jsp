@@ -69,7 +69,15 @@ try{
 	dao.close();
 	
 	if(affected==1){//성공
-		response.sendRedirect("sub05_view.jsp?idx="+ dto.getIdx());	
+		
+		switch(boardName){
+		case "gal" :
+			response.sendRedirect("sub04_view.jsp?idx="+ dto.getIdx() +"&boardName=" + dto.getBoardName());	
+			return;
+		case "ref" :
+			response.sendRedirect("sub05_view.jsp?idx="+ dto.getIdx() +"&boardName=" + dto.getBoardName());	
+			return;
+		}
 	}
 }
 catch(Exception e){

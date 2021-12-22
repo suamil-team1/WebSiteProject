@@ -64,7 +64,7 @@ try{
 		case "gal" : 
 			response.sendRedirect("sub04.jsp?boardName=gal"); return;
 		case "ref" :
-			response.sendRedirect("sub05_view.jsp?boardName=ref"); return;
+			response.sendRedirect("sub05.jsp?boardName=ref"); return;
 		}
 	}
 }

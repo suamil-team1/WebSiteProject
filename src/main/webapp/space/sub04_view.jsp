@@ -26,7 +26,7 @@ function deletePost() {
 	if(confirmed){
 		var form=document.fileForm;
 		form.method="post";//전송방식을 post로 설정
-		form.action="DeleteProcess.jsp";//전송할 URL
+		form.action="DeleteProcessGR.jsp";//전송할 URL
 		form.submit();//폼값 전송
 	}
 }
@@ -52,6 +52,7 @@ function deletePost() {
 
 <form enctype="multipart/form-data" name="fileForm" method="post">
 <input type="hidden" name="idx" value="<%= idx %>" />
+<input type="hidden" name="boardName" value="<%= boardName %>" />
 <table class="table table-bordered">
 <colgroup>
 	<col width="20%"/>
@@ -118,7 +119,7 @@ if(session.getAttribute("UserId")!=null
 %> 
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"
-		onclick="location.href='sub04_edit.jsp?idx=<%=dto.getIdx()%>';">수정하기</button>
+		onclick="location.href='sub04_edit.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
 		onclick="deletePost();">삭제하기</button>	
 	<button type="button" class="btn btn-warning" 
