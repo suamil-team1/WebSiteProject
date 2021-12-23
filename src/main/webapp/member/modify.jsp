@@ -1,11 +1,16 @@
+<%@page import="util.JSFunction"%>
 <%@page import="member.ProjectMemberDTO"%>
 <%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <%
+	if (session.getAttribute("UserId") == null) {
+		JSFunction.alertBack("로그인 후 이용하실 수 있습니다.", out);
+	}	
+
 	String userId = session.getAttribute("UserId").toString();
-	
+
 	String oracleDriver = application.getInitParameter("OracleDriver");
 	String oracleURL = application.getInitParameter("OracleURL");
 	String oracleId = application.getInitParameter("OracleId");
@@ -13,7 +18,7 @@
 	
 	ProjectMemberDAO dao = new ProjectMemberDAO(oracleDriver, oracleURL, oracleId, oraclePwd);
 	ProjectMemberDTO dto = dao.getProMemberInfo(userId, "", "");
-	
+
 	String[] tellnum = new String[3];
 	
 	if (dto.getTellNum() != null) {
@@ -32,6 +37,8 @@
 	
 %>
 <script>
+	//도메인 선택 (진행중)
+	<%-- 
 	function init() {
 		setDomain("<%= email[1] %>");
 	}
@@ -44,7 +51,8 @@
                 break;
             }
         }
-	} 
+	}  
+	--%>
 	
 </script>
 
