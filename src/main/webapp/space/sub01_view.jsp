@@ -108,12 +108,17 @@ function deletePost() {
 </table>
 
 <div class="row text-center" style="">
+<div class="container mt-3">
+<%
+if(session.getAttribute("UserId")=="admin")
+{
+%>
 	<!-- 각종 버튼 부분 -->
-	<div class="container mt-3">
 	<button type="button" class="btn btn-primary"
 	onclick="location.href='sub01_edit.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
-		onclick="deletePost();">삭제하기</button>	
+		onclick="deletePost();">삭제하기</button>
+<%} %>	
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='sub01.jsp?boardName=<%=boardName%>';">리스트보기</button>
 	</div>

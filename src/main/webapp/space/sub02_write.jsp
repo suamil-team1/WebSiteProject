@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
+<!-- 로그인 확인 -->
+<%@ include file="../model1/IsLoggedIn.jsp" %>
 <%
 String boardName =request.getParameter("boardName");
 %>

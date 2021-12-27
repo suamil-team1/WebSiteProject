@@ -4,8 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 글쓰기 처리 전 로그인 확인 -->
-<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
-<%@ include file="../model1/loggingnow.jsp" %>
+<%@ include file="../model1/IsLoggedIn.jsp" %>
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName);

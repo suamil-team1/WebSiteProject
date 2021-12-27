@@ -3,7 +3,8 @@
 <%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="./IsLoggedIn.jsp" %>--%>
+<!-- 수정 처리 전 로그인 확인 -->
+<%@ include file="../model1/IsLoggedIn.jsp" %>
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName);

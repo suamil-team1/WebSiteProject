@@ -3,8 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
-<!-- 글쓰기 전 로그인 확인 -->
-<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName); 
@@ -97,20 +95,19 @@ function deletePost() {
 </table>
 
 <div class="row text-center" style="">
+<div class="container mt-3">
 <%
-if(session.getAttribute("UserId")!=null
-           		&& session.getAttribute("UserId").toString().equals(dto.getId())){
-%>	
-<%
-}
-%> 
+if(session.getAttribute("UserId")=="admin")
+{
+%>	 
 	<!-- 각종 버튼 부분 -->
-	<div class="container mt-3">
 	<button type="button" class="btn btn-primary"
 	onclick="location.href='sub02_edit.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
 		onclick="deletePost();">삭제하기</button>
-		
+<%
+}
+%>		
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='sub02.jsp?boardName=<%=boardName%>';">리스트보기</button>
 	</div>

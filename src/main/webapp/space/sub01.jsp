@@ -166,9 +166,14 @@ else{
 <div class="row text-right" style="padding-right:50px;">
 	<!-- 각종 버튼 부분 -->
 	<!-- <button type="reset" class="btn">Reset</button> -->
-<div class="container mt-3">		
+<div class="container mt-3">
+<%
+if(session.getAttribute("UserId")=="admin")
+{
+%>
 	<button type="button" class="btn btn-outline-dark" 
 		onclick="location.href='sub01_write.jsp?boardName=<%=boardName%>';">글쓰기</button>
+<%} %>
 			
 	<!-- <button type="button" class="btn btn-primary">수정하기</button>
 	<button type="button" class="btn btn-success">삭제하기</button>

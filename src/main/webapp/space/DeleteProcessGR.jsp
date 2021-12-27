@@ -1,10 +1,11 @@
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 글쓰기 처리 전 로그인 확인 -->
-<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
-<%@ include file="../model1/loggingnow.jsp" %>
+<!-- 삭제 처리 전 로그인 확인 -->
+<%@ include file="../model1/IsLoggedIn.jsp" %>
 <%
 //파일 저장소
 String saveDirectory = application.getRealPath("/Uploads");

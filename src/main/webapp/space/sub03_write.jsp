@@ -2,8 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/global_head.jsp" %>
 <!-- 글쓰기 전 로그인 확인 -->
-<%-- <%@ include file="../model1/IsLoggedIn.jsp" %> --%>
-<%@ include file="../model1/loggingnow.jsp" %>
+<%@ include file="../model1/IsLoggedIn.jsp" %>
 <%
 String boardName = request.getParameter("boardName");
 System.out.println(boardName);
