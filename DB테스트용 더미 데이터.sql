@@ -25,13 +25,17 @@ INSERT INTO Model2BoardCal (id, title, content, pdate, boardName)
 /*	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', to_date('12/01/2021', 'mm/dd/yyyy'), 'cal');*/
 
 
-#수아몰 테이블 테스트용 더미데이터
+#수아몰 상품 테이블 테스트용 더미데이터
+insert into product(pname, pcontent,pNum,price,point)
+    values('참기름','고소해요','1','30000원','300포인트');
 
-INSERT INTO product(pname, pcontent, price, point, id, eaNum, delivery, delVer)
-   VALUES ('참기름','고소해요','3000','300', 'test', '1', '0','무료배송' ); 
+insert into product(pname, pcontent,pNum,price,point)
+    values('간장','짜요','2','20000원','200포인트');
 
-INSERT INTO product(pname, pcontent, price, point, id, eaNum, delivery, delVer)
-   VALUES ('피자','맛있어요','20000','2000', 'test', '1', '3000','택배배송' ); 
-    
-insert into product(pname, pcontent, price, point, id, eaNum, delivery, delVer)
-   values('맥주','짱 맛있어요','50000','5000', 'test1', '1', '3000','직접배달' ); 
+
+#수아몰 장바구니 테이블 테스트용 더미데이터
+insert into basket(pNum,id,eaNum,sump,delivery,delVer)
+    values('1','test','5','300000원','2500원','기본배송'); 
+
+insert into basket(pNum,id,eaNum,sump,delivery,delVer)
+    VALUES('2','test1','6','200000원','2500원','기본배송');

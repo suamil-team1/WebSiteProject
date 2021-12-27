@@ -54,47 +54,38 @@ CREATE TABLE Model2BoardCal(
 
 #수아몰 테이블 
 create table product(
-	idx INT AUTO_INCREMENT NOT NULL,		#상품일련번호
-	imgfile VARCHAR(100),	#이미지파일
-	pname VARCHAR(50) NOT NULL,	#상품명
-	pcontent TEXT NOT NULL,	#상품설명
+	pname VARCHAR(50) NOT NULL, #상품명
+	pcontent VARCHAR(200) NOT NULL,	#상품설명
+	pNum VARCHAR(50) PRIMARY key unique NOT NULL,	#상품번호
 	price VARCHAR(50) NOT NULL,	#가격
-	point VARCHAR(50) NOT NULL,	#적립금
-	id VARCHAR(30) NOT null,
-	eaNum VARCHAR(50) NOT NULL,	#선택수량
-	delivery VARCHAR(50) NOT NULL,	#배송비
-	delVer VARCHAR(50) NOT NULL,		#배송구분(무료배송/택배배송/직접배달)
-	PRIMARY KEY (idx)
+	imgfile VARCHAR(200),	#이미지파일
+	POINT VARCHAR(50) NOT NULL	#적립금
 );
-
 
 #장바구니 
 create table basket(
-	idx INT AUTO_INCREMENT NOT NULL,	#상품일련번호
-	id VARCHAR(30) NOT NULL,
-	eaNum INT NOT NULL,	#선택수량
-	sump INT NOT NULL,		#합계금액
-	primary key (idx)
-);
+	pNum VARCHAR(50) unique NOT NULL,	#상품번호
+	id VARCHAR(30) primary key not null,
+	eaNum VARCHAR(50) NOT NULL,	#선택수량
+	sump VARCHAR(50) NOT NULL,	#합계금액
+	delivery VARCHAR(50) not NULL,	#배송방법
+	delVer VARCHAR(50) not NULL	#배송구분(무료배송/택배배송/직접배달)
+); 
 
-#외래키(장바구니 --> 상품) ※ 에러발생. 수정요망
-ALTER TABLE basket
-	ADD CONSTRAINT product_basket_fk
-	FOREIGN KEY (pNum)
-	REFERENCES product (pNum)
-;    
+#외래키(장바구니 --> 상품)
+ALTER TABLE basket ADD CONSTRAINT product_basket_fk
+   FOREIGN KEY (pNum) REFERENCES product (pNum); 
 
 #상품 주문서
 create table orderl(
-	id VARCHAR(30) primary KEY NOT NULL,
-	address TEXT NOT NULL,	#배송지
-	pay VARCHAR(50) NOT NULL	#결제방법
+    id VARCHAR(30) primary KEY NOT NULL,
+    address TEXT NOT NULL,    #배송지
+    pay VARCHAR(50) NOT NULL    #결제방법
 ); 
-
 
 #외래키(장바구니와 상품주문서) ※ 실행은 잘되지만 확인 요망.
 ALTER TABLE basket
 	ADD CONSTRAINT basket_orderl_fk
 	FOREIGN KEY (id)
 	REFERENCES orderl (id)
-;musthave_db
+;
