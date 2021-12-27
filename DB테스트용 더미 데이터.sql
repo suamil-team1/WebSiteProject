@@ -1,9 +1,3 @@
-# 게시판 테이블 테스트용 더미데이터
-
-insert into Model2Board(id,title,content,boardName)
-    values('hj0825','로그인 연동 테스트','처음 뵙겠습니다', 'prt');
-
-
 # 멤버 테이블 테스트용 더미데이터
 
 INSERT INTO Projectmember(id, pass, name, email, mobile,address) 
@@ -14,10 +8,18 @@ INSERT INTO Projectmember(id, pass, name, email, mobile,address)
 	VALUES ('hj0825', '890825', '임시험', 'hj0825@gmail.com', '010-3333-9999','경기도 수원시 권광로 21번길 보성아파트');
 
 
+# 게시판 테이블 테스트용 더미데이터
+
+insert into Model2Board(id,title,content,boardName)
+    values('hj0825','로그인 연동 테스트','처음 뵙겠습니다', 'prt');
+
+
 #캘린더형 게시판 테이블 테스트용 더미데이터
 
 INSERT INTO Model2BoardCal (id, title, content, pdate, boardName)
-	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', to_date('12/01/2021', 'mm/dd/yyyy'), 'cal');
+	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', (DATE_FORMAT('2021/12/01', '%Y/%m/%d')), 'cal');
+	
+/*	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', to_date('12/01/2021', 'mm/dd/yyyy'), 'cal');*/
 
 
 #수아몰 테이블 테스트용 더미데이터
