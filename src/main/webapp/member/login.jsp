@@ -57,9 +57,9 @@
 					
 					<span style="font-size: 18px; font-weight: bold;"><%= session.getAttribute("UserName") %></span> 님, 반갑습니다.<br>
 					<br><br>
-					<button onclick="location.href='../adminpage/index.jsp';" style="width:70px;font-size:1px;height:20px; ">관리자모드</button>
-					<button type="button" onclick="location.href='modify.jsp';">회원정보수정</button>
-					<button type="button"  onclick="location.href='logout.jsp';">로그아웃</button>
+					<button onclick="location.href='../adminpage/index.jsp';" class="btn btn-primary" ">관리자모드</button>
+					<button type="button" class="btn btn-warning" onclick="location.href='modify.jsp';">회원정보수정</button>
+					<button type="button" class="btn btn-danger"  onclick="location.href='logout.jsp';">로그아웃</button>
 				</div>
 				<%
 				} else {
@@ -68,8 +68,8 @@
 					
 					<span style="font-size: 18px; font-weight: bold;"><%= session.getAttribute("UserName") %></span> 님, 반갑습니다.<br>
 					<br><br>
-					<button type="button" onclick="location.href='modify.jsp';">회원정보수정</button>
-					<button type="button"  onclick="location.href='logout.jsp';">로그아웃</button>
+					<button type="button" class="btn btn-warning" onclick="location.href='modify.jsp';">회원정보수정</button>
+					<button type="button" class="btn btn-danger"  onclick="location.href='logout.jsp';">로그아웃</button>
 				</div>
 				<%
 				}

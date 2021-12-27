@@ -1,4 +1,4 @@
-<%@page import="util.JSFunction"%>
+	<%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -136,7 +136,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="tables.jsp">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>인원관리</span></a>
             </li>
 
             <!-- Divider -->

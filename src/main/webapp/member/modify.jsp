@@ -6,12 +6,12 @@
 <%
 	String userId = session.getAttribute("UserId").toString();
 	
-	String oracleDriver = application.getInitParameter("OracleDriver");
-	String oracleURL = application.getInitParameter("OracleURL");
-	String oracleId = application.getInitParameter("OracleId");
-	String oraclePwd = application.getInitParameter("OraclePwd");
+	String mariaDBDriver = application.getInitParameter("MariaDBDriver");
+	String mariaDBURL = application.getInitParameter("MariaDBURL");
+	String mariaDBId = application.getInitParameter("MariaDBId");
+	String mariaDBPwd = application.getInitParameter("MariaDBPwd");
 	
-	ProjectMemberDAO dao = new ProjectMemberDAO(oracleDriver, oracleURL, oracleId, oraclePwd);
+	ProjectMemberDAO dao = new ProjectMemberDAO(mariaDBDriver, mariaDBURL, mariaDBId, mariaDBPwd);
 	ProjectMemberDTO dto = dao.getProMemberInfo(userId, "", "");
 	
 	String[] tellnum = new String[3];

@@ -436,19 +436,6 @@
 											<td><%=dto.getAddress() %></td>
 											<td><%=dto.getType() %></td>
 										<tr>
-                                       <%--  <c:choose>
-										<c:when test="${empty boardLists }">  <!-- 게시물이 없을때 --> 	<!-- 포워드가 걸렸으니 가장 좁은 영역인 request영역이 된다. (EL은 영역 지정하지 않으면 가장 좁은 영역 자동선택 -->
-											<tr>
-												<td colspan="6" align="center">
-													등록된 게시물이 없습니다^^*
-												</td>
-											</tr>
-										</c:when>
-										<c:otherwise> <!-- 출력할 게시물이 있을때 -->
-											<c:forEach items="${boardLists}" var="row" varStatus="loop">
-                                    		<td>${row.id }</td>
-											<td>${row.visitcount }</td> 
-											<td>${row.postdate }</td>  --%>
                                     </tbody>
                                     <%
 									      	}
