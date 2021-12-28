@@ -1,12 +1,3 @@
-#DB 생성
-CREATE DATABASE musthave_db;
-#계정 생성
-CREATE user 'musthave_user'@'localhost' IDENTIFIED BY '1234';
-#계정에 DB관련 권한 부여
-GRANT ALL PRIVILEGES ON musthave_db.* TO 'musthave_user'@'localhost';
-#새로고침
-FLUSH PRIVILEGES;
-
 # 일반 게시판 테이블(자식)
 create table Model2Board(
 	idx INT PRIMARY KEY AUTO_INCREMENT NOT NULL,	#일련번호
@@ -47,7 +38,7 @@ CREATE TABLE Model2BoardCal(
 	id VARCHAR(30) NOT NULL,
 	title VARCHAR(300) NOT NULL,
 	content TEXT NOT NULL,
-	pdate DATE DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	pdate DATE NOT NULL,
 	boardName VARCHAR(30)
 );
 
