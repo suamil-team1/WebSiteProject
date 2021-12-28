@@ -35,7 +35,7 @@ public class ProjectMemberDAO extends JDBConnect {
 	public ProjectMemberDTO getMemberDTO(String uid, String upass) {
 		ProjectMemberDTO dto = new ProjectMemberDTO();
 		//회원로그인을 위한 쿼리문 작성
-		String query = "SELECT * FROM Projectmember WHERE id =? AND pass=?";
+		String query = "SELECT * FROM ProjectMember WHERE id =? AND pass=?";
 		
 		try {
 			psmt = con.prepareStatement(query);

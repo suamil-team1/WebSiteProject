@@ -85,7 +85,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.jsp">Colors</a>
+                        <a class="collapse-item" href="member_list.jsp">인원관리</a>
                         <a class="collapse-item" href="utilities-border.jsp">Borders</a>
                         <a class="collapse-item" href="utilities-animation.jsp">Animations</a>
                         <a class="collapse-item active" href="utilities-other.jsp">Other</a>
@@ -325,7 +325,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%=session.getAttribute("UserName") %></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>

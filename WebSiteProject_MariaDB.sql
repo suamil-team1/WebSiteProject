@@ -1,3 +1,15 @@
+/*
+#DB 생성
+MariaDB [mysql]> create database hj890825;
+#계정 생성
+MariaDB [mysql]> create user 'hj890825'@'hj890825.cafe24.com' identified by 'varan@1350';
+#계정에 DB관련 권한 부여
+MariaDB [mysql]> grant all privileges on hj890825.* to 'hj890825'@'hj890825.cafe24.com';
+#새로고침
+MariaDB [mysql]> flush privileges;
+*/
+
+DROP TABLE Model2Board;
 # 일반 게시판 테이블(자식)
 create table Model2Board(
 	idx INT PRIMARY KEY AUTO_INCREMENT NOT NULL,	#일련번호
@@ -11,8 +23,9 @@ create table Model2Board(
 	boardName VARCHAR(30)	#직원 emp, 보호자 prt, 공지 not, 자유fre, 사진 gal, 자료실 ref
 );
 
+DROP TABLE Projectmember;
 #회원 테이블(부모)
-create table Projectmember
+create TABLE Projectmember
 (
 	id VARCHAR(30) NOT NULL,
 	pass VARCHAR(40) NOT NULL,
@@ -26,13 +39,19 @@ create table Projectmember
 	PRIMARY KEY (id)
 );
 
+#SELECT * FROM Projectmember WHERE id ='admin' AND pass='1234';
+
+
+
+
+alter table Model2Board drop foreign key fk_M2Board_pMember;
 #외래키 설정(일반 게시판 테이블 --> 멤버 테이블)
 ALTER TABLE Model2Board ADD CONSTRAINT fk_M2Board_pMember
-	FOREIGN KEY (id) REFERENCES Projectmember (id);
+	FOREIGN KEY (id) REFERENCES ProjectMember (id);
 	
 	
 #캘린더형 게시판 테이블(자식)
-DROP TABLE model2boardcal;
+DROP TABLE Model2BoardCal;
 CREATE TABLE Model2BoardCal(
 	idx INT PRIMARY KEY AUTO_INCREMENT NOT NULL,	#일련번호
 	id VARCHAR(30) NOT NULL,
@@ -41,7 +60,6 @@ CREATE TABLE Model2BoardCal(
 	pdate DATE NOT NULL,
 	boardName VARCHAR(30)
 );
-
 
 #수아몰 테이블 
 create table product(

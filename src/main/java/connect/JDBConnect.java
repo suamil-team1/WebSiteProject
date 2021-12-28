@@ -1,3 +1,4 @@
+
 package connect;
 
 import java.sql.Connection;
@@ -24,7 +25,7 @@ public class JDBConnect {
 			Class.forName("org.mariadb.jdbc.Driver");
 			//커넥션 URL 생성
 			String url = "jdbc:mariadb://127.0.0.1:3306/hj890825";
-			String id = "dbcp_mariadb";
+			String id = "hj890825";
 			String pwd = "varan@1350";
 			con = DriverManager.getConnection(url, id, pwd);
 			
@@ -87,3 +88,4 @@ public class JDBConnect {
 		}
 	}
 }
+
