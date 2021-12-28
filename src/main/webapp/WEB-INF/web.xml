@@ -17,15 +17,15 @@
 </context-param>
 <context-param>
     <param-name>MariaDBURL</param-name>
-    <param-value>jdbc:mariadb://127.0.0.1:3306/musthave_db</param-value>
-</context-param>
-<context-param>
+    <param-value>jdbc:mariadb://127.0.0.1:3306/hj890825</param-value>
+  </context-param>
+  <context-param>
     <param-name>MariaDBId</param-name>
-    <param-value>musthave_user</param-value>
-</context-param>
-<context-param>
+    <param-value>hj890825</param-value>
+  </context-param>
+  <context-param>
     <param-name>MariaDBPwd</param-name>
-    <param-value>1234</param-value>
+    <param-value>varan@1350</param-value>
 </context-param>
 
 <!-- 한글 깨짐에 대한 인코딩 필터 설정 -->
