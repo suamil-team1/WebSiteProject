@@ -1,15 +1,11 @@
-#DB 생성
-CREATE DATABASE musthave_db;
-#계정 생성
-CREATE user 'musthave_user'@'localhost' IDENTIFIED BY '1234';
-#계정에 DB관련 권한 부여
-GRANT ALL PRIVILEGES ON musthave_db.* TO 'musthave_user'@'localhost';
-#새로고침
-FLUSH PRIVILEGES;
 /*
+#DB 생성
 MariaDB [mysql]> create database hj890825;
+#계정 생성
 MariaDB [mysql]> create user 'hj890825'@'hj890825.cafe24.com' identified by 'varan@1350';
-MariaDB [mysql]> grant all privileges on hj890825_db.* to 'hj890825'@'hj890825.cafe24.com';
+#계정에 DB관련 권한 부여
+MariaDB [mysql]> grant all privileges on hj890825.* to 'hj890825'@'hj890825.cafe24.com';
+#새로고침
 MariaDB [mysql]> flush privileges;
 */
 
@@ -29,7 +25,7 @@ create table Model2Board(
 
 DROP TABLE Projectmember;
 #회원 테이블(부모)
-create TABLE ProjectMember
+create TABLE Projectmember
 (
 	id VARCHAR(30) NOT NULL,
 	pass VARCHAR(40) NOT NULL,
