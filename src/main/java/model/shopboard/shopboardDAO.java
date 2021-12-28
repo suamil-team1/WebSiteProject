@@ -58,7 +58,7 @@ public class shopboardDAO extends JDBConnect{
 	            query += " WHERE " + map.get("searchField")
 	                   + " LIKE '%" + map.get("searchWord") + "%' ";
 	        }
-	        query += " ORDER BY idx DESC "; //내림차순 정렬
+	        query += " ORDER BY pNum DESC "; //내림차순 정렬
 
 	        try {
 	            stmt = con.createStatement();    
@@ -72,7 +72,7 @@ public class shopboardDAO extends JDBConnect{
 
 	            	dto.setPname(rs.getString("pname"));
 	                dto.setPcontent(rs.getString("pcontent"));
-	                dto.setIdx(rs.getString("idx"));   
+	                //dto.setIdx(rs.getString("idx"));   
 	                dto.setpNum(rs.getString("pNum"));      
 	                dto.setPrice(rs.getString("price"));   
 	                dto.setImgfile(rs.getString("imgfile"));
@@ -89,22 +89,22 @@ public class shopboardDAO extends JDBConnect{
 	    }
 		
 		//상세보기를 위해 특정 일련번호에 해당하는 게시물을 인출한다. 
-	    public shopboardDTO selectView(String idx) { 
+	    public shopboardDTO selectView(String pNum) { 
 	        
 	    	shopboardDTO dto = new shopboardDTO(); 
 	        
 	        String query = "select"
-	        		+ " idx, pname, pcontent,pNum,price,point,imgfile "
+	        		+ " pNum, pname, pcontent,price,point,imgfile "
 	        		+ " from product "
-	                + " WHERE idx=?";
+	                + " WHERE pNum=?";
 	        
 	        try {
 	            psmt = con.prepareStatement(query);
-	            psmt.setString(1, idx);   
+	            psmt.setString(1, pNum);   
 	            rs = psmt.executeQuery();  
 	            //일련번호는 중복되지 않으므로 if문에서 처리하면 된다. 
 	            if (rs.next()) {//ResultSet에서 커서를 이동시켜 레코드를 읽은 후
-	                dto.setIdx(rs.getString("idx"));   
+	                //dto.setIdx(rs.getString("idx"));   
 	            	dto.setPname(rs.getString("pname"));
 	                dto.setPcontent(rs.getString("pcontent"));
 	                dto.setpNum(rs.getString("pNum"));      
@@ -121,7 +121,7 @@ public class shopboardDAO extends JDBConnect{
 	        return dto; 
 	    }
 	  //게시물 출력 관련 메서드
-	    public shopboardDTO selectBasket(String idx) { 
+	    public shopboardDTO selectBasket(String pNum) { 
 		    
 			shopboardDTO dto = new shopboardDTO(); 
 
@@ -130,15 +130,15 @@ public class shopboardDAO extends JDBConnect{
 	        		+" imgfile, pname, price, point, eaNum,delivery,delVer,sumP "
 	        		+" from product P inner join basket B "
 	        		+" on P.pNum=B.pNum "
-	                +" where idx=?";
+	                +" where P.pNum=?";
 
 	        try {
 	        	psmt = con.prepareStatement(query);
-	            psmt.setString(1, idx);   
+	            psmt.setString(1, pNum);   
 	            rs = psmt.executeQuery();  
 	            //결과 반복
 	            while (rs.next()) { 
-	            	
+	            	dto.setpNum(rs.getString("pNum"));
 	            	dto.setPname(rs.getString("pname"));
 	            	dto.setImgfile(rs.getString("imgfile"));
 	            	dto.setPrice(rs.getString("price"));

@@ -20,7 +20,7 @@ insert into Model2Board(id,title,content,boardName)
 #캘린더형 게시판 테이블 테스트용 더미데이터
 
 INSERT INTO Model2BoardCal (id, title, content, pdate, boardName)
-	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', (DATE_FORMAT('2021/12/01', '%Y/%m/%d')), 'cal');
+	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', (DATE_FORMAT('2021-12-01', '%y-%m-%d')), 'cal');
 #밑에 to_date쓰면 에러남
 /*	VALUES ('test' , '12월의 첫날' , '12월의 첫날 입니다.', to_date('12/01/2021', 'mm/dd/yyyy'), 'cal');*/
 
