@@ -3,7 +3,7 @@ package model.shopboard;
 
 public class shopboardDTO {
 
-	private String idx;
+	//private String idx;
 	private String pname;
     private String pcontent;
     private String pNum;
@@ -48,13 +48,14 @@ public class shopboardDTO {
 		this.delVer = delVer;
 	}
 	
-    
+    /*
     public String getIdx() {
 		return idx;
 	}
 	public void setIdx(String idx) {
 		this.idx = idx;
 	}
+	*/
     public String getPname() {
 		return pname;
 	}
