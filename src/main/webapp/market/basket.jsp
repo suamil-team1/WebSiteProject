@@ -13,14 +13,14 @@
 <%@ include file="../model1/loggingnow.jsp" %>
 <%
 //게시물의 일련번호를 파라미터를 통해 받는다. 
-String pNum = request.getParameter("pNum"); 
+String idx = request.getParameter("idx"); 
 String id = request.getParameter("id");
 
 //DB연결
 shopboardDAO dao = new shopboardDAO(application);
 
 //일련번호에 해당하는 게시물 조회
-//shopboardDTO dto = dao.selectView(pNum);
+//shopboardDTO dto = dao.selectView(idx);
 shopboardDTO dto = dao.selectBasket(id);
 
 

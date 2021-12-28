@@ -99,13 +99,13 @@ else{
 					
 					<tr>
 						<td><%= virtualNum %></td>
-						<td><a href="market_view.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/img01.jpg" /></a></td>
-						<td class="t_left"><a href="market_view.jsp?pNum=<%= dto.getpNum()%>"><%=dto.getPname()%></a></td>
+						<td><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/img01.jpg" /></a></td>
+						<td class="t_left"><a href="market_view.jsp?idx=<%= dto.getIdx()%>"><%=dto.getPname()%></a></td>
 						<td class="p_style"><%=dto.getPrice()%></td>
 						<td><input type="text" name="" value="1" class="n_box" /></td>
-						<td><a href="basket02.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a>
+						<td><a href="basket02.jsp?idx=<%= dto.getIdx()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a>
 						<br />
-						<a href="basket02.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/btn02.gif" /></a></td>
+						<a href="basket.jsp?id=<%= dto.getId()%>"><img src="../images/market/btn02.gif" /></a></td>
 					</tr>
 <%
 	}
