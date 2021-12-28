@@ -16,9 +16,9 @@ String searchField = request.getParameter("searchField");
 String searchWord = request.getParameter("searchWord");
 //검색어가 있는 경우에만 
 if(searchWord !=null){
-	//Map컬렉션에 파라미터 값을 추가한다.
-	param.put("searchField", searchField);//검색필드명(title,content 등)
-	param.put("searchWord", searchWord);//검색어
+   //Map컬렉션에 파라미터 값을 추가한다.
+   param.put("searchField", searchField);//검색필드명(title,content 등)
+   param.put("searchWord", searchWord);//검색어
 }
 //board테이블에 저장된 게시물의 갯수 카운트
 int totalCount = dao.selectCount(param);
@@ -30,7 +30,7 @@ int totalPage = (int)Math.ceil((double)totalCount / pageSize);
 int pageNum = 1;
 String pageTemp = request.getParameter("pageNum");
 if (pageTemp != null && !pageTemp.equals(""))
-	pageNum = Integer.parseInt(pageTemp);
+   pageNum = Integer.parseInt(pageTemp);
 
 int start = (pageNum -1) * pageSize + 1;
 int end = pageNum * pageSize;
@@ -44,57 +44,58 @@ dao.close();
 %>
 
  <body>
-	<!-- <center> -->
-	<div id="wrap">
-		<%@ include file="../include/top.jsp" %>
+   <!-- <center> -->
+   <div id="wrap">
+      <%@ include file="../include/top.jsp" %>
 
-		<img src="../images/market/sub_image.jpg" id="main_visual" />
+      <img src="../images/market/sub_image.jpg" id="main_visual" />
 
-		<div class="contents_box">
-			<div class="left_contents">
-				
-				<%@ include file = "../include/market_leftmenu.jsp" %>
-			</div>
-			<div class="right_contents">
-				<div class="top_title">
-					<img src="../images/market/sub01_title.gif" alt="수아밀 제품 주문" class="con_title" />
-					<p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린장터&nbsp;>&nbsp;수아밀 제품 주문<p>
-				</div>
-				<table cellpadding="0" cellspacing="0" border="0" class="market_board01">
-					<colgroup>
-						<col width="5%" />
-						<col width="20%" />
-						<col width="*" />
-						<col width="10%" />
-						<col width="10%" />
-						<col width="15%" />
-					</colgroup>
-					<tr>
-						<th>번호</th>
-						<th>상품이미지</th>
-						<th>상품명</th>
-						<th>가격</th>
-						<th>수량</th>
-						<th>구매</th>
-					</tr>
+      <div class="contents_box">
+         <div class="left_contents">
+            
+            <%@ include file = "../include/market_leftmenu.jsp" %>
+         </div>
+         <div class="right_contents">
+            <div class="top_title">
+               <img src="../images/market/sub01_title.gif" alt="수아밀 제품 주문" class="con_title" />
+               <p class="location"><img src="../images/center/house.gif" />&nbsp;&nbsp;열린장터&nbsp;>&nbsp;수아밀 제품 주문<p>
+            </div>
+            <table cellpadding="0" cellspacing="0" border="0" class="market_board01">
+               <colgroup>
+                  <col width="5%" />
+                  <col width="20%" />
+                  <col width="*" />
+                  <col width="10%" />
+                  <col width="10%" />
+                  <col width="15%" />
+               </colgroup>
+               <tr>
+                  <th>번호</th>
+                  <th>상품이미지</th>
+                  <th>상품명</th>
+                  <th>가격</th>
+                  <th>수량</th>
+                  <th>구매</th>
+               </tr>
 <%
 if(boardLists.isEmpty()){
 %>
-	<tr>
-		<td colspan="6" align="center">
-			등록된 게시물이 없습니다^^*
-		</td>
-	</tr>
+   <tr>
+      <td colspan="6" align="center">
+         등록된 게시물이 없습니다^^*
+      </td>
+   </tr>
 <%
 }
 else{
-	//게시물이 있을때
-	int virtualNum=0;//게시물의 출력번호(가상번호)
-	for(shopboardDTO dto:boardLists) //반복
-	{
-		//전체 레코드 수를 1씩 차감하면서 번호를 출력
-		virtualNum = totalCount--;
+   //게시물이 있을때
+   int virtualNum=0;//게시물의 출력번호(가상번호)
+   for(shopboardDTO dto:boardLists) //반복
+   {
+      //전체 레코드 수를 1씩 차감하면서 번호를 출력
+      virtualNum = totalCount--;
 
+<<<<<<< HEAD
 %>					
 					
 					<tr>
@@ -107,18 +108,32 @@ else{
 						<br />
 						<a href="basket02.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/btn02.gif" /></a></td>
 					</tr>
+=======
+%>               
+               
+               <tr>
+                  <td><%= virtualNum %></td>
+                  <td><a href="market_view.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/img01.jpg" /></a></td>
+                  <td class="t_left"><a href="market_view.jsp?pNum=<%= dto.getpNum()%>"><%=dto.getPname()%></a></td>
+                  <td class="p_style"><%=dto.getPrice()%></td>
+                  <td><input type="text" name="" value="1" class="n_box" /></td>
+                  <td><a href="basket02.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/btn01.gif" style="margin-bottom:5px;" /></a>
+                  <br />
+                  <a href="basket02.jsp?pNum=<%= dto.getpNum()%>"><img src="../images/market/btn02.gif" /></a></td>
+               </tr>
+>>>>>>> refs/remotes/origin/main
 <%
-	}
+   }
 }
 %>
-				</table>
-			</div>
-		</div>
-		<%@ include file="../include/quick.jsp" %>
-	</div>
-	
+            </table>
+         </div>
+      </div>
+      <%@ include file="../include/quick.jsp" %>
+   </div>
+   
 
-	<%@ include file="../include/footer.jsp" %>
-	</center>
+   <%@ include file="../include/footer.jsp" %>
+   </center>
  </body>
 </html>

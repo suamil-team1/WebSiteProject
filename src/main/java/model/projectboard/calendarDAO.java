@@ -52,9 +52,10 @@ public class calendarDAO extends JDBConnect{
 		Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();  
 
         //쿼리문
-        String query = "SELECT bd.* , to_char(pdate, 'yyyy-mm-dd') pd "
+        String query = "SELECT bd.* , DATE_FORMAT(pdate, '%Y-%m-%d') pd "
         		+ " FROM Model2BoardCal bd WHERE boardName='cal' "
-        		+ " AND to_char(pdate, 'yyyy-mm')='"+ param +"'"; 
+        		+ " AND DATE_FORMAT(pdate, '%Y-%m')='"+ param +"'";
+
         System.out.println(query);
 
         try {
@@ -95,7 +96,7 @@ public class calendarDAO extends JDBConnect{
     	calendarDTO dto = new calendarDTO(); 
         
         String query = "SELECT"
-        		+ " idx, C.id, title, content, pdate, boardName, to_char(pdate, 'yyyy-mm-dd') pd "
+        		+ " idx, C.id, title, content, pdate, boardName, DATE_FORMAT(pdate, '%Y-%m-%d') pd "
         		+ " FROM Model2BoardCal C inner join Projectmember M "
         		+ " on C.id=M.id "
                 + " WHERE idx=?";
