@@ -24,12 +24,12 @@ public class JDBConnect {
 			//오라클 드라이버 로드
 			Class.forName("org.mariadb.jdbc.Driver");
 			//커넥션 URL 생성
-			String url = "jdbc:mariadb://127.0.0.1:3306/hj890825";
+			String url = "jdbc:mariadb://localhost:3306/hj890825";
 			String id = "hj890825";
 			String pwd = "varan@1350";
 			con = DriverManager.getConnection(url, id, pwd);
 			
-			System.out.println("DB 연결 성공(기본 생성자)");
+			System.out.println("DB 연결 성공");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -44,7 +44,7 @@ public class JDBConnect {
 			//DB에 연결
 			con = DriverManager.getConnection(url, id, pwd);
 			
-			System.out.println("DB 연결 성공(인자 생성자 1)");
+			System.out.println("DB 연결 성공");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class JDBConnect {
 			//DB에 연결
 			con = DriverManager.getConnection(url, id, pwd);
 			
-			System.out.println("DB 연결 성공(인자 생성자 2)");
+			System.out.println("DB 연결 성공");
 		}
 		catch(Exception e) {
 			e.printStackTrace();
