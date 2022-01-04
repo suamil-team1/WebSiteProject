@@ -154,9 +154,9 @@ public class projectboardDAO extends JDBConnect{
         
     	ProjectBoardDTO dto = new ProjectBoardDTO(); 
         
-        String query = "select"
+        String query = "SELECT"
         		+ " idx, B.id, title, content, postdate, ofile, sfile, visitcount, boardName "
-        		+ " from Model2Board B inner join Projectmember M "
+        		+ " FROM Model2Board B inner join ProjectMember M "
         		+ " on B.id=M.id "
                 + " WHERE idx=?";
 
