@@ -1,3 +1,8 @@
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="member.ProjectMemberDAO"%>
 <%@page import="util.JSFunction"%>
 <%@page import="util.CookieManager"%>
@@ -30,6 +35,7 @@ function validateForm(form) {
 } 
   
 <%
+//아이디 저장 
 ProjectMemberDAO dao = new ProjectMemberDAO(application);
 
 dao.close();
@@ -40,6 +46,15 @@ String cookieCheck="";
 if(!loginId.equals("")){
 	cookieCheck = "checked";
 }
+
+//각 게시판에 따른 글 가져오기
+projectboardDAO boardDao = new projectboardDAO(application);
+String boardName = request.getParameter("boardName");
+Map<String,Object> param =new HashMap<String,Object>();
+List<ProjectBoardDTO> notBoardLists = boardDao.selectList(param, "not");
+List<ProjectBoardDTO> freBoardLists = boardDao.selectList(param, "fre");
+
+boardDao.close();
 %>
 </script>
 <body>
@@ -112,19 +127,63 @@ if(!loginId.equals("")){
 				</div>
 			</div>
 			<div class="main_con_center">
-				<p class="main_title"><img src="../images/main_title02.gif" alt="공지사항 NOTICE" /><a href="../space/sub01.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title02.gif" alt="공지사항 NOTICE" /><a href="../space/sub01.jsp?boardName=not"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
-				<c:forEach items="${ boardList }" begin="0" end="3" var ="boardList">
-					<li><a href="" class="ab">${ boardList.title }</a><span>${ boardList.postdate }</span></li>
-				</c:forEach>
+				<%
+					if(notBoardLists.isEmpty()){
+					%>
+						<tr>
+							<td colspan="6" align="center">
+								등록된 게시물이 없습니다.
+							</td>
+						</tr>
+					<%
+					}
+					else{
+						//게시물이 있을때
+						for(ProjectBoardDTO dto:notBoardLists) //반복
+						{
+							//전체 레코드 수를 1씩 차감하면서 번호를 출력
+					%>
+						<tbody>
+						<!-- 리스트반복 -->
+							<li class="text-left"><a href="../space/sub01_view.jsp?idx=<%=dto.getIdx()%>&boardName=not"><%= dto.getTitle() %></a><span class="text-center"><%=dto.getPostdate()%></span></li>
+							
+						</tbody>
+					<%
+						}
+					}
+					%>
 				</ul>
 			</div>
 			<div class="main_con_right">
-				<p class="main_title"><img src="../images/main_title03.gif" alt="자유게시판 FREE BOARD" /><a href="../space/sub03.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title03.gif" alt="자유게시판 FREE BOARD" /><a href="../space/sub03.jsp?boardName=fre"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_board_list">
-					<c:forEach items="${ boardList }" begin="0" end="3" var ="boardList">
-					<li><a href="" class="ab">${ boardList.title }</a><span>${ boardList.postdate }</span></li>
-					</c:forEach>
+					<%
+					if(freBoardLists.isEmpty()){
+					%>
+						<tr>
+							<td colspan="6" align="center">
+								등록된 게시물이 없습니다.
+							</td>
+						</tr>
+					<%
+					}
+					else{
+						//게시물이 있을때
+						for(ProjectBoardDTO dto:freBoardLists) //반복
+						{
+							//전체 레코드 수를 1씩 차감하면서 번호를 출력
+					%>
+						<tbody>
+						<!-- 리스트반복 -->
+							<li class="text-left"><a href="../space/sub03_view.jsp?idx=<%=dto.getIdx()%>&boardName=fre"><%= dto.getTitle() %></a><span class="text-center"><%=dto.getPostdate()%></span></li>
+							
+						</tbody>
+					<%
+						}
+					}
+					%>
 				</ul>
 			</div>
 		</div>

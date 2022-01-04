@@ -8,7 +8,8 @@ String boardName = request.getParameter("boardName");
 System.out.println(boardName);
 
 //게시물의 일련번호를 파라미터를 통해 받는다. 
-String idx = request.getParameter("idx");   
+String idx = request.getParameter("idx"); 
+
 //DB연결
 projectboardDAO dao = new projectboardDAO(application);
 //조회수 증가
@@ -75,7 +76,8 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			<%=dto.getEmail() %>
+			<%-- <%=dto.getEmail() %> --%>
+			admin@gmail.com
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">조회수</th>
@@ -110,7 +112,9 @@ function deletePost() {
 <div class="row text-center" style="">
 <div class="container mt-3">
 <%
-if(session.getAttribute("UserId")=="admin")
+if(session.getAttribute("UserType") == null){
+}
+else if(session.getAttribute("UserType").equals("0"))
 {
 %>
 	<!-- 각종 버튼 부분 -->

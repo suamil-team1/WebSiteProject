@@ -86,7 +86,7 @@ dao.close();
 <div class="col-md-6" >
 <div class="input-group mb-3">
 	<div class="form-group">
-		<select name="searchField" class="form-control">
+		<select name="searchField" class="form-control" >
 			<option value="title">제목</option>
 			<!-- <option value="">작성자</option> -->
 			<option value="content">내용</option>
@@ -125,6 +125,7 @@ dao.close();
 		<th class="text-center">첨부</th>
 	</tr>
 	</thead>
+	<tbody>
 <%
 if(boardLists.isEmpty()){
 %>
@@ -146,7 +147,6 @@ else{
 		virtualNum = totalCount-(((pageNum-1)*pageSize)+countNum++);
 
 %>
-	<tbody>
 	<!-- 리스트반복 -->
 	<tr>
 		<td class="text-center"><%= virtualNum %></td>
@@ -168,7 +168,9 @@ else{
 	<!-- <button type="reset" class="btn">Reset</button> -->
 <div class="container mt-3">
 <%
-if(session.getAttribute("UserId")=="admin")
+if(session.getAttribute("UserType") == null){
+}
+else if(session.getAttribute("UserType").equals("0"))
 {
 %>
 	<button type="button" class="btn btn-outline-dark" 
