@@ -27,6 +27,13 @@
     <param-name>MariaDBPwd</param-name>
     <param-value>varan@1350</param-value>
   </context-param>
+  <!-- 리소스 요구사항 명시 -->
+  <resource-ref>
+	<description>MariaDB Connection Pool</description>
+	<res-ref-name>dbcp_myoracle</res-ref-name>
+	<res-type>javax.sql.DataSource</res-type>
+	<res-auth>Container</res-auth>
+</resource-ref>
 
 <!-- 한글 깨짐에 대한 인코딩 필터 설정 -->
 <filter>
