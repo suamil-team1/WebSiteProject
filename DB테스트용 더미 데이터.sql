@@ -1,15 +1,15 @@
 # 멤버 테이블 테스트용 더미데이터
 
-INSERT INTO Projectmember(id, pass, name, email, mobile,address) 
+INSERT INTO ProjectMember(id, pass, name, email, mobile,address) 
 	VALUES ('test', '1234', '김검사', 'test1@naver.com', '010-1234-5678','11900,서울시 서울구 서울로20길 서울아파트,11');
-INSERT INTO Projectmember(id, pass, name, email, mobile,address) 
+INSERT INTO ProjectMember(id, pass, name, email, mobile,address) 
 	VALUES ('test2', '1234', '이검수', 'test2@hanmail.net', '010-1111-2222','11900,서울시 서울구 서울로20길 서울아파트,5층');
-INSERT INTO Projectmember(id, pass, name, email, mobile,address) 
+INSERT INTO ProjectMember(id, pass, name, email, mobile,address) 
 	VALUES ('hj0825', '890825', '임시험', 'hj0825@gmail.com', '010-3333-9999','34560,경기도 수원시 권광로 21번길 보성아파트,가나다');
-INSERT INTO Projectmember(id, pass, name, email, mobile,address,type) 
+INSERT INTO ProjectMember(id, pass, name, email, mobile,address,type) 
 	VALUES ('admin', '1234', '어드민', 'tjcos3@hanmail.net', '010-1234-1111','08505,서울 금천구 가산디지털2로 123,4층',0);
 #zip코드 붙이기 위해서 수정	
- UPDATE projectmember SET address='34560,경기도 수원시 권광로 21번길 보성아파트,가나다' WHERE id ='hj0825';
+ UPDATE ProjectMember SET address='34560,경기도 수원시 권광로 21번길 보성아파트,가나다' WHERE id ='hj0825';
 
 # 게시판 테이블 테스트용 더미데이터
 

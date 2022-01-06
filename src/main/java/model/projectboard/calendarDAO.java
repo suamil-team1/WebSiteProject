@@ -97,7 +97,7 @@ public class calendarDAO extends JDBConnect{
         
         String query = "SELECT"
         		+ " idx, C.id, title, content, pdate, boardName, DATE_FORMAT(pdate, '%Y-%m-%d') pd "
-        		+ " FROM Model2BoardCal C inner join Projectmember M "
+        		+ " FROM Model2BoardCal C inner join ProjectMember M "
         		+ " on C.id=M.id "
                 + " WHERE idx=?";
 

@@ -23,9 +23,9 @@ create table Model2Board(
 	boardName VARCHAR(30)	#직원 emp, 보호자 prt, 공지 not, 자유fre, 사진 gal, 자료실 ref
 );
 
-DROP TABLE Projectmember;
+DROP TABLE ProjectMember;
 #회원 테이블(부모)
-create TABLE Projectmember
+create TABLE ProjectMember
 (
 	id VARCHAR(30) NOT NULL,
 	pass VARCHAR(40) NOT NULL,

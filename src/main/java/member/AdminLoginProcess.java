@@ -23,7 +23,7 @@ public class AdminLoginProcess extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = req.getParameter("id");
 		String userPwd = req.getParameter("pass");
-		String saveEmail = req.getParameter("save_check");
+		String saveId = req.getParameter("save_check");
 		
 		ProjectMemberDAO dao = new ProjectMemberDAO();
 		ProjectMemberDTO dto = dao.getMemberDTO(userId, userPwd);
@@ -38,13 +38,13 @@ public class AdminLoginProcess extends HttpServlet{
 			session.setAttribute("UserType", dto.getType());
 			
 			//아이디 쿠키에 저장하기.
-			if(saveEmail != null && saveEmail.equals("Y")){
+			if(saveId != null && saveId.equals("Y")){
 				//쿠키를 저장한다. 쿠키값은 로그인아이디, 유효기간은 1일로 설정한다.
-				CookieManager.makeCookie(resp, "loginEmail", userId, 86400);
+				CookieManager.makeCookie(resp, "loginId", userId, 86400);
 			}
 			else{
 				//로그인 성공하고, 아이디 저장 체크를 하지 않았다면 쿠키를 삭제한다.
-				CookieManager.deleteCookie(resp, "loginEmail");
+				CookieManager.deleteCookie(resp, "loginId");
 			}
 			resp.sendRedirect("index.jsp");
 		}

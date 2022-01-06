@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import member.ProjectMemberDAO;
+import member.ProjectMemberDTO;
 import model.projectboard.ProjectBoardDAO2;
 import util.IsLogIn;
 import util.JSFunction;
@@ -40,10 +42,12 @@ public class CheckInController extends HttpServlet {
 		if(req.getParameter("boardName").equals("emp")) {
 			
 			ProjectBoardDAO2 dao = new ProjectBoardDAO2();
-			int typeNum = dao.checkingAccess(UserId);
+//			session.setAttribute("UserType", memberDTO.getType());
+			
+			//int typeNum = dao.checkingAccess(UserId);
 			dao.close();
 			
-			if(!(typeNum == 0 || typeNum == 1)) {
+			if(session.getAttribute("UserType").equals("2")) {
 				
 				JSFunction.alertBack(resp, "이용할 수 없는 게시판 입니다.");
 				return;

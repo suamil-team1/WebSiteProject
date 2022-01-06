@@ -43,7 +43,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 		
 		String boardName = (String)map.get("boardName");
 		
-		String query = "SELECT * FROM Model2Board JOIN Projectmember USING(id) ";	
+		String query = "SELECT * FROM Model2Board JOIN ProjectMember USING(id) ";	
 		//검색어가 있을때
 		if(map.get("keyString") !=null) {
 			query += " WHERE "+ map.get("keyField")
@@ -106,7 +106,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 	public ProjectBoardDTO selectView(String idx) {
 		
 		ProjectBoardDTO dto = new ProjectBoardDTO();
-		String query = "SELECT * FROM Projectmember JOIN Model2Board "
+		String query = "SELECT * FROM ProjectMember JOIN Model2Board "
 					+ " USING(id) WHERE idx=?";
 		try {
 			psmt = con.prepareStatement(query);
@@ -212,7 +212,7 @@ public class ProjectBoardDAO2 extends DBConnPool{
 		int typeNum = -1;
 		
 		try {
-			String query = "select type from Projectmember join Model2Board "
+			String query = "select type from ProjectMember join Model2Board "
 							+ " using(id) where id="+ UserId;			
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(query);

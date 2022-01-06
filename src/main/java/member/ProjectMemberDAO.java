@@ -12,7 +12,7 @@ import connect.JDBConnect;
 DAO(Data Access Object): 실제 데이터베이스에 접근하여
 	여러 가지 CRUD작업을 하기 위한 객체.
 */
-import model.shopboard.shopboardDTO;
+
 
 //DB 연결을 위한 클래스를 상속한다.
 public class ProjectMemberDAO extends JDBConnect {
@@ -121,7 +121,7 @@ public class ProjectMemberDAO extends JDBConnect {
 		
 		try {
 			//인파라미터(?물음표)가 있는 쿼리문 작성 => 동적쿼리문
-			String query = " INSERT INTO Projectmember (id, pass, name, email, mobile, address) "
+			String query = " INSERT INTO ProjectMember (id, pass, name, email, mobile, address) "
 						+ " VALUES ( ?, ?, ?, ?, ?, ?) ";
 			//동적쿼리문 실행을 위한 prepared 객체 생성
 			psmt = con.prepareStatement(query);
@@ -146,7 +146,7 @@ public class ProjectMemberDAO extends JDBConnect {
 	public boolean idCheck(String uid) {
 		boolean isCorr = false;
 		  
-		String query = "select id from Projectmember where id = ?";
+		String query = "select id from ProjectMember where id = ?";
 		  
 		try {
 			psmt = con.prepareStatement(query);
@@ -166,7 +166,7 @@ public class ProjectMemberDAO extends JDBConnect {
 	public int updateMemberInfo(ProjectMemberDTO dto) throws SQLException {
 		int result = 0;
 		
-		String query = "UPDATE Projectmember "
+		String query = "UPDATE ProjectMember "
 				+ " SET pass=?, name=?, email=?, "
 				+ " tellnum=?, mobile=?, address=? "
 				+ " WHERE id=? ";
@@ -197,7 +197,7 @@ public class ProjectMemberDAO extends JDBConnect {
         List<ProjectMemberDTO> bbs = new Vector<ProjectMemberDTO>();  
         
         //pNum의 내림차순으로 게시물 정렬 및 출력
-        String query = "SELECT * FROM Projectmember "; 
+        String query = "SELECT * FROM ProjectMember "; 
         
         
         try {
