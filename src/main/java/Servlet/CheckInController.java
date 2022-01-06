@@ -41,11 +41,11 @@ public class CheckInController extends HttpServlet {
 		//직원 게시판인 경우(직원/관리자 권한만 접근, 수정 가능)
 		if(req.getParameter("boardName").equals("emp")) {
 			
-			ProjectBoardDAO2 dao = new ProjectBoardDAO2();
-//			session.setAttribute("UserType", memberDTO.getType());
+			//ProjectBoardDAO2 dao = new ProjectBoardDAO2();
+			//session.setAttribute("UserType", memberDTO.getType());
 			
 			//int typeNum = dao.checkingAccess(UserId);
-			dao.close();
+			//dao.close();
 			
 			if(session.getAttribute("UserType").equals("2")) {
 				
