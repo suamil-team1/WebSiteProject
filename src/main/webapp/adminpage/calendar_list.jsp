@@ -1,10 +1,22 @@
+<%@page import="model.projectboard.calendarDTO"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="model.projectboard.calendarDAO"%>
+<%@page import="java.net.URLEncoder"%>
+<%@page import="util.BoardPage"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="member.ProjectMemberDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+  
+//db연결
+calendarDAO dao = new calendarDAO(application);
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +88,7 @@
                         <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
-                        <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>
                     </div>
                 </div>
@@ -254,7 +266,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Spending Alert: We've notd unusually high spending for your account.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -367,13 +379,51 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<!-- Page Heading -->
+                    <%			
+					if(boardName==null || boardName.equals("not")) {
+					%>
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 게시판</h1>
+                    <p class="mb-4">공지사항을 작성/수정할수있습니다.</p>
+                    <%
+					}
+					else if(boardName.equals("fre")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">자유게시판</h1>
+                    <p class="mb-4">자유게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("program")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">프로그램일정</h1>
+                    <p class="mb-4">프로그램일정을 작성/수정할수있습니다.</p>
+					<%   
+					}
+					else if(boardName.equals("gal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">사진게시판</h1>
+                    <p class="mb-4">사진게시판을 작성/수정할수있습니다.</p>
+					<% 
+					}
+					else if(boardName.equals("info")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">정보자료실</h1>
+                    <p class="mb-4">정보자료실을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("emp")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">직원게시판</h1>
+                    <p class="mb-4">직원게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("guard")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">보호자게시판</h1>
+                    <p class="mb-4">보호자게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					%>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -381,66 +431,163 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-	                            <%
-	                            ProjectMemberDAO dao = new ProjectMemberDAO(application);
-	                            Map<String, Object> param = new HashMap<String, Object>();
-	                            List<ProjectMemberDTO> memberLists = dao.mamberList(param);
-	                            dao.close();
-	                            %>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
-                                    <tr>
-								        <td colspan="7" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td><%=dto.getId() %></td>
-											<td><%=dto.getPass() %></td>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-										<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
+
+                                <form action="sub02_write.jsp">
+				<input type="hidden" name="boardName" value="<%=boardName%>"/>
+<%
+//현재 년/월/일을 구하기 위한 인스턴스 생성
+Calendar tDay = Calendar.getInstance();
+
+/*
+파라미터가 있는 경우 : 파라미터에 해당하는 년/월을 표현
+파라미터가 없는 경우 : 무조건 현재 년/월을 표현
+*/
+int y = (request.getParameter("y")==null) ?
+    tDay.get(Calendar.YEAR) :
+    Integer.parseInt(request.getParameter("y"));
+int m = (request.getParameter("m")==null) ?
+    tDay.get(Calendar.MONTH) :
+    Integer.parseInt(request.getParameter("m"));
+int d = tDay.get(Calendar.DATE);
+
+Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();
+
+String ym = y + "-" + (m+1) ;
+
+map = dao.selectC(ym);
+//System.out.println(map.get("2021-12-17").getTitle()); 
+//자원해제
+dao.close(); 
+
+/*
+날자설정을 위한 객체생성 : 현재 년/월 그리고 1일로 설정
+한다. 즉 현재월의 1일로 설정한다.
+*/
+Calendar dSet = Calendar.getInstance();
+
+dSet.set(y, m, 1);//현재 년/월/1 일로 설정함
+//오늘이 어떤 요일인지 구한다.
+int yo = dSet.get(Calendar.DAY_OF_WEEK);
+//현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
+int last_day = dSet.getActualMaximum(Calendar.DATE);
+%>
+<a href="./sub02.jsp?y=<%=y-1%>&m=<%=m%>" target="_self">
+<b>&lt;&lt;</b><!-- 이전 해 -->
+</a>
+<%if(m > 0 ){ %>
+<a href="./sub02.jsp?y=<%=y%>&m=<%=m-1%>" target="_self">
+<b>&lt;</b><!-- 이전 달 -->
+</a>
+<%} else {%>
+<b>&lt;</b>
+<%} %>
+&nbsp;&nbsp;
+<%=y%>년<%=m+1%>월
+&nbsp;&nbsp;
+<%if(m < 11 ){ %>
+<a href="./sub02.jsp?y=<%=y%>&m=<%=m+1%>" target="_self">
+<b>&gt;</b><!-- 다음 달 -->
+</a>
+<%}else{%>
+<b>&gt;</b>
+<%} %>
+<a href="./sub02.jsp?y=<%= y+1 %>&m=<%= m %>" target="_self">
+<b>&gt;&gt;</b><!-- 다음 해 -->
+</a>
+<!-- <%= y %>년<%= m+1 %>월 -->
+<table cellpadding="0" cellspacing="0" border="1" class="calendar table">
+    <colgroup>
+   	 <col width="14%" />
+   	 <col width="14%" />
+   	 <col width="14%" />
+   	 <col width="14%" />
+   	 <col width="14%" />
+   	 <col width="14%" />
+   	 <col width="*" />
+    </colgroup>
+    
+    <tr class="table-active">
+    <%
+    String[] a = { "sun", "mon", "tue", "wed", "thu", "fri", "sat" };
+    for (int i = 0; i < 7; i++) {
+    %>
+   	 <%-- <th style="padding:5px 0;"><img src="../images/day0<%=i+1 %>.gif" alt="<%=a[i]%>" /></th> --%>
+   	 <th style="padding:5px 0;"><%=a[i]%></th>
+    <%
+    }
+    %>   	 
+    </tr>
+    <tr>
+    <%
+    for (int k = 1; k < yo; k++) {
+    %>
+   	 <td></td>
+    <%
+    }
+    %>
+    <%
+   	int f_date;
+    for (int j = 1; j <= last_day; j++) {
+  		
+    	String str = "";
+    	if(j<10){
+    		str = y + "-" + (m+1) + "-0" + j;
+    	}
+    	else{
+    		str = y + "-" + (m+1) + "-" + j; 
+    	}
+    	//System.out.println(str);
+    %>
+   	 <!-- 날짜가 출력되는 부분 <%=y%>-<%=m+1%>-<%=j%> -->
+   	 <td><%=j%> 
+   	 <br />
+   	 <%
+   		if(map.get(str)!=null){
+   	 %>
+	   	 <a href="sub02_view.jsp?idx=<%= map.get(str).getIdx() %>">
+	   	 <%= map.get(str).getTitle() %>
+	   	 </a>
+	<%}%>
+   	 </td>
+    <%
+    	
+    if ((yo+j-1) % 7 == 0) {%>
+    </tr>
+    <tr>
+    <%
+   	 }
+    }
+    for(int e=1;e<(7-yo)-1;e++){
+    %>
+   	 <td></td>
+    <%
+    }
+    %>
+    </tr>
+</table>
+<%
+if(session.getAttribute("UserId")=="admin")
+{
+%>
+	<button type="submit" class="btn btn-outline-dark">일정 등록</button>
+<%} %>
+	</form>
                             </div>
+                            <div class="row text-right" style="padding-right:50px;">
+							<!-- 각종 버튼 부분 -->
+							<!-- <button type="reset" class="btn">Reset</button> -->
+							<div class="container mt-3">	
+							<button type="button" class="btn btn-outline-dark"  
+								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
+									
+							<!-- <button type="button" class="btn btn-primary">수정하기</button>
+							<button type="button" class="btn btn-success">삭제하기</button>
+							<button type="button" class="btn btn-info">답글쓰기</button>
+							<button type="button" class="btn btn-warning">리스트보기</button>
+							<button type="submit" class="btn btn-danger">전송하기</button> -->
+							</div>
                         </div>
+                        
                     </div>
 
                 </div>

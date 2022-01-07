@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ include file="IsLoggedIn.jsp" %> <!-- 로그인 확인 -->
+<%-- <%@ include file="IsLoggedIn.jsp" %> --%> <!-- 로그인 확인 -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -66,13 +66,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span>게시판관리</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.jsp">Buttons</a>
-                        <a class="collapse-item" href="cards.jsp">Cards</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
+                        <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>
                     </div>
                 </div>
             </li>
@@ -127,9 +130,9 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.jsp">
+                <a class="nav-link" href="board_list03.jsp?boardName=fre">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>자유게시판 관리</span></a>
             </li>
 
             <!-- Nav Item - Tables -->

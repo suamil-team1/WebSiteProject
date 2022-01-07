@@ -1,10 +1,31 @@
+<%@page import="util.BoardPage"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="member.ProjectMemberDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- 글쓰기 전 로그인 확인 -->
+<%@ include file="../model1/IsLoggedIn.jsp" %>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+%>
+<script>
+function validateForm(form) {
+	if(form.title.value==""){
+		alert("제목을 입력하세요.");
+		form.title.focus();
+		return false;
+	}
+	if(form.content.value==""){
+		alert("내용을 입력하세요.");
+		form.content.focus();
+		return false;
+	}
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -381,66 +402,88 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-	                            <%
-	                            ProjectMemberDAO dao = new ProjectMemberDAO(application);
-	                            Map<String, Object> param = new HashMap<String, Object>();
-	                            List<ProjectMemberDTO> memberLists = dao.mamberList(param);
-	                            dao.close();
-	                            %>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
-                                    <tr>
-								        <td colspan="7" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td><%=dto.getId() %></td>
-											<td><%=dto.getPass() %></td>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-										<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
+<form name="writeFrm" method="post" action="writeProcessF.jsp"
+	onsubmit="return validateForm(this);">
+<input type="hidden" name="boardName" value="<%=boardName%>"/>
+<table class="table table-bordered">
+<colgroup>
+	<col width="20%"/>
+	<col width="*"/>
+</colgroup>
+<tbody>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">작성자</th>
+		
+		<td>
+			<input type="text" class="form-control" 
+				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
+		</td>
+	</tr>
+	<!-- <tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">이메일</th>
+		<td>
+			<input type="text" class="form-control" 
+				style="width:400px;" value="<%= session.getAttribute("UserMail")%>"/>
+		</td>
+	</tr>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">패스워드</th>
+		<td>
+			<input type="text" class="form-control" 
+				style="width:200px;" value="<%= session.getAttribute("UserPwd")%>"/>
+		</td>
+	</tr>  -->
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">제목</th>
+		<td>
+			<input type="text" name="title" class="form-control" />
+		</td>
+	</tr>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">내용</th>
+		<td>
+			<textarea rows="10" name="content" class="form-control"></textarea>
+		</td>
+	</tr>
+	<!-- <tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">첨부파일</th>
+		<td>
+			<input type="file" class="form-control" />
+		</td>
+	</tr> -->
+</tbody>
+</table>
+<div class="row text-center" style="">
+	<div class="container mt-3">
+	<button type="submit" class="btn btn-danger">전송하기</button>
+	<button type="reset" class="btn">Reset</button>
+	<button type="button" class="btn btn-warning" 
+		onclick="location.href='board_list03.jsp?boardName=<%=boardName%>';">리스트보기</button>
+	<div class="container mt-3">
+</div>
+</form>
                             </div>
+                            <div class="row text-right" style="padding-right:50px;">
+							<!-- 각종 버튼 부분 -->
+							<!-- <button type="reset" class="btn">Reset</button> -->
+							<div class="container mt-3">	
+							<button type="button" class="btn btn-outline-dark"  
+								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
+									
+							<!-- <button type="button" class="btn btn-primary">수정하기</button>
+							<button type="button" class="btn btn-success">삭제하기</button>
+							<button type="button" class="btn btn-info">답글쓰기</button>
+							<button type="button" class="btn btn-warning">리스트보기</button>
+							<button type="submit" class="btn btn-danger">전송하기</button> -->
+							</div>
                         </div>
+                    
                     </div>
 
                 </div>

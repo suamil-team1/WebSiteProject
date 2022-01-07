@@ -1,10 +1,25 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="util.BoardPage"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="member.ProjectMemberDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName); 
+
+//DAO객체 생성
+projectboardDAO dao = new projectboardDAO();
+//목록 가져오기
+Map<String,Object> param =new HashMap<String,Object>();
+//출력할 레코드 추출
+List<ProjectBoardDTO> boardLists = dao.selectList(param, boardName);
+
+dao.close();
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -254,7 +269,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Spending Alert: We've notd unusually high spending for your account.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -367,13 +382,51 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<!-- Page Heading -->
+                    <%			
+					if(boardName==null || boardName.equals("not")) {
+					%>
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 게시판</h1>
+                    <p class="mb-4">공지사항을 작성/수정할수있습니다.</p>
+                    <%
+					}
+					else if(boardName.equals("fre")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">자유게시판</h1>
+                    <p class="mb-4">자유게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("program")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">프로그램일정</h1>
+                    <p class="mb-4">프로그램일정을 작성/수정할수있습니다.</p>
+					<%   
+					}
+					else if(boardName.equals("gal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">사진게시판</h1>
+                    <p class="mb-4">사진게시판을 작성/수정할수있습니다.</p>
+					<% 
+					}
+					else if(boardName.equals("info")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">정보자료실</h1>
+                    <p class="mb-4">정보자료실을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("emp")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">직원게시판</h1>
+                    <p class="mb-4">직원게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("guard")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">보호자게시판</h1>
+                    <p class="mb-4">보호자게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					%>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -381,66 +434,51 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-	                            <%
-	                            ProjectMemberDAO dao = new ProjectMemberDAO(application);
-	                            Map<String, Object> param = new HashMap<String, Object>();
-	                            List<ProjectMemberDTO> memberLists = dao.mamberList(param);
-	                            dao.close();
-	                            %>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
-                                    <tr>
-								        <td colspan="7" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td><%=dto.getId() %></td>
-											<td><%=dto.getPass() %></td>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-										<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
+
+                                
+                            <form id="galFrm">
+				<div class="row text-center mt-3">
+				
+	<%
+	for(ProjectBoardDTO b:boardLists){
+	%>
+		<div class="card col-md-4">
+				<a href="gallery_view.jsp?idx=<%= b.getIdx()%>&boardName=<%=boardName%>">
+		        <img class="card-img-top" src="../Uploads/<%=b.getSfile() %>" style="width: 200px; height: 270px;">
+		        </a>
+	        <div class="card-body">
+	        <h4 class="card-title" style="text-align: end;">
+		        <a href="sub04_view.jsp?idx=<%= b.getIdx()%>&boardName=<%=boardName%>">
+		        <%=b.getTitle() %>
+		        </a>
+	        </h4>         
+	    	</div>
+    	</div>
+	<%} %>
+    	</div>
+				<div class="container mt-3">	
+				<button type ="button" class="btn btn-outline-dark"  
+					onclick="location.href='gallery_write.jsp?boardName=<%=boardName%>';">사진등록</button>
+				</div>
+				</form>    
+                                
+                                
                             </div>
+                            <div class="row text-right" style="padding-right:50px;">
+							<!-- 각종 버튼 부분 -->
+							<!-- <button type="reset" class="btn">Reset</button> -->
+							<div class="container mt-3">	
+							<button type="button" class="btn btn-outline-dark"  
+								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
+									
+							<!-- <button type="button" class="btn btn-primary">수정하기</button>
+							<button type="button" class="btn btn-success">삭제하기</button>
+							<button type="button" class="btn btn-info">답글쓰기</button>
+							<button type="button" class="btn btn-warning">리스트보기</button>
+							<button type="submit" class="btn btn-danger">전송하기</button> -->
+							</div>
                         </div>
+                      
                     </div>
 
                 </div>

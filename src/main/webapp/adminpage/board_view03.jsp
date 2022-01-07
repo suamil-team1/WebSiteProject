@@ -1,10 +1,38 @@
+<%@page import="util.BoardPage"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="member.ProjectMemberDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName); 
+
+//게시물의 일련번호를 파라미터를 통해 받는다. 
+String idx = request.getParameter("idx");   
+//DB연결
+projectboardDAO dao = new projectboardDAO(application);
+//조회수 증가
+dao.updateVisitCnt(idx);
+
+//일련번호에 해당하는 게시물 조회
+ProjectBoardDTO dto = dao.selectView(idx);
+//자원해제
+dao.close();                               
+%>
+<script>
+function deletePost() {
+	var confirmed = confirm("정말로 삭제하겠습니까?");
+	if(confirmed){
+		var form=document.writeFrm;
+		form.method="post";//전송방식을 post로 설정
+		form.action="DeleteProcess.jsp";//전송할 URL
+		form.submit();//폼값 전송
+	}
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +104,7 @@
                         <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
-                        <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>
                     </div>
                 </div>
@@ -381,66 +409,100 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-	                            <%
-	                            ProjectMemberDAO dao = new ProjectMemberDAO(application);
-	                            Map<String, Object> param = new HashMap<String, Object>();
-	                            List<ProjectMemberDTO> memberLists = dao.mamberList(param);
-	                            dao.close();
-	                            %>
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
-                                    <tr>
-								        <td colspan="7" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td><%=dto.getId() %></td>
-											<td><%=dto.getPass() %></td>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-										<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
+<form name="writeFrm">
+<table class="table table-bordered">
+<input type="hidden" name="idx" value="<%= idx %>" />
+<input type="hidden" name="boardName" value="<%= boardName %>" />
+<colgroup>
+	<col width="20%"/>
+	<col width="30%"/>
+	<col width="20%"/>
+	<col width="*"/>
+</colgroup>
+<tbody>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">작성자</th>
+		<td>
+			<%= dto.getId() %>
+		</td>
+		<th class="text-center" 
+			style="vertical-align:middle;">작성일</th>
+		<td>
+			<%= dto.getPostdate() %>
+		</td>
+	</tr>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">이메일</th>
+		<td>
+			<%= dto.getEmail() %>
+		</td>
+		<th class="text-center" 
+			style="vertical-align:middle;">조회수</th>
+		<td>
+			<%= dto.getVisitcount() %>
+		</td>
+	</tr>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">제목</th>
+		<td colspan="3">
+			<%= dto.getTitle() %>
+		</td>
+	</tr>
+	<tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">내용</th>
+		<td colspan="3">
+			<%= dto.getContent().replace("\r\n", "<br/>") %>
+		</td>
+	</tr>
+	<%-- <tr>
+		<th class="text-center" 
+			style="vertical-align:middle;">첨부파일</th>
+		<td colspan="3">
+			<%= dto.getOfile() %>
+		</td>
+	</tr> --%>
+</tbody>
+</table>
+
+<div class="row text-center" style="">
+<div class="container mt-3">
+<%
+if(session.getAttribute("UserId")!=null
+           		&& session.getAttribute("UserId").toString().equals(dto.getId())){
+%>	
+	<!-- 각종 버튼 부분 -->
+	<button type="button" class="btn btn-primary"
+	onclick="location.href='board_edit03.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
+	<button type="button" class="btn btn-success"
+		onclick="deletePost();">삭제하기</button>
+<%
+}
+%> 		
+	<button type="button" class="btn btn-warning" 
+		onclick="location.href='board_list03.jsp?boardName=<%=boardName%>';">리스트보기</button>
+	</div>
+</div>
+</form>
                             </div>
+                            <div class="row text-right" style="padding-right:50px;">
+							<!-- 각종 버튼 부분 -->
+							<!-- <button type="reset" class="btn">Reset</button> -->
+							<div class="container mt-3">	
+							<button type="button" class="btn btn-outline-dark"  
+								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
+									
+							<!-- <button type="button" class="btn btn-primary">수정하기</button>
+							<button type="button" class="btn btn-success">삭제하기</button>
+							<button type="button" class="btn btn-info">답글쓰기</button>
+							<button type="button" class="btn btn-warning">리스트보기</button>
+							<button type="submit" class="btn btn-danger">전송하기</button> -->
+							</div>
                         </div>
+                    
                     </div>
 
                 </div>

@@ -1,10 +1,65 @@
+<%@page import="java.net.URLEncoder"%>
+<%@page import="util.BoardPage"%>
+<%@page import="model.projectboard.projectboardDAO"%>
+<%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.HashMap"%>
-<%@page import="member.ProjectMemberDTO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String boardName = request.getParameter("boardName");
+System.out.println(boardName);
+
+//DAO 객체 생성 및 DB연결
+projectboardDAO dao = new projectboardDAO(application);
+//검색어가 있는 경우 파라미터를 저장하기 위한 Map컬렉션 생성
+Map<String,Object> param =new HashMap<String,Object>();
+//검색 파라미터를 request 내장객체를 통해 얻어온다.
+String searchField = request.getParameter("searchField");
+String searchWord = request.getParameter("searchWord");
+//검색어가 있는 경우에만
+if(searchWord !=null){
+	//Map컬렉션에 파라미터 값을 추가한다.
+	param.put("searchField", searchField);//검색필드명(title,content 등)
+	param.put("searchWord", searchWord);//검색어
+}
+
+
+//String boardName = request.getParameter("boardName"); //플래그 값여기서 받음 플래그 시작!!!
+//param.put("boardName", boardName);
+
+
+//board테이블에 저장된 게시물의 갯수 카운트
+int totalCount = dao.selectCount(param, boardName);
+
+/***페이지 처리 start***/
+//컨텍스트 초기화 파라미터를 얻어온 후 사칙연산을 위한 정수로 변경한다.
+int pageSize=Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
+int blockPage=Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
+//전체 페이지 수를 계산한다. 소수점을 얻기 위해 double로 형변환 후 나눈다.
+int totalPage= (int)Math.ceil((double)totalCount/pageSize);
+/*  
+목록에 첫 진입시에는 페이지 관련 파라미터가 없으므로 무조건 1page로 지정한다.
+만약 pageNum이 있다면 파라미터를 받아와서 정수로 변경한 후 페이지수로 지정한다.
+*/
+int pageNum=1;
+//pageTemp에 잠깐 저장
+String pageTemp = request.getParameter("pageNum");
+if(pageTemp != null&&!pageTemp.equals(""))
+	pageNum=Integer.parseInt(pageTemp);
+//게시물의 구간을 계산한다.
+int start=(pageNum-1)*pageSize+1;//구간의 시작
+int end=pageNum*pageSize;//구간의 끝
+param.put("start",start);//Map컬렉션에 저장 후 DAO로 전달함
+param.put("end", end);
+/***페이지 처리 end***/
+//출력할 레코드 추출
+List<ProjectBoardDTO> boardLists = dao.selectList(param, boardName);
+//DB작업 끝났으므로 자원 해제
+dao.close();
+
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -254,7 +309,7 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Spending Alert: We've notd unusually high spending for your account.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -367,13 +422,40 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<!-- Page Heading -->
+                    <%			
+					if(boardName==null || boardName.equals("not")) {
+					%>
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 게시판</h1>
+                    <p class="mb-4">공지사항을 작성/수정할수있습니다.</p>
+                    <%
+					}
+					else if(boardName.equals("fre")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">자유게시판</h1>
+                    <p class="mb-4">자유게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("cal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">프로그램일정</h1>
+                    <p class="mb-4">프로그램일정을 작성/수정할수있습니다.</p>
+					<%   
+					}
+					else if(boardName.equals("gal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">사진게시판</h1>
+                    <p class="mb-4">사진게시판을 작성/수정할수있습니다.</p>
+					<% 
+					}
+					else if(boardName.equals("ref")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">정보자료실</h1>
+                    <p class="mb-4">정보자료실을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					
+					%>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -381,66 +463,121 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-	                            <%
-	                            ProjectMemberDAO dao = new ProjectMemberDAO(application);
-	                            Map<String, Object> param = new HashMap<String, Object>();
-	                            List<ProjectMemberDTO> memberLists = dao.mamberList(param);
-	                            dao.close();
-	                            %>
+
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
+                                       	<tr> <!-- 꾸밀거면 여기서 꾸미자 -->
+											<th>번호</th>
+											<th>제목</th>
+											<th>작성자</th>
+											<th>작성일</th>
+											<th>조회수</th>
+											<%  	
+											if(boardName==null || boardName.equals("info") || boardName.equals("emp") || boardName.equals("guard")){
+											%>
+											<th class="text-center">첨부</th>
+											<%
+											}
+									        %>
+										</tr>
                                     </thead>
                                     <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>PASS</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>작성일</th>
+                                            <th>조회수</th>
+                                            <%  	
+											if(boardName==null || boardName.equals("info") || boardName.equals("emp") || boardName.equals("guard")){
+											%>
+											<th class="text-center">첨부</th>
+											<%
+											}
+									        %>
                                         </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
-                                    <tr>
-								        <td colspan="7" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td><%=dto.getId() %></td>
-											<td><%=dto.getPass() %></td>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-										<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
+                                    </tfoot>                   			
+	                                    <tbody>
+	                                    <%
+										if (boardLists.isEmpty()) {
+										// 게시물이 하나도 없을 때 
+										%>
+														
+											<tr>
+												<td colspan="5" align="center">
+												    등록된 게시물이 없습니다^^*
+												</td>
+											</tr>
+												        
+										<%
+										}
+										else {
+											// 게시물이 있을 때 
+											int virtualNum = 0;//게시물의 출력 번호
+											int countNum = 0;
+											for(ProjectBoardDTO dto:boardLists) //반복
+											{
+											//전체 레코드 수를 1씩 차감하면서 번호를 출력
+												//virtualNum = totalCount--;  //전체 게시물 수에서 시작해 1씩 감소
+												virtualNum = totalCount - (((pageNum -1) * pageSize) + countNum++);
+										%> 
+									        <tr>
+									        <td><%= virtualNum %></td>
+									       
+									        
+									        <td class="text-left">
+									        <a href="board_view03.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>"><%= dto.getTitle() %>
+									        </a></td>
+									        
+									        
+									        <td><%= dto.getName() %></td>
+									        <td><%= dto.getPostdate() %></td>
+									        <td><%= dto.getVisitcount() %></td>
+									        <%  	
+											if(boardName==null || boardName.equals("info") || boardName.equals("emp") || boardName.equals("guard")){
+											%>
+											<td>
+												<%if(!(dto.getOfile()==(null))){ %>
+												<a href="../space/Download.jsp?oName=<%= URLEncoder.encode(dto.getOfile(),"UTF-8") %>&sName=<%= URLEncoder.encode(dto.getSfile(),"UTF-8") %>">
+													<i class="bi-pin-angle-fill" style="font-size: 1rem;"></i></a>
+												<%} %>
+											</td>
+									        <%
+											}
+									        %>
+									        </tr>
+									    <%
+												
+											}
+										}
+										%>  
+	                                   	</tbody>
+                                </table> 
                             </div>
+                            <div class="row text-right" style="padding-right:50px;">
+							<!-- 각종 버튼 부분 -->
+							<!-- <button type="reset" class="btn">Reset</button> -->
+							<div class="container mt-3">	
+							<button type="button" class="btn btn-outline-dark"  
+								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
+									
+							<!-- <button type="button" class="btn btn-primary">수정하기</button>
+							<button type="button" class="btn btn-success">삭제하기</button>
+							<button type="button" class="btn btn-info">답글쓰기</button>
+							<button type="button" class="btn btn-warning">리스트보기</button>
+							<button type="submit" class="btn btn-danger">전송하기</button> -->
+							</div>
                         </div>
+                        <div class="row text-center">
+					<div class="row mt-3">
+                <div class="col">
+                    <ul class="pagination justify-content-center">
+                        <%=BoardPage.pagingStr(totalCount,pageSize,
+        				blockPage, pageNum, request.getRequestURI()) %>
+                    </ul>
+                </div>
+            </div>
+</div>
                     </div>
 
                 </div>
