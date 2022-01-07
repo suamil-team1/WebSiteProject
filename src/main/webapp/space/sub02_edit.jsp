@@ -78,7 +78,7 @@ $( function() {
 			style="vertical-align:middle;">작성자</th>
 		<td>
 			<input type="text" class="form-control" 
-				style="width:100px;" value="<%= dto.getId()%>"/>
+				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
 		</td>
 	</tr>
 	<!-- <tr>

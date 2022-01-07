@@ -175,7 +175,7 @@ public class projectboardDAO extends JDBConnect{
                 dto.setOfile(rs.getString("ofile"));           
                 dto.setSfile(rs.getString("sfile")); 
                 dto.setVisitcount(rs.getInt("visitcount")); 
-                //dto.setEmail(rs.getString("email"));
+                dto.setEmail(rs.getString("email"));
                 //dto.setName(rs.getString("name"));
             }
         } 
