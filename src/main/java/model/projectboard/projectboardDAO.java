@@ -155,7 +155,7 @@ public class projectboardDAO extends JDBConnect{
     	ProjectBoardDTO dto = new ProjectBoardDTO(); 
         
         String query = "SELECT"
-        		+ " idx, B.id, title, content, postdate, ofile, sfile, visitcount, boardName "
+        		+ " idx, B.id, title, content, postdate, ofile, sfile, visitcount, boardName, M.email "
         		+ " FROM Model2Board B inner join ProjectMember M "
         		+ " on B.id=M.id "
                 + " WHERE idx=?";
@@ -175,7 +175,7 @@ public class projectboardDAO extends JDBConnect{
                 dto.setOfile(rs.getString("ofile"));           
                 dto.setSfile(rs.getString("sfile")); 
                 dto.setVisitcount(rs.getInt("visitcount")); 
-                //dto.setEmail(rs.getString("email"));
+                dto.setEmail(rs.getString("email"));
                 //dto.setName(rs.getString("name"));
             }
         } 

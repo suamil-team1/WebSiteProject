@@ -62,7 +62,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">작성자</th>
 		<td>
-			<%= dto.getName() %>
+			<%= dto.getId() %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">날짜</th>
