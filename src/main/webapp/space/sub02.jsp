@@ -170,7 +170,9 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     </tr>
 </table>
 <%
-if(session.getAttribute("UserId")=="admin")
+if(session.getAttribute("UserType") == null){
+}
+else if(session.getAttribute("UserType").equals("0"))
 {
 %>
 	<button type="submit" class="btn btn-outline-dark">일정 등록</button>
