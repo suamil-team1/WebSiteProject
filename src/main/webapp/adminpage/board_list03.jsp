@@ -530,7 +530,7 @@ dao.close();
 									        </a></td>
 									        
 									        
-									        <td><%= dto.getName() %></td>
+									        <td><%= dto.getId() %></td>
 									        <td><%= dto.getPostdate() %></td>
 									        <td><%= dto.getVisitcount() %></td>
 									        <%  	

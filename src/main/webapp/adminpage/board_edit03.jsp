@@ -425,7 +425,7 @@ function validateForm(form) {
 		
 		<td>
 			<input type="text" class="form-control" 
-				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
+				style="width:100px;" value="<%= dto.getId() %>"/>
 		</td>
 	</tr>
 	<!-- <tr>

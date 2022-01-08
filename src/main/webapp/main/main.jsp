@@ -53,6 +53,7 @@ String boardName = request.getParameter("boardName");
 Map<String,Object> param =new HashMap<String,Object>();
 List<ProjectBoardDTO> notBoardLists = boardDao.selectList(param, "not");
 List<ProjectBoardDTO> freBoardLists = boardDao.selectList(param, "fre");
+List<ProjectBoardDTO> galBoardLists = boardDao.selectList(param, "gal");
 
 boardDao.close();
 %>
@@ -105,7 +106,7 @@ boardDao.close();
 					<%
 					    } else if(session.getAttribute("UserType").equals("0")){
 					%>
-					</form>
+					<!-- </form> 여기 폼태그 왜닫는거에여? 일단 주석-->
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
 						<button onclick="location.href='../adminpage/index.jsp';" style="width:70px;font-size:1px;height:20px; ">관리자모드</button>
@@ -289,42 +290,37 @@ boardDao.close();
 			<div class="main_con_right">
 				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="/space/sub04.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_photo_list">
+				<%
+				if(galBoardLists.isEmpty()){
+				%>
 					<li>
 						<dl>
 							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
 							<dd><a href="">마포 구립 장애인...</a></dd>
 						</dl>
 					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
-					<li>
-						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
-						</dl>
-					</li>
+					
+					<%
+					}
+					else{
+						//게시물이 있을때
+						for(ProjectBoardDTO dto:galBoardLists) //반복
+						{
+							//전체 레코드 수를 1씩 차감하면서 번호를 출력
+					%>
+						<!-- 리스트반복 -->
+							<li>
+								<dl>
+									<dt><a href="../space/sub04.jsp?idx=<%= dto.getIdx() %>&boardName=gal">
+									<img src="../Uploads/<%= dto.getSfile() %>" alt="" width=95 height=63></a></dt>
+									<dd style="padding:0 2px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
+									<a href=""><%=dto.getTitle() %></a></dd>
+								</dl>
+							</li>
+					<%
+						}
+					}
+					%>
 				</ul>
 			</div>
 		</div>
