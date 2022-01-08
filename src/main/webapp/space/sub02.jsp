@@ -97,7 +97,7 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
 <b>&gt;&gt;</b><!-- 다음 해 -->
 </a>
 <!-- <%= y %>년<%= m+1 %>월 -->
-<table cellpadding="0" cellspacing="0" border="1" class="calendar table">
+<table cellpadding="0" cellspacing="0" border="1" class="calendar table" style="width:90%">
     <colgroup>
    	 <col width="14%" />
    	 <col width="14%" />
