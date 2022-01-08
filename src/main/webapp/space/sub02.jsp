@@ -73,6 +73,7 @@ int yo = dSet.get(Calendar.DAY_OF_WEEK);
 //현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
 int last_day = dSet.getActualMaximum(Calendar.DATE);
 %>
+<div align=center style="font-size: 16px; font-weight: bold;">
 <a href="./sub02.jsp?y=<%=y-1%>&m=<%=m%>" target="_self">
 <b>&lt;&lt;</b><!-- 이전 해 -->
 </a>
@@ -96,8 +97,9 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
 <a href="./sub02.jsp?y=<%= y+1 %>&m=<%= m %>" target="_self">
 <b>&gt;&gt;</b><!-- 다음 해 -->
 </a>
+</div>
 <!-- <%= y %>년<%= m+1 %>월 -->
-<table cellpadding="0" cellspacing="0" border="1" class="calendar table" style="width:90%">
+<table cellpadding="0" cellspacing="0" border="1" class="calendar table" style="width:100%; height:60%">
     <colgroup>
    	 <col width="14%" />
    	 <col width="14%" />
