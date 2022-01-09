@@ -54,7 +54,13 @@ int d = tDay.get(Calendar.DATE);
 
 Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();
 
-String ym = y + "-" + (m+1) ;
+String ym="";
+if(m+1>=10){
+	ym = y + "-" + (m+1);
+}
+else{
+	ym = y + "-0" + (m+1);
+}
 
 map = dao.selectC(ym);
 //System.out.println(map.get("2021-12-17").getTitle()); 
