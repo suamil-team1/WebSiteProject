@@ -74,11 +74,11 @@ int yo = dSet.get(Calendar.DAY_OF_WEEK);
 int last_day = dSet.getActualMaximum(Calendar.DATE);
 %>
 <div align=center style="font-size: 16px; font-weight: bold;">
-<a href="./sub02.jsp?y=<%=y-1%>&m=<%=m%>" target="_self">
+<a href="./sub02.jsp?y=<%=y-1%>&m=<%=m%>&boardName=<%=boardName%>" target="_self">
 <b>&lt;&lt;</b><!-- 이전 해 -->
 </a>
 <%if(m > 0 ){ %>
-<a href="./sub02.jsp?y=<%=y%>&m=<%=m-1%>" target="_self">
+<a href="./sub02.jsp?y=<%=y%>&m=<%=m-1%>&boardName=<%=boardName%>" target="_self">
 <b>&lt;</b><!-- 이전 달 -->
 </a>
 <%} else {%>
@@ -88,13 +88,13 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
 <%=y%>년<%=m+1%>월
 &nbsp;&nbsp;
 <%if(m < 11 ){ %>
-<a href="./sub02.jsp?y=<%=y%>&m=<%=m+1%>" target="_self">
+<a href="./sub02.jsp?y=<%=y%>&m=<%=m+1%>&boardName=<%=boardName%>" target="_self">
 <b>&gt;</b><!-- 다음 달 -->
 </a>
 <%}else{%>
 <b>&gt;</b>
 <%} %>
-<a href="./sub02.jsp?y=<%= y+1 %>&m=<%= m %>" target="_self">
+<a href="./sub02.jsp?y=<%= y+1 %>&m=<%= m %>&boardName=<%=boardName%>" target="_self">
 <b>&gt;&gt;</b><!-- 다음 해 -->
 </a>
 </div>
@@ -134,11 +134,21 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     for (int j = 1; j <= last_day; j++) {
   		
     	String str = "";
-    	if(j<10){
-    		str = y + "-" + (m+1) + "-0" + j;
+    	if(m+1<10){
+    		if(j>=10){
+    			str = y + "-0" + (m+1) + "-" + j;
+    		}
+    		if(j<10){
+    			str = y + "-0" + (m+1) + "-0" + j;
+    		}
     	}
-    	else{
-    		str = y + "-" + (m+1) + "-" + j; 
+    	if(m+1>=10){
+    		if(j>=10){
+    			str = y + "-" + (m+1) + "-" + j;
+    		}
+    		if(j<10){
+    			str = y + "-" + (m+1) + "-0" + j;
+    		}
     	}
     	//System.out.println(str);
     %>
@@ -148,7 +158,7 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
    	 <%
    		if(map.get(str)!=null){
    	 %>
-	   	 <a href="sub02_view.jsp?idx=<%= map.get(str).getIdx() %>">
+	   	 <a href="sub02_view.jsp?idx=<%= map.get(str).getIdx() %>&boardName=<%=boardName%>">
 	   	 <%= map.get(str).getTitle() %>
 	   	 </a>
 	<%}%>
