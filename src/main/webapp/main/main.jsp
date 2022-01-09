@@ -18,6 +18,7 @@
 @import url("../css/common.css");
 @import url("../css/main.css");
 @import url("../css/sub.css");
+.main_board_list li{overflow:hidden; text-overflow:ellipsis; white-space: nowrap; width:150px; padding-right: 145px;}
 </style>
 </head> 
 <script>
@@ -97,6 +98,7 @@ boardDao.close();
 						</tr>
 						
 					</table>
+					
 					<p>
 						<input type="checkbox" name="saveId" value="Y"<%= cookieCheck %> tabindex="3" /><img src="../images/login_tit03.gif" alt="저장" />
 						<a href="../member/id_pw.jsp"><img src="../images/login_btn02.gif" alt="아이디/패스워드찾기" /></a>
@@ -106,7 +108,7 @@ boardDao.close();
 					<%
 					    } else if(session.getAttribute("UserType").equals("0")){
 					%>
-					<!-- </form> 여기 폼태그 왜닫는거에여? 일단 주석-->
+					</form>
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
 						<button onclick="location.href='../adminpage/index.jsp';" style="width:70px;font-size:1px;height:20px; ">관리자모드</button>
@@ -148,8 +150,8 @@ boardDao.close();
 					%>
 						<tbody>
 						<!-- 리스트반복 -->
-							<li class="text-left"><a href="../space/sub01_view.jsp?idx=<%=dto.getIdx()%>&boardName=not"><%= dto.getTitle() %></a><span class="text-center"><%=dto.getPostdate()%></span></li>
-							
+							<li class="text-left" ><a href="../space/sub01_view.jsp?idx=<%=dto.getIdx()%>&boardName=not" ><%= dto.getTitle()  %></a><span class="text-center"><%=dto.getPostdate()%></span></li>
+							<!-- style="display:block; width:150px; overflow:hidden; text-overflow:ellipsis; padding-right: 146px;" -->
 						</tbody>
 					<%
 						}
@@ -288,15 +290,16 @@ boardDao.close();
 				</div>
 			</div>
 			<div class="main_con_right">
-				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="/space/sub04.jsp"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
+				<p class="main_title"><img src="../images/main_title06.gif" alt="사진게시판 PHOTO BOARD" /><a href="../space/sub04.jsp?boardName=gal"><img src="../images/more.gif" alt="more" class="more_btn" /></a></p>
 				<ul class="main_photo_list">
 				<%
 				if(galBoardLists.isEmpty()){
 				%>
 					<li>
 						<dl>
-							<dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd>
+							<!-- <dt><a href=""><img src="../images/g_img.gif" /></a></dt>
+							<dd><a href="">마포 구립 장애인...</a></dd> -->
+							<dd style="width: 150px" >등록된 게시물이 없습니다.</dd>
 						</dl>
 					</li>
 					
@@ -311,8 +314,8 @@ boardDao.close();
 						<!-- 리스트반복 -->
 							<li>
 								<dl>
-									<dt><a href="../space/sub04.jsp?idx=<%= dto.getIdx() %>&boardName=gal">
-									<img src="../Uploads/<%= dto.getSfile() %>" alt="" width=95 height=63></a></dt>
+									<dt><a href="../space/sub04_view.jsp?idx=<%= dto.getIdx() %>&boardName=gal">
+									<img src="../Uploads/<%=dto.getSfile() %>" alt="" width=95 height=63></a></dt>
 									<dd style="padding:0 2px; overflow:hidden;text-overflow:ellipsis; white-space:nowrap;">
 									<a href=""><%=dto.getTitle() %></a></dd>
 								</dl>
