@@ -1,18 +1,9 @@
-<%@page import="util.JSFunction"%>
-<%@page import="util.BoardPage"%>
-<%@page import="model.projectboard.projectboardDAO"%>
-<%@page import="model.projectboard.ProjectBoardDTO"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- 글쓰기 전 로그인 확인 -->
-<%@ include file="../model1/IsLoggedIn.jsp" %>
-<%
-String boardName = request.getParameter("boardName");
-System.out.println(boardName); 
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 직원 자료실; "직원"권한을 가진 회원만 접근 & 수정 가능; 파일 첨부형 -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -265,7 +256,7 @@ System.out.println(boardName);
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Spending Alert: We've notd unusually high spending for your account.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -378,13 +369,40 @@ System.out.println(boardName);
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<!-- Page Heading -->
+                    <%-- <%			
+					if(boardName==null || boardName.equals("not")) {
+					%>
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 게시판</h1>
+                    <p class="mb-4">공지사항을 작성/수정할수있습니다.</p>
+                    <%
+					}
+					else if(boardName.equals("fre")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">자유게시판</h1>
+                    <p class="mb-4">자유게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("cal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">프로그램일정</h1>
+                    <p class="mb-4">프로그램일정을 작성/수정할수있습니다.</p>
+					<%   
+					}
+					else if(boardName.equals("gal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">사진게시판</h1>
+                    <p class="mb-4">사진게시판을 작성/수정할수있습니다.</p>
+					<% 
+					}
+					else if(boardName.equals("ref")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">정보자료실</h1>
+                    <p class="mb-4">정보자료실을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					
+					%> --%>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -392,89 +410,29 @@ System.out.println(boardName);
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-<form enctype="multipart/form-data" action="uploadProcess.jsp" 
-	name="fileForm" method="post" onsubmit="return validateForm(this);">
-<input type="hidden" name="boardName" value="<%=boardName%>"/>
-<table class="table table-bordered">
-<colgroup>
-	<col width="20%"/>
-	<col width="*"/>
-</colgroup>
-<tbody>
-	<tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">작성자</th>
-		<td>
-			<input type="text" class="form-control" 
-				style="width:100px;" value="<%= session.getAttribute("UserId")%>"/>
-		</td>
-	</tr>
-	<!-- <tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">이메일</th>
-		<td>
-			<input type="text" class="form-control" 
-				style="width:400px;" value="<%= session.getAttribute("UserMail")%>"/>
-		</td>
-	</tr>
-	<tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">패스워드</th>
-		<td>
-			<input type="text" class="form-control" 
-				style="width:200px;" value="<%= session.getAttribute("UserPwd")%>"/>
-		</td>
-	</tr>  -->
-	<tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">제목</th>
-		<td>
-			<input type="text" name="title" class="form-control" />
-		</td>
-	</tr>
-	<tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">내용</th>
-		<td>
-			<textarea rows="10" name="content" class="form-control"></textarea>
-		</td>
-	</tr>
-	<tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">첨부파일</th>
-		<td>
-			<input type="file" class="form-control" name="attachedFile"/>
-		</td>
-	</tr>
-</tbody>
-</table>
 
-<div class="row text-center" style="">
-	<!-- 각종 버튼 부분 -->
-	<div class="container mt-3">
-	<button type="submit" class="btn btn-danger">전송하기</button>
-	<button type="reset" class="btn">Reset</button>
-	<button type="button" class="btn btn-warning" 
-		onclick="location.href='gallery_list.jsp?boardName=<%=boardName%>';">리스트보기</button>
-	</div>
-</div>
-</form> 
+                                <div>
+					<!-- 컨텐츠 인클루드 -->
+					<%-- <% out.print(request.getAttribute("bCRUD")); %> --%>
+					<c:if test='${not empty bCRUD or bCRUD eq null}'>
+					<c:choose>
+						<c:when test="${bCRUD eq 'list'}">
+							<%@ include file="list_model2.jsp" %>
+						</c:when>
+						<c:when test="${bCRUD eq 'view'}">
+							<%@ include file="view_model2.jsp" %>
+						</c:when>
+						<c:when test="${bCRUD eq 'write'}">
+							<%@ include file="write_model2.jsp" %>
+						</c:when>
+					    <c:when test="${bCRUD eq 'edit'}">
+							<%@ include file="edit_model2.jsp" %>
+						</c:when> 
+					</c:choose>
+					</c:if>
+				</div>
                             </div>
-                            <div class="row text-right" style="padding-right:50px;">
-							<!-- 각종 버튼 부분 -->
-							<!-- <button type="reset" class="btn">Reset</button> -->
-							<div class="container mt-3">	
-							<button type="button" class="btn btn-outline-dark"  
-								onclick="location.href='board_write03.jsp?boardName=<%=boardName%>';">글쓰기</button>
-									
-							<!-- <button type="button" class="btn btn-primary">수정하기</button>
-							<button type="button" class="btn btn-success">삭제하기</button>
-							<button type="button" class="btn btn-info">답글쓰기</button>
-							<button type="button" class="btn btn-warning">리스트보기</button>
-							<button type="submit" class="btn btn-danger">전송하기</button> -->
-							</div>
-                        </div>
-                    
+                     
                     </div>
 
                 </div>

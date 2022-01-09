@@ -34,13 +34,13 @@ int delResult=0;
 	if(delResult==1){
 		
 		if(boardName.equals("not")){
-			JSFunction.alertLocation("삭제되었습니다.", "sub01.jsp?boardName="+boardName, out);
+			JSFunction.alertLocation("삭제되었습니다.", "board_list03.jsp?boardName="+boardName, out);
 		}
 		/* if(boardName.equals("cal")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub02.jsp?boardName=cal", out);
 		} */
 		if(boardName.equals("fre")){
-			JSFunction.alertLocation("삭제되었습니다.", "sub03.jsp?boardName="+boardName, out);
+			JSFunction.alertLocation("삭제되었습니다.", "board_list03.jsp?boardName="+boardName, out);
 		}
 		/* if(boardName.equals("gal")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub04.jsp?boardName=gal", out);

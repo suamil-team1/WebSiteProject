@@ -100,12 +100,15 @@ function deletePost() {
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
+                        <h6 class="collapse-header">게시판 관리</h6>
                         <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
-                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
+                        <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>
+                        <h6 class="collapse-header">커뮤니티 관리</h6>
+                        <a class="collapse-item" href="board2_list.do?boardName=emp">직원자료실</a>
+                        <a class="collapse-item" href="board2_list.do?boardName=prt">보호자 게시판</a>
                     </div>
                 </div>
             </li>
