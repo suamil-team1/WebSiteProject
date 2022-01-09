@@ -74,7 +74,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td colspan="3">
-			<%= dto.getEmail() %>
+			admin@gmail.com
 		</td>
 	</tr>
 	<tr>

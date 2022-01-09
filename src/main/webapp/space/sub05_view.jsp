@@ -77,7 +77,7 @@ function deletePost() {
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
 		<td>
-			
+			<%= dto.getEmail() %>
 		</td>
 		<th class="text-center" 
 			style="vertical-align:middle;">조회수</th>
