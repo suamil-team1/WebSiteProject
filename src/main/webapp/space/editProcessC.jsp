@@ -1,3 +1,5 @@
+<%@page import="model.projectboard.calendarDTO"%>
+<%@page import="model.projectboard.calendarDAO"%>
 <%@page import="util.JSFunction"%>
 <%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="model.projectboard.ProjectBoardDTO"%>
@@ -17,14 +19,14 @@ String pdate = request.getParameter("pdate");
 
 
 //DTO객체에 입력값 추가하기
-ProjectBoardDTO dto = new ProjectBoardDTO();
+calendarDTO dto = new calendarDTO();
 dto.setIdx(idx);
 dto.setTitle(title);
 dto.setContent(content);
 dto.setBoardName(pdate);
 
 //DB연결
-projectboardDAO dao = new projectboardDAO(application);
+calendarDAO dao = new calendarDAO(application);
 
 int affected = dao.updateEdit(dto); //반환되는 1을 받는 변수
 
