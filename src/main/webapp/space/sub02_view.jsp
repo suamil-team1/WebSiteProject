@@ -24,7 +24,7 @@ function deletePost() {
 	if(confirmed){
 		var form=document.writeFrm;
 		form.method="post";//전송방식을 post로 설정
-		form.action="DeleteProcess.jsp";//전송할 URL
+		form.action="DeleteProcessCal.jsp";//전송할 URL
 		form.submit();//폼값 전송
 	}
 }
