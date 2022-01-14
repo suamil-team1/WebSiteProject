@@ -85,7 +85,7 @@ $(function(){
 		
 		$('#calendar_date').html(user_year+"년 "+ (user_month+1)+'월');
 		
-		$.get('../space/sub02_calendar.jsp',
+		$.get('../space/sub02_main_calendar.jsp',
 			{
 				y : user_year,
 				m : user_month
@@ -114,7 +114,7 @@ $(function(){
 		
 		$('#calendar_date').html(user_year+"년 "+ (user_month+1)+'월');
 		
-		$.get('../space/sub02_calendar.jsp',
+		$.get('../space/sub02_main_calendar.jsp',
 			{
 				y : user_year,
 				m : user_month
