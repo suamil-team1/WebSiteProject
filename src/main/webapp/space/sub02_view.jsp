@@ -97,8 +97,9 @@ function deletePost() {
 <div class="row text-center" style="">
 <div class="container mt-3">
 <%
-if(session.getAttribute("UserId")=="admin")
-{
+if(session.getAttribute("UserType") == null){
+}
+else if(session.getAttribute("UserType").equals("0")){
 %>	 
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"

@@ -1,5 +1,5 @@
-<%@page import="model.projectboard.projectboardDAO"%>
-<%@page import="model.projectboard.ProjectBoardDTO"%>
+<%@page import="model.projectboard.calendarDAO"%>
+<%@page import="model.projectboard.calendarDTO"%>
 <%@page import="util.JSFunction"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,22 +8,27 @@
 <%
 //폼값 받기
 String idx= request.getParameter("idx");
-System.out.println(idx);
+//System.out.println(idx);
 String boardName = request.getParameter("boardName");
-System.out.println(boardName); 
+//System.out.println(boardName); 
 
 //DTO객체와 DB연결 및 기존 게시물 가져오기
-ProjectBoardDTO dto = new ProjectBoardDTO();
+//캘린더 삭제 프로세스인데 board로 되어있어서 수정했어요..
+/* ProjectBoardDTO dto = new ProjectBoardDTO();
 projectboardDAO dao = new projectboardDAO(application);
+dto=dao.selectView(idx); */
+calendarDTO dto = new calendarDTO();
+calendarDAO dao = new calendarDAO(application);
 dto=dao.selectView(idx);
 
 //세션영역에 저장된 아이디를 문자열로 반환
 String sessionId=session.getAttribute("UserId").toString();
 
+
 int delResult=0;
 
 //현재 삭제하는 사람이 해당 글의 작성자가 맞는지 확인
-//if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
+if(sessionId.equals(dto.getId())){//작성자 본인이 맞으면...
 	
 	//DTO객체에 일련번호를 저장한 후 DAO로 매개변수 전달
 	dto.setIdx(idx);
@@ -36,9 +41,9 @@ int delResult=0;
 		if(boardName.equals("not")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub01.jsp?boardName="+boardName, out);
 		}
-		/* if(boardName.equals("cal")){
-			JSFunction.alertLocation("삭제되었습니다.", "sub02.jsp?boardName=cal", out);
-		} */
+		if(boardName.equals("cal")){
+			JSFunction.alertLocation("삭제되었습니다.", "sub02.jsp?boardName="+boardName, out);
+		}
 		if(boardName.equals("fre")){
 			JSFunction.alertLocation("삭제되었습니다.", "sub03.jsp?boardName="+boardName, out);
 		}
@@ -52,10 +57,10 @@ int delResult=0;
 	else{
 		JSFunction.alertBack("삭제에 실패하였습니다.", out);
 	}
-//}
-//else{// 작성자 본인이 아니면 삭제할 수 없음
-//	JSFunction.alertBack("본인만 삭제할 수 있습니다.", out);
+}
+else{// 작성자 본인이 아니면 삭제할 수 없음
+JSFunction.alertBack("본인만 삭제할 수 있습니다.", out);
 //	return;
-//}
+}
 
 %>

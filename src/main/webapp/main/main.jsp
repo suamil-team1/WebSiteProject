@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="model.projectboard.ProjectBoardDTO"%>
 <%@page import="java.util.List"%>
@@ -20,6 +21,7 @@
 @import url("../css/sub.css");
 .main_board_list li{overflow:hidden; text-overflow:ellipsis; white-space: nowrap; width:150px; padding-right: 145px;}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head> 
 <script>
 function validateForm(form) {
@@ -58,6 +60,72 @@ List<ProjectBoardDTO> galBoardLists = boardDao.selectList(param, "gal");
 
 boardDao.close();
 %>
+</script>
+
+<!-- 캘린더 -->
+<script>
+$(function(){
+	$('#calendar_view').load('../space/sub02_main_calendar.jsp');
+	
+	$('#prev_month').click(function(){
+		var user_year = parseInt($('#now_year').val());
+		var user_month = parseInt($('#now_month').val());
+		
+		
+		if(user_month == 0){
+			user_year--;
+			user_month = 11;
+		}
+		else{
+			user_month--;
+		}
+		
+		$('#now_year').val(user_year);
+		$('#now_month').val(user_month);
+		
+		$('#calendar_date').html(user_year+"년 "+ (user_month+1)+'월');
+		
+		$.get('../space/sub02_calendar.jsp',
+			{
+				y : user_year,
+				m : user_month
+			},
+			function(d) {
+				$('#calendar_view').html(d);
+			}
+		);
+	});
+	
+	$('#next_month').click(function(){
+		var user_year = parseInt($('#now_year').val());
+		var user_month = parseInt($('#now_month').val());
+		
+		
+		if(user_month ==11){
+			user_year++;
+			user_month = 0;
+		}
+		else{
+			user_month++;
+		}
+		
+		$('#now_year').val(user_year);
+		$('#now_month').val(user_month);
+		
+		$('#calendar_date').html(user_year+"년 "+ (user_month+1)+'월');
+		
+		$.get('../space/sub02_calendar.jsp',
+			{
+				y : user_year,
+				m : user_month
+			},
+			function(d) {
+				$('#calendar_view').html(d);
+			}
+		);
+	});
+});
+
 </script>
 <body>
 <center>
@@ -108,10 +176,10 @@ boardDao.close();
 					<%
 					    } else if(session.getAttribute("UserType").equals("0")){
 					%>
-					</form>
+					</form> <!-- 이거 안넣으면 관리자모드 안넘어가요오오 -예지- -->
 					<p style="padding:10px 0px 10px 10px"><span style="font-weight:bold; color:#333;"><%= session.getAttribute("UserName") %>님,</span> 반갑습니다.<br />로그인 하셨습니다.</p>
 					<p style="text-align:right; padding-right:10px;">
-						<button onclick="location.href='../adminpage/index.jsp';" style="width:70px;font-size:1px;height:20px; ">관리자모드</button>
+						<button onclick="location.href='../adminpage/index.jsp';" style="width:70px;font-size:1px;height:20px; background-color:white; border:solid lightgray 1px;">관리자모드</button>
 						<a href="../member/modify.jsp"><img src="../images/login_btn04.gif" /></a>
 						<a href="../member/logout.jsp"><img src="../images/login_btn05.gif" /></a>
 					</p>
@@ -199,6 +267,13 @@ boardDao.close();
 			<div class="main_con_center">
 				<p class="main_title" style="border:0px; margin-bottom:0px;"><img src="../images/main_title05.gif" alt="월간일정 CALENDAR" /></p>
 				<div class="cal_top">
+					<%
+					Calendar nowDay = Calendar.getInstance();
+					int now_year = nowDay.get(Calendar.YEAR);
+					int now_month = nowDay.get(Calendar.MONTH);
+					%>
+					<input type="hidden" id="now_year" value="<%=now_year %>" />
+					<input type="hidden" id="now_month" value="<%=now_month %>" />	
 					<table cellpadding="0" cellspacing="0" border="0">
 						<colgroup>
 							<col width="13px;" />
@@ -206,87 +281,17 @@ boardDao.close();
 							<col width="13px;" />
 						</colgroup>
 						<tr>
-							<td><a href=""><img src="../images/cal_a01.gif" style="margin-top:3px;" /></a></td>
-							<td><img src="../images/calender_2012.gif" />&nbsp;&nbsp;<img src="../images/calender_m1.gif" /></td>
-							<td><a href=""><img src="../images/cal_a02.gif" style="margin-top:3px;" /></a></td>
+							<td><img src="../images/cal_a01.gif" style="margin-top:3px; cursor:pointer;" id="prev_month"/></td>
+							<td style="font-weight:bold;font-size:14px;" id="calendar_date">
+								<%=now_year %>년 
+								<%=(now_month+1) %>월
+							</td>
+							<td><img src="../images/cal_a02.gif" style="margin-top:3px; cursor:pointer;" id="next_month"/></td>
 						</tr>
 					</table>
 				</div>
-				<div class="cal_bottom">
-					<table cellpadding="0" cellspacing="0" border="0" class="calendar">
-						<colgroup>
-							<col width="14%" />
-							<col width="14%" />
-							<col width="14%" />
-							<col width="14%" />
-							<col width="14%" />
-							<col width="14%" />
-							<col width="*" />
-						</colgroup>
-						<tr>
-							<th><img src="../images/day01.gif" alt="S" /></th>
-							<th><img src="../images/day02.gif" alt="M" /></th>
-							<th><img src="../images/day03.gif" alt="T" /></th>
-							<th><img src="../images/day04.gif" alt="W" /></th>
-							<th><img src="../images/day05.gif" alt="T" /></th>
-							<th><img src="../images/day06.gif" alt="F" /></th>
-							<th><img src="../images/day07.gif" alt="S" /></th>
-						</tr>
-						<tr>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">1</a></td>
-							<td><a href="">2</a></td>
-							<td><a href="">3</a></td>
-						</tr>
-						<tr>
-							<td><a href="">4</a></td>
-							<td><a href="">5</a></td>
-							<td><a href="">6</a></td>
-							<td><a href="">7</a></td>
-							<td><a href="">8</a></td>
-							<td><a href="">9</a></td>
-							<td><a href="">10</a></td>
-						</tr>
-						<tr>
-							<td><a href="">11</a></td>
-							<td><a href="">12</a></td>
-							<td><a href="">13</a></td>
-							<td><a href="">14</a></td>
-							<td><a href="">15</a></td>
-							<td><a href="">16</a></td>
-							<td><a href="">17</a></td>
-						</tr>
-						<tr>
-							<td><a href="">18</a></td>
-							<td><a href="">19</a></td>
-							<td><a href="">20</a></td>
-							<td><a href="">21</a></td>
-							<td><a href="">22</a></td>
-							<td><a href="">23</a></td>
-							<td><a href="">24</a></td>
-						</tr>
-						<tr>
-							<td><a href="">25</a></td>
-							<td><a href="">26</a></td>
-							<td><a href="">27</a></td>
-							<td><a href="">28</a></td>
-							<td><a href="">29</a></td>
-							<td><a href="">30</a></td>
-							<td><a href="">31</a></td>
-						</tr>
-						<tr>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-							<td><a href="">&nbsp;</a></td>
-						</tr>
-					</table>
+				<div class="cal_bottom" id="calendar_view">
+				<!-- ajax결과를 여기에 디스플레이 -->
 				</div>
 			</div>
 			<div class="main_con_right">
@@ -297,8 +302,6 @@ boardDao.close();
 				%>
 					<li>
 						<dl>
-							<!-- <dt><a href=""><img src="../images/g_img.gif" /></a></dt>
-							<dd><a href="">마포 구립 장애인...</a></dd> -->
 							<dd style="width: 150px" >등록된 게시물이 없습니다.</dd>
 						</dl>
 					</li>

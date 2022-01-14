@@ -15,13 +15,12 @@ calendarDAO dao = new calendarDAO(application);	//DB연결
 calendarDTO dto = dao.selectView(idx);			//게시물 조회
 
 //세션 영역에 저장된 회원 아이디를 얻어와서 문자열의 형태로 변환.
-//String sessionId = session.getAttribute("UserId").toString();
+String sessionId = session.getAttribute("UserId").toString();
 
 //작성자 본인만 수정할 수 있는 if문
-/*if(!sessionId.equals(dto.getId())){	
+if(!sessionId.equals(dto.getId())){	
 	JSFunction.alertBack("작성자 본인만 수정할 수 있습니다", out);
-	return;
-}*/
+}
 dao.close();
 %>
 <script>
@@ -63,7 +62,7 @@ $( function() {
 				</div>
 				<div>
 
-<form name="writeFrm" method="post" action="EditProcessC.jsp"
+<form name="writeFrm" method="post" action="editProcessC.jsp"
 	onsubmit="return validateForm(this);">
 <table class="table table-bordered">
 <input type="hidden" name="idx" value="<%= idx %>" />
