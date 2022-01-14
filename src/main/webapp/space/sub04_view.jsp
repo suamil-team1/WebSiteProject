@@ -107,8 +107,10 @@ function deletePost() {
 <div class="row text-center" style="">
 <div class="container mt-3">
 <%
-if(session.getAttribute("UserId")!=null
-           		&& session.getAttribute("UserId").toString().equals(dto.getId())){
+if(session.getAttribute("UserId") == null){
+}
+else if(session.getAttribute("UserType").equals("0")
+           		|| session.getAttribute("UserId").toString().equals(dto.getId())){
 %>
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"
@@ -116,11 +118,12 @@ if(session.getAttribute("UserId")!=null
 	<button type="button" class="btn btn-success"
 		onclick="deletePost();">삭제하기</button>	
 <%
-}
+} 
 %> 
 	<button type="button" class="btn btn-warning" 
 		onclick="location.href='sub04.jsp?boardName=<%=boardName%>';">리스트보기</button>
 	</div>
+
 </div>
 </form> 
 
