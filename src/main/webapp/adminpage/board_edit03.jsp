@@ -37,6 +37,13 @@ function validateForm(form) {
 <html lang="en">
 
 <head>
+<% if(session.getAttribute("UserId") == null || !(session.getAttribute("UserType").equals("0")))  {%>
+	<script>
+		alert('관리자 계정 로그인후에 수정 가능합니다.');location.href="logout.jsp";
+	</script>
+	<%
+	}
+	%> 
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

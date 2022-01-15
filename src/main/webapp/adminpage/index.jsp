@@ -72,7 +72,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">게시판 관리</h6>
                         <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
-                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
+                        <a class="collapse-item" href="calendar_list.jsp?boardName=cal">프로그램 일정</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
                         <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>

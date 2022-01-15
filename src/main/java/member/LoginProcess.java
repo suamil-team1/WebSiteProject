@@ -27,6 +27,7 @@ public class LoginProcess extends HttpServlet{
 		String userPwd = req.getParameter("pass");
 		String saveId = req.getParameter("saveId");
 		
+		
 		ProjectMemberDAO dao = new ProjectMemberDAO();
 		ProjectMemberDTO memberDTO = dao.getMemberDTO(userId, userPwd);
 		

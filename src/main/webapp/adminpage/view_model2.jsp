@@ -47,7 +47,7 @@
 	
 	<div>
 		<!-- 각종 버튼 부분 -->
-	<c:if test='${!(UserId == null || UserId == "")}'>
+	<c:if test='${(UserType == "0")}'>
 		<button type="button" onclick="location.href='../adminpage/Edit.do?boardName=${param.boardName}&idx=${param.idx}';">수정하기</button>
 		<button type="button" onclick="location.href='../adminpage/Delete.do?boardName=${param.boardName}&idx=${param.idx}';">삭제하기</button>
 	</c:if>	

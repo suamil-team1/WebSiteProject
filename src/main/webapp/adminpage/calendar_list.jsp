@@ -432,7 +432,7 @@ calendarDAO dao = new calendarDAO(application);
                         <div class="card-body">
                             <div class="table-responsive">
 
-                                <form action="sub02_write.jsp">
+                                <form action="calendar_write.jsp">
 				<input type="hidden" name="boardName" value="<%=boardName%>"/>
 <%
 //현재 년/월/일을 구하기 위한 인스턴스 생성
@@ -452,7 +452,13 @@ int d = tDay.get(Calendar.DATE);
 
 Map<String, calendarDTO> map = new HashMap<String, calendarDTO>();
 
-String ym = y + "-" + (m+1) ;
+String ym="";
+if(m+1>=10){
+	ym = y + "-" + (m+1);
+}
+else{
+	ym = y + "-0" + (m+1);
+}
 
 map = dao.selectC(ym);
 //System.out.println(map.get("2021-12-17").getTitle()); 
@@ -471,11 +477,12 @@ int yo = dSet.get(Calendar.DAY_OF_WEEK);
 //현재월의 마지막 날자를 구한다.(7월->31, 9월->30)
 int last_day = dSet.getActualMaximum(Calendar.DATE);
 %>
-<a href="./sub02.jsp?y=<%=y-1%>&m=<%=m%>" target="_self">
+<div align=center style="font-size: 16px; font-weight: bold;">
+<a href="../calendar_list.jsp?y=<%=y-1%>&m=<%=m%>&boardName=<%=boardName%>" target="_self">
 <b>&lt;&lt;</b><!-- 이전 해 -->
 </a>
 <%if(m > 0 ){ %>
-<a href="./sub02.jsp?y=<%=y%>&m=<%=m-1%>" target="_self">
+<a href="../calendar_list.jsp?y=<%=y%>&m=<%=m-1%>&boardName=<%=boardName%>" target="_self">
 <b>&lt;</b><!-- 이전 달 -->
 </a>
 <%} else {%>
@@ -485,17 +492,18 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
 <%=y%>년<%=m+1%>월
 &nbsp;&nbsp;
 <%if(m < 11 ){ %>
-<a href="./sub02.jsp?y=<%=y%>&m=<%=m+1%>" target="_self">
+<a href="../calendar_list.jsp?y=<%=y%>&m=<%=m+1%>&boardName=<%=boardName%>" target="_self">
 <b>&gt;</b><!-- 다음 달 -->
 </a>
 <%}else{%>
 <b>&gt;</b>
 <%} %>
-<a href="./sub02.jsp?y=<%= y+1 %>&m=<%= m %>" target="_self">
+<a href="../calendar_list.jsp?y=<%= y+1 %>&m=<%= m %>&boardName=<%=boardName%>" target="_self">
 <b>&gt;&gt;</b><!-- 다음 해 -->
 </a>
+</div>
 <!-- <%= y %>년<%= m+1 %>월 -->
-<table cellpadding="0" cellspacing="0" border="1" class="calendar table">
+<table cellpadding="0" cellspacing="0" border="1" class="calendar table" style="width:100%; height:60%">
     <colgroup>
    	 <col width="14%" />
    	 <col width="14%" />
@@ -530,11 +538,21 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     for (int j = 1; j <= last_day; j++) {
   		
     	String str = "";
-    	if(j<10){
-    		str = y + "-" + (m+1) + "-0" + j;
+    	if(m+1<10){
+    		if(j>=10){
+    			str = y + "-0" + (m+1) + "-" + j;
+    		}
+    		if(j<10){
+    			str = y + "-0" + (m+1) + "-0" + j;
+    		}
     	}
-    	else{
-    		str = y + "-" + (m+1) + "-" + j; 
+    	if(m+1>=10){
+    		if(j>=10){
+    			str = y + "-" + (m+1) + "-" + j;
+    		}
+    		if(j<10){
+    			str = y + "-" + (m+1) + "-0" + j;
+    		}
     	}
     	//System.out.println(str);
     %>
@@ -544,7 +562,7 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
    	 <%
    		if(map.get(str)!=null){
    	 %>
-	   	 <a href="sub02_view.jsp?idx=<%= map.get(str).getIdx() %>">
+	   	 <a href="calendar_view.jsp?idx=<%= map.get(str).getIdx() %>&boardName=<%=boardName%>">
 	   	 <%= map.get(str).getTitle() %>
 	   	 </a>
 	<%}%>
@@ -566,7 +584,9 @@ int last_day = dSet.getActualMaximum(Calendar.DATE);
     </tr>
 </table>
 <%
-if(session.getAttribute("UserId")=="admin")
+if(session.getAttribute("UserType") == null){
+}
+else if(session.getAttribute("UserType").equals("0"))
 {
 %>
 	<button type="submit" class="btn btn-outline-dark">일정 등록</button>

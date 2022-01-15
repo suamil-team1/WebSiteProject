@@ -18,10 +18,10 @@ ProjectBoardDTO dto = dao.selectView(idx);			//게시물 조회
 String sessionId = session.getAttribute("UserId").toString();
 
 //작성자 본인만 수정할 수 있는 if문
-if(!sessionId.equals(dto.getId())){	
+/* if(!sessionId.equals(dto.getId())){	
 	JSFunction.alertBack("작성자 본인만 수정할 수 있습니다", out);
 	return;
-}
+} */
 dao.close();
 %>
 <script>

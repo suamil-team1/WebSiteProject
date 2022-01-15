@@ -1,3 +1,7 @@
+<%@page import="model.projectboard.calendarDTO"%>
+<%@page import="java.util.Calendar"%>
+<%@page import="model.projectboard.calendarDAO"%>
+<%@page import="java.net.URLEncoder"%>
 <%@page import="util.BoardPage"%>
 <%@page import="model.projectboard.projectboardDAO"%>
 <%@page import="model.projectboard.ProjectBoardDTO"%>
@@ -13,15 +17,13 @@ System.out.println(boardName);
 //게시물의 일련번호를 파라미터를 통해 받는다. 
 String idx = request.getParameter("idx");   
 //DB연결
-projectboardDAO dao = new projectboardDAO(application);
-//조회수 증가
-dao.updateVisitCnt(idx);
+calendarDAO dao = new calendarDAO(application);
+
 
 //일련번호에 해당하는 게시물 조회
-ProjectBoardDTO dto = dao.selectView(idx);
+calendarDTO dto = dao.selectView(idx);
 //자원해제
-dao.close();   
-
+dao.close();                               
 %>
 <script>
 function deletePost() {
@@ -101,15 +103,12 @@ function deletePost() {
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">게시판 관리</h6>
+                        <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="board_list03.jsp?boardName=not">공지사항</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=fre">자유게시판</a>
-                        <a class="collapse-item" href="gallery_list.jsp?boardName=gal">사진게시판</a>
+                        <a class="collapse-item" href="board_list03.jsp?boardName=fre">Buttons</a>
                         <a class="collapse-item" href="board_list03.jsp?boardName=ref">정보자료실</a>
-                        <h6 class="collapse-header">커뮤니티 관리</h6>
-                        <a class="collapse-item" href="board2_list.do?boardName=emp">직원자료실</a>
-                        <a class="collapse-item" href="board2_list.do?boardName=prt">보호자 게시판</a>
                     </div>
                 </div>
             </li>
@@ -286,7 +285,7 @@ function deletePost() {
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
+                                        Spending Alert: We've notd unusually high spending for your account.
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
@@ -399,13 +398,51 @@ function deletePost() {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
-
+<!-- Page Heading -->
+                    <%			
+					if(boardName==null || boardName.equals("not")) {
+					%>
+                    <h1 class="h3 mb-2 text-gray-800">공지사항 게시판</h1>
+                    <p class="mb-4">공지사항을 작성/수정할수있습니다.</p>
+                    <%
+					}
+					else if(boardName.equals("fre")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">자유게시판</h1>
+                    <p class="mb-4">자유게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("program")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">프로그램일정</h1>
+                    <p class="mb-4">프로그램일정을 작성/수정할수있습니다.</p>
+					<%   
+					}
+					else if(boardName.equals("gal")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">사진게시판</h1>
+                    <p class="mb-4">사진게시판을 작성/수정할수있습니다.</p>
+					<% 
+					}
+					else if(boardName.equals("info")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">정보자료실</h1>
+                    <p class="mb-4">정보자료실을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("emp")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">직원게시판</h1>
+                    <p class="mb-4">직원게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					else if(boardName.equals("guard")){
+					%>
+					<h1 class="h3 mb-2 text-gray-800">보호자게시판</h1>
+                    <p class="mb-4">보호자게시판을 작성/수정할수있습니다.</p>
+					<%  
+					}
+					%>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -413,7 +450,8 @@ function deletePost() {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-<form name="writeFrm">
+
+                                <form name="writeFrm">
 <table class="table table-bordered">
 <input type="hidden" name="idx" value="<%= idx %>" />
 <input type="hidden" name="boardName" value="<%= boardName %>" />
@@ -431,21 +469,16 @@ function deletePost() {
 			<%= dto.getId() %>
 		</td>
 		<th class="text-center" 
-			style="vertical-align:middle;">작성일</th>
+			style="vertical-align:middle;">날짜</th>
 		<td>
-			<%= dto.getPostdate() %>
+			<%= dto.getPdate() %>
 		</td>
 	</tr>
 	<tr>
 		<th class="text-center" 
 			style="vertical-align:middle;">이메일</th>
-		<td>
-			<%= dto.getEmail() %>
-		</td>
-		<th class="text-center" 
-			style="vertical-align:middle;">조회수</th>
-		<td>
-			<%= dto.getVisitcount() %>
+		<td colspan="3">
+			admin@gmail.com
 		</td>
 	</tr>
 	<tr>
@@ -462,13 +495,6 @@ function deletePost() {
 			<%= dto.getContent().replace("\r\n", "<br/>") %>
 		</td>
 	</tr>
-	<%-- <tr>
-		<th class="text-center" 
-			style="vertical-align:middle;">첨부파일</th>
-		<td colspan="3">
-			<%= dto.getOfile() %>
-		</td>
-	</tr> --%>
 </tbody>
 </table>
 
@@ -482,15 +508,15 @@ else if(session.getAttribute("UserType").equals("0"))
 %>
 	<!-- 각종 버튼 부분 -->
 	<button type="button" class="btn btn-primary"
-	onclick="location.href='board_edit03.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
+			onclick="location.href='calendar_edit.jsp?idx=<%=dto.getIdx()%>&boardName=<%=boardName%>';">수정하기</button>
 	<button type="button" class="btn btn-success"
 		onclick="deletePost();">삭제하기</button>
 <%} %>	
 	<button type="button" class="btn btn-warning" 
-		onclick="location.href='board_list03.jsp?boardName=<%=boardName%>';">리스트보기</button>
+		onclick="location.href='calendar_list.jsp?boardName=<%=boardName%>';">리스트보기</button>
 	</div>
 </div>
-</form>
+</form> 
                             </div>
                             <div class="row text-right" style="padding-right:50px;">
 							<!-- 각종 버튼 부분 -->
@@ -506,7 +532,7 @@ else if(session.getAttribute("UserType").equals("0"))
 							<button type="submit" class="btn btn-danger">전송하기</button> -->
 							</div>
                         </div>
-                    
+                        
                     </div>
 
                 </div>
