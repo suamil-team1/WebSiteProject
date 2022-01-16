@@ -5,53 +5,27 @@
 <%@page import="member.ProjectMemberDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- <%
+<%
+String uid = request.getParameter("user_id");
 ProjectMemberDAO dao = new ProjectMemberDAO(application);
 Map<String, Object> param = new HashMap<String, Object>();
-//검색 파라미터를 request 내장객체를 통해 얻어온다.
-String searchField = request.getParameter("searchField");
-String searchWord = request.getParameter("searchWord");
-//검색어가 있는 경우에만
-if(searchWord !=null){
-	//Map컬렉션에 파라미터 값을 추가한다.
-	param.put("searchField", searchField);//검색필드명(title,content 등)
-	param.put("searchWord", searchWord);//검색어
-}
-//board테이블에 저장된 게시물의 갯수 카운트
-int totalCount = dao.selectCount(param);
-//System.out.println(totalCount);
-
-/***페이지 처리 start***/
-//컨텍스트 초기화 파라미터를 얻어온 후 사칙연산을 위한 정수로 변경한다.
-int pageSize=Integer.parseInt(application.getInitParameter("POSTS_PER_PAGE"));
-int blockPage=Integer.parseInt(application.getInitParameter("PAGES_PER_BLOCK"));
-//전체 페이지 수를 계산한다. 소수점을 얻기 위해 double로 형변환 후 나눈다.
-int totalPage= (int)Math.ceil((double)totalCount/pageSize);
-/*  
-목록에 첫 진입시에는 페이지 관련 파라미터가 없으므로 무조건 1page로 지정한다.
-만약 pageNum이 있다면 파라미터를 받아와서 정수로 변경한 후 페이지수로 지정한다.
-*/
-int pageNum=1;
-//pageTemp에 잠깐 저장
-String pageTemp = request.getParameter("pageNum");
-if(pageTemp!=null && !pageTemp.equals("pageNum")){
-	pageNum = Integer.parseInt(pageTemp);
-}
-
-//게시물의 구간을 계산한다.
-int start=(pageNum-1)*pageSize+1;//구간의 시작
-int end=pageNum*pageSize;//구간의 끝
-param.put("start",start);//Map컬렉션에 저장 후 DAO로 전달함
-param.put("end", end);
-/***페이지 처리 end***/
-
-List<ProjectMemberDTO> memberLists = dao.mamberList(param);
+ProjectMemberDTO dto = dao.memberInfo(uid);
 dao.close();
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<script>
+function deleteMember() {
+	var confirmed = confirm("정말로 삭제하겠습니까?");
+	if(confirmed){
+		var form=document.writeFrm;
+		form.method="post";//전송방식을 post로 설정
+		form.action="member_deleteProcess.jsp";//전송할 URL
+		form.submit();//폼값 전송
+	}
+}
+</script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -420,69 +394,52 @@ dao.close();
                             href="https://datatables.net">official DataTables documentation</a>.</p>
 
                     <!-- DataTales Example -->
+                    <form name="myform" action="member_editProcess.jsp" method="get" id="memberInfo">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">수정하려면 해당 id를 클릭하시오</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">회원 정보</h6>
                         </div>
+                        
                         <div class="card-body">
-                            <div class="table-responsive">
-	                           
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr align="center">
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>MOBILE</th>
-                                            <th>ADDRESS</th>
-                                            <th>TYPE</th>
-                                        </tr>
-                                    </tfoot>
-                                    <%
-                                    	if (memberLists.isEmpty()) {
-                            		%>
+                            <table class="table table-bordered table-hover">
+                            <input type="hidden" name="user_id" value="<%= dto.getId() %>" />
+                                <thead>
                                     <tr>
-								        <td colspan="6" align="center">
-								            등록된 인원이 없습니다!^^
-								        </td>
-								    </tr>
-								    <%
-									   	}
-									   	else {
-									      	for (ProjectMemberDTO dto : memberLists) {
-									%>
-                                    <tbody>
-										<tr align="center">
-											<td>
-											<button class="btn" type="button" onclick="location.href='member_view.jsp?user_id=<%= dto.getId() %>'">
-											<%=dto.getId() %></button></td>
-											<%-- <td><%=dto.getPass() %></td> 엥 비번을 왜보여줘여--%>
-											<td><%=dto.getName() %></td>
-											<td><%=dto.getEmail() %></td>
-											<td><%=dto.getMobile() %></td>
-											<td><%=dto.getAddress() %></td>
-											<td><%=dto.getType() %></td>
-											<tr>
-                                    </tbody>
-                                    <%
-									      	}
-									   	}
-									%>
-                                </table>
-                            </div>
+                                        <th width="15%">아이디</th>
+                                        <td width="30%"><%= dto.getId() %></td>
+                                        <th width="15%">이름</th>
+                                        <td width="40%"><%= dto.getName() %></td>
+                                    </tr>    
+                                    <tr>
+                                        <th>이메일</th>
+                                        <td><%= dto.getEmail() %></td>
+                                        <th>주소</th>
+                                        <td><%= dto.getAddress() %></td>
+                                    </tr>
+                                   	<tr>
+                                        <th>전화번호</th>
+                                        <td><%= dto.getTellNum () %></td>
+                                        <th>핸드폰번호</th>
+                                        <td><%= dto.getMobile() %></td>
+                                    </tr>  
+                                    <tr>
+                                        <th>회원등급</th>
+                                        <td><input type="text" name="type " value="<%= dto.getType () %>" /></td>
+                                        <th>회원등록일</th>
+                                        <td><%= dto.getRegidate() %></td>
+                                    </tr>  
+                                </thead>
+                            </table>
                         </div>
                     </div>
-
+                    <div class="board-btn-group01">
+                        <ul class="d-flex justify-content-end">
+                        	<li><button type="submit" class="btn btn-outline-success">등급저장</button></li>
+                            <li><button type="button" class="btn btn-outline-danger" onclick="deleteMember();">회원삭제</button></li>
+                       
+                        </ul>
+                    </div>
+                    </form>
                 </div>
                 <!-- /.container-fluid -->
 

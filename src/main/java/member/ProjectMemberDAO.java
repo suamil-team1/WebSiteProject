@@ -227,4 +227,111 @@ public class ProjectMemberDAO extends JDBConnect {
         }
         return bbs;
     }
+	///////////////////////////////////////
+	//[회원관리페이지]회원 수 불러오기
+		public int selectCount(Map<String, Object> map) {
+			int totalCount = 0;
+
+			String query = " SELECT COUNT(*) FROM ProjectMember ";
+				
+				if(map.get("searchWord") != null) {
+					query += " WHERE "+ map.get("searchField")
+						+ " LIKE '%" + map.get("searchWord") + "%' ";
+				}
+				
+			try {
+				stmt = con.createStatement();
+				rs = stmt.executeQuery(query);
+				rs.next();
+				totalCount = rs.getInt(1);
+			} catch (Exception e) {
+				System.out.println("회원 수 구하는 중 예외 발생(selectCount)");
+				e.printStackTrace();
+			}
+			return totalCount;
+		}
+	
+	
+	// [회원관리페이지]수정페이지를 위한 로딩
+		public ProjectMemberDTO memberInfo(String uid) {
+			ProjectMemberDTO dto = new ProjectMemberDTO();
+			//회원로그인을 위한 쿼리문 작성
+			String query = "SELECT * FROM ProjectMember WHERE id=?";
+			
+			try {
+				psmt = con.prepareStatement(query);
+				//쿼리문에 사용자가 입력한 아이디, 패스워드를 설정
+				psmt.setString(1, uid);
+				//쿼리 실행
+				rs = psmt.executeQuery();
+				
+				//회원정보가 존재한다면 DTO객체에 정보를 저장
+				if(rs.next()) {
+					
+					dto.setId(rs.getString("id"));
+					dto.setPass(rs.getString(2));
+					dto.setName(rs.getString(3));
+					dto.setEmail(rs.getString(4));
+					dto.setRegidate(rs.getString(5));
+					dto.setTellNum(rs.getString(6));
+					dto.setMobile(rs.getString(7));
+					dto.setAddress(rs.getString(8));
+					dto.setType(rs.getString(9));
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+			return dto;
+		}
+		
+
+		// [회원관리페이지]회원등급 수정을 위한 메서드
+		public int editType(ProjectMemberDTO dto) {
+			//입력결과 확인용 변수
+			int result=0;
+			try {
+				//인파라미터가 있는 쿼리문 작성(동적쿼리문)
+				String query = " Update ProjectMember SET "
+							+ " type=? "
+							+ " WHERE id=? ";
+					
+				//동적쿼리문 실행을 위한 prepared 객체 생성
+				psmt = con.prepareStatement(query);
+				//순서대로 인파라미터 설정
+				psmt.setString(1, dto.getType());
+				psmt.setString(2, dto.getId());
+				//쿼리문 실행 : 입력에 성공하면 1, 실패하면 0 반환
+				result = psmt.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println("회원정보 수정 중 예외 발생");
+				e.printStackTrace();
+			}	
+			return result;
+		}
+		
+		
+		// [회원관리페이지]회원삭제를 위한 메서드
+		public int deleteMember(ProjectMemberDTO dto) {
+			//입력결과 확인용 변수
+			int result=0;
+			try {
+				String query = " DELETE from ProjectMember "
+							+ " WHERE id=? ";
+					
+				//동적쿼리문 실행을 위한 prepared 객체 생성
+				psmt = con.prepareStatement(query);
+				//인파라미터 설정
+				psmt.setString(1, dto.getId());
+				
+				//쿼리문 실행 : 입력에 성공하면 1, 실패하면 0 반환
+				result = psmt.executeUpdate();
+			}
+			catch (Exception e) {
+				System.out.println("회원정보 수정 중 예외 발생");
+				e.printStackTrace();
+			}	
+			return result;
+		}
 }
